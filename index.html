@@ -3,123 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Cozy Interval Café - คาเฟ่ขั้นคู่ฮีลใจ</title>
+    <title>Italian Interval - ร้านพิซซ่าขั้นคู่</title>
     <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;700;900&display=swap" rel="stylesheet">
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Mali', sans-serif; user-select: none; }
         
-        /* 🤎 พื้นหลังหน้าจอด้านนอก ลายจุดจางๆ */
+        /* 🇮🇹 พื้นหลังลายตาราง Gingham สีแดง-ขาว สไตล์ร้านอิตาลี */
         body { 
-            background-color: #fdfaf6;
-            background-image: radial-gradient(#d7ccc8 15%, transparent 16%), 
-                              radial-gradient(#d7ccc8 15%, transparent 16%);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            color: #5d4037; 
+            background-color: #fffcf4;
+            background-image: 
+                linear-gradient(90deg, rgba(211, 47, 47, 0.15) 50%, transparent 50%),
+                linear-gradient(0deg, rgba(211, 47, 47, 0.15) 50%, transparent 50%);
+            background-size: 50px 50px;
+            color: #4e342e; 
             height: 100vh; height: 100dvh; 
             display: flex; align-items: center; justify-content: center; 
             overflow: hidden; touch-action: none;
         }
 
-        /* 📱 กรอบคาเฟ่ สไตล์ Cozy ลายตารางสก็อต (Gingham) ด้านใน */
+        /* 📱 กรอบร้านพิซซ่า */
         #app-container {
             width: 100%; max-width: 420px; 
             height: 100%; height: 100dvh; 
-            background-color: #fffcf4;
-            background-image: 
-                linear-gradient(90deg, rgba(186, 156, 133, 0.15) 50%, transparent 50%),
-                linear-gradient(0deg, rgba(186, 156, 133, 0.15) 50%, transparent 50%);
+            background-color: #fdfaf6;
+            background-image: radial-gradient(#e6d8ce 15%, transparent 16%), 
+                              radial-gradient(#e6d8ce 15%, transparent 16%);
             background-size: 40px 40px;
-            border-radius: 35px; /* ขอบโค้งมน */
-            border: 8px solid #fff;
-            box-shadow: 0 20px 50px rgba(93, 64, 55, 0.4);
+            background-position: 0 0, 20px 20px;
+            border-radius: 35px; border: 8px solid #fff;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             position: relative; 
+            display: flex; flex-direction: column; align-items: center; padding: 20px 15px;
             overflow: hidden; 
-            display: flex; flex-direction: column;
         }
 
-        .screen { 
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-start; 
-            width: 100%; height: 100%; padding: 25px 20px; z-index: 10; 
+        /* ---------------- ส่วนหัว (Header - ป้ายไม้) ---------------- */
+        .header-board {
+            background: #5d4037; border: 4px solid #8d6e63; border-radius: 22px;
+            width: 100%; text-align: center; padding: 12px 15px; margin-bottom: 12px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 8px 0 #4e342e, 0 12px 18px rgba(0, 0, 0, 0.15);
+            position: relative; flex-shrink: 0;
+            display: flex; justify-content: space-between; align-items: center;
         }
-
-        /* ---------------- 🏠 หน้า Lobby ---------------- */
-        .lobby-header { width: 100%; flex-shrink: 0; text-align: center; }
-
-        .game-logo {
-            background: #fff; border-radius: 30px;
-            padding: 15px 25px; font-size: 2rem; color: #ff8a65; margin-bottom: 20px;
-            font-weight: 900; text-align: center; 
-            box-shadow: 0 8px 0 #ffe0b2, 0 15px 20px rgba(93, 64, 55, 0.1);
-            display: inline-block;
-        }
-
-        /* กล่องคู่มือ นุ่มฟู */
-        .instruction-box {
-            background: rgba(255, 255, 255, 0.95); padding: 18px 15px; 
-            border-radius: 25px; width: 100%; text-align: left; margin-bottom: 20px;
-            box-shadow: 0 8px 0 #f4e1d2, 0 10px 15px rgba(93, 64, 55, 0.05); position: relative;
-        }
-        .instruction-box h3 { color: #d4a373; margin-bottom: 10px; font-size: 1.15rem; text-align: center;}
-        .instruction-box p { font-size: 0.9rem; color: #795548; font-weight: 700; margin-bottom: 6px; line-height: 1.4;}
-
-        /* กลุ่มปุ่มแนวตั้ง */
-        .btn-group-vertical { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 280px; margin: 0 auto; }
         
-        .btn-action {
-            padding: 15px; font-size: 1.25rem; font-weight: 900; color: #fff;
-            background: #ff8a65; border: none; border-radius: 30px;
-            cursor: pointer; box-shadow: 0 8px 0 #d84315, 0 15px 20px rgba(216, 67, 21, 0.2); transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); width: 100%;
+        .game-title {
+            display: flex; flex-direction: column; align-items: flex-start;
         }
-        .btn-action:active { transform: translateY(8px); box-shadow: 0 0px 0 transparent; }
-        
-        .btn-secondary {
-            background: #fff; color: #ff8a65;
-            box-shadow: 0 8px 0 #ffe0b2, 0 15px 20px rgba(93, 64, 55, 0.1);
-            font-size: 1.1rem;
+        .game-name-small {
+            font-size: 0.85rem; color: #d7ccc8; font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase; margin-bottom: 2px;
         }
-
-        /* ---------------- 📖 หน้าต่างป๊อปอัปทบทวนเมนู ---------------- */
-        .overlay-screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(244, 235, 226, 0.95); z-index: 1000; display: none;
-            flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px); text-align: center; padding: 20px;
+        .huge-target {
+            font-size: 1.6rem; color: #ffccbc; font-weight: 900; line-height: 1.1;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.4);
         }
-        .overlay-title { font-size: 2rem; color: #ff8a65; font-weight: 900; margin-bottom: 15px; text-shadow: 0px 3px 0px #fff; line-height: 1.2;}
-        
-        .review-box {
-            background: #fff; padding: 20px; 
-            border-radius: 25px; width: 100%; text-align: left; margin-bottom: 25px;
-            box-shadow: 0 10px 0 #f4e1d2, 0 20px 25px rgba(93, 64, 55, 0.1);
-            max-height: 60vh; overflow-y: auto;
-        }
-        .review-box::-webkit-scrollbar { width: 6px; }
-        .review-box::-webkit-scrollbar-thumb { background: #ff8a65; border-radius: 10px; }
-
-        .chord-info { margin-bottom: 12px; font-size: 0.95rem; padding: 15px; border-radius: 16px; background: #fffcf4; border: 2px dashed #ffccbc; }
-        .chord-title { font-weight: 900; color: #d84315; font-size: 1.1rem;}
-        .chord-desc { color: #795548; font-weight: 600; display: block; margin-top: 5px; line-height: 1.5; }
-
-        /* ---------------- 🍞 หน้าจอเล่นเกมหลัก ---------------- */
-        #gameWrapper { justify-content: space-between; padding: 15px 15px; display: none; flex-direction: column;}
-        
-        .game-header { width: 100%; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; padding: 0 0 15px 0; z-index: 30;}
-        .score-board { font-size: 1.1rem; padding: 8px 16px; background: #fff; color: #ff8a65; border-radius: 20px; font-weight: 900; box-shadow: 0 6px 0 #ffe0b2; }
-        .lives-board { font-size: 1.4rem; filter: drop-shadow(0 4px 2px rgba(0,0,0,0.1)); letter-spacing: 2px;}
 
         .btn-pause {
-            width: 45px; height: 45px; background: #fff; border: none;
-            border-radius: 15px; font-size: 1.3rem; font-weight: 900; color: #ff8a65;
+            width: 42px; height: 42px; background: #fffcf4; border: 3px solid #d32f2f;
+            border-radius: 12px; font-size: 1.2rem; color: #d32f2f; font-weight: 900;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 6px 0 #ffe0b2; transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1); -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 5px 0 #b71c1c; transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-tap-highlight-color: transparent; flex-shrink: 0;
         }
-        .btn-pause:active { transform: translateY(6px); box-shadow: 0 0px 0 transparent; }
+        .btn-pause:active { transform: translateY(5px); box-shadow: 0 0 0 transparent; }
 
-        /* 👨‍🍳 โซนตัวละครบาริสต้าใหญ่อยู่ตรงกลาง */
+        /* HUD - หัวใจและคะแนน */
+        .hud-info {
+            width: 100%; display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5px; margin-bottom: 8px; z-index: 20;
+        }
+        .score-board { font-size: 1.1rem; color: #fff; font-weight: 900; background: #d32f2f; padding: 4px 15px; border-radius: 12px; box-shadow: 0 3px 0 #b71c1c;}
+        .lives-board { font-size: 1.2rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); letter-spacing: 2px; background: #fff; padding: 4px 12px; border-radius: 12px; border: 2px solid #e6d8ce; }
+
+        /* ---------------- พื้นที่เล่นเกม (Kitchen Area) ---------------- */
+        .board-wrapper {
+            position: relative; width: 100%; flex: 1; min-height: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(253,250,246,0.95) 100%);
+            border: 6px solid #8d6e63; border-radius: 25px; border-bottom: none;
+            box-shadow: inset 0 10px 20px rgba(93, 64, 55, 0.05);
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+
+        #gameArea {
+            width: 100%; height: 100%; position: relative; overflow: hidden;
+        }
+
+        /* 👨‍🍳 SVG ตัวละครเชฟอิตาลี */
         .character-center-zone {
-            position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
+            position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
             display: flex; flex-direction: column; align-items: center; z-index: 5;
         }
         .chef-img { 
@@ -131,247 +103,195 @@
         @keyframes breathe { 0% { transform: scale(1) translateY(0); } 100% { transform: scale(1.02) translateY(-5px); } }
         
         .hint-bubble {
-            background: #fff; border-radius: 20px;
-            padding: 8px 16px; font-weight: 900; color: #d84315; font-size: 1.1rem;
-            box-shadow: 0 8px 0 #ffe0b2; margin-bottom: 5px; text-align: center;
+            background: #fff; border-radius: 20px; border: 3px solid #d32f2f;
+            padding: 6px 15px; font-weight: 900; color: #d32f2f; font-size: 1rem;
+            box-shadow: 0 6px 0 #ffcdd2; margin-bottom: 5px; text-align: center;
             animation: float 2s infinite alternate ease-in-out;
         }
-        @keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(-8px); } }
+        @keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
 
-        /* พื้นที่สายพานขนมปัง */
-        .belt-zone {
-            position: absolute; bottom: 33%; left: 0; width: 100%; height: 120px;
-            display: flex; align-items: center; z-index: 10;
-        }
-        .belt-track {
-            position: absolute; width: 200%; height: 100%; background: #d7ccc8;
-            border-top: 6px solid #bcaaa4; border-bottom: 10px solid #8d6e63;
-            box-shadow: inset 0 10px 15px rgba(0,0,0,0.05), 0 10px 20px rgba(93, 64, 55, 0.15);
-            background-image: repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255,255,255,0.4) 50px, rgba(255,255,255,0.4) 55px);
-        }
-        .target-scanner {
-            position: absolute; left: 15%; top: 5%; width: 120px; height: 90%;
-            border: 5px dashed rgba(141, 110, 99, 0.8); border-radius: 20px; z-index: 15;
-            pointer-events: none; background: linear-gradient(to bottom, rgba(141, 110, 99, 0.1), transparent);
+        /* 🍕 แป้งพิซซ่าที่ร่วงลงมา */
+        .falling-pizza {
+            position: absolute; width: 105px; height: 105px; 
+            background: #ffe0b2; /* สีแป้ง */
+            border-radius: 50%;
+            border: 6px solid #ffb300; /* ขอบชีส/ครัสต์ */
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1), 0 10px 15px rgba(0,0,0,0.2);
+            transform: translateX(-50%); z-index: 10;
         }
 
-        /* 🍞 ขนมปังโทสต์ (บล็อกโน้ต) */
-        .toast-plate {
-            position: absolute; width: 100px; height: 95px; background: #ffe0b2;
-            border: 8px solid #d4a373; border-radius: 20px; top: 10%;
-            box-shadow: inset 0 0 15px rgba(212, 163, 115, 0.4), 0 10px 15px rgba(93, 64, 55, 0.3);
-            display: flex; justify-content: center; align-items: center; z-index: 10;
+        /* ซอสและบรรทัด 5 เส้นบนพิซซ่า */
+        .pizza-sauce {
+            position: absolute; width: 85%; height: 85%;
+            background: #e53935; border-radius: 50%; z-index: -1;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
         }
 
-        .toast-plate.golden-toast {
-            background: #fff8e1; border-color: #ffb300;
-            box-shadow: 0 0 20px rgba(255, 179, 0, 0.6);
-        }
+        .mini-staff { width: 75%; height: 45px; position: relative; margin-top: -5px; z-index: 2; }
+        .mini-line { width: 100%; height: 2px; background: rgba(255,255,255,0.6); position: absolute; border-radius: 2px;}
+        .m-line-1 { bottom: 8px; } .m-line-2 { bottom: 16px; } .m-line-3 { bottom: 24px; } .m-line-4 { bottom: 32px; } .m-line-5 { bottom: 40px; }
 
-        .mini-staff { width: 85%; height: 50px; position: relative; margin-top: -5px; }
-        .mini-line { width: 100%; height: 2px; background: #8d6e63; position: absolute; opacity: 0.6; border-radius: 2px;}
-        .m-line-1 { bottom: 10px; } .m-line-2 { bottom: 18px; } .m-line-3 { bottom: 26px; } .m-line-4 { bottom: 34px; } .m-line-5 { bottom: 42px; }
-
-        /* กุญแจซอลในขนมปัง */
         .mini-clef-svg {
-            position: absolute; 
-            left: -12px; 
-            bottom: -16px; 
-            width: 45px; 
-            height: 80px; 
-            pointer-events: none; z-index: 2; opacity: 0.7;
+            position: absolute; left: -10px; bottom: -18px; width: 40px; height: 75px; 
+            pointer-events: none; opacity: 0.85; z-index: 1;
         }
 
+        /* โน้ตเพลงเปรียบเสมือนเปปเปอโรนี */
         .mini-note {
-            position: absolute; width: 12px; height: 10px; background: #4e342e;
-            border-radius: 50%; transform: rotate(-15deg); margin-left: -6px; margin-bottom: -5px;
-            box-shadow: 1px 1px 0 rgba(255,255,255,0.5); /* เพิ่มมิติให้ช็อกโกแลตไซรัป */
+            position: absolute; width: 14px; height: 14px; background: #fff;
+            border-radius: 50%; border: 3px solid #3e2723;
+            transform: rotate(-15deg); margin-left: -7px; margin-bottom: -7px;
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.3); z-index: 5;
         }
         .mini-ledger {
-            position: absolute; width: 22px; height: 2px; background: #4e342e; border-radius: 2px;
-            left: 50%; top: 50%; transform: translate(-50%, -50%);
+            position: absolute; width: 24px; height: 3px; background: #fff; border-radius: 2px;
+            left: 50%; top: 50%; transform: translate(-50%, -50%); border: 1px solid #3e2723;
         }
 
-        /* 📌 แผงปุ่มตอบ ยึดติดล่างสุด ปรับเป็น 3x2 Grid สำหรับ 6 ปุ่ม */
+        /* 🔥 เตาอบด้านล่าง */
+        .oven-zone {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
+            background: #4e342e; border-radius: 50px 50px 0 0;
+            border: 6px solid #8d6e63; border-bottom: none;
+            box-shadow: inset 0 -40px 50px rgba(255, 87, 34, 0.6), inset 0 0 20px #d84315;
+            z-index: 15; display: flex; justify-content: center;
+        }
+        .oven-zone::before {
+            content: '🔥'; font-size: 2.5rem; opacity: 0.8; animation: fireGlow 0.5s infinite alternate; margin-top: 20px;
+        }
+        @keyframes fireGlow { 0% { transform: scale(1); opacity: 0.7;} 100% { transform: scale(1.2); opacity: 1;} }
+
+        .flash-red { animation: flashRed 0.3s; }
+        @keyframes flashRed { 0% { background-color: #ffcdd2; } 100% { background-color: transparent; } }
+
+        /* ---------------- แผงปุ่มตอบ (Italian Flag Colors) ---------------- */
         .answer-zone {
-            position: absolute; bottom: 0; left: 0;
-            width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; 
-            padding: 25px 15px calc(25px + env(safe-area-inset-bottom)) 15px; 
-            background: #fff; border-radius: 40px 40px 0 0; 
-            box-shadow: 0 -10px 30px rgba(93, 64, 55, 0.1); z-index: 30;
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; 
+            padding: 20px 15px calc(20px + env(safe-area-inset-bottom)) 15px; 
+            background: #fff; border-radius: 35px 35px 0 0; 
+            box-shadow: 0 -10px 30px rgba(93, 64, 55, 0.15); z-index: 30;
         }
 
         .btn-ans { 
             padding: 15px 5px; font-size: 1.2rem; font-weight: 900; color: #fff; 
             border: none; border-radius: 18px; 
             cursor: pointer; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); -webkit-tap-highlight-color: transparent;
-            display: flex; flex-direction: column; align-items: center; line-height: 1.2;
+            display: flex; flex-direction: column; align-items: center; line-height: 1.1;
         }
-        .btn-ans span { font-size: 0.75rem; color: rgba(255,255,255,0.9); font-weight: 700; margin-top: 2px;}
+        .btn-ans span { font-size: 0.75rem; color: rgba(255,255,255,0.9); font-weight: 700; margin-top: 3px;}
         .btn-ans:active { transform: translateY(6px); box-shadow: 0 0px 0 transparent !important; }
         
-        /* สีปุ่ม 6 แบบ พาสเทล */
-        .btn-2 { background: #fbc02d; box-shadow: 0 6px 0 #f57f17; }
-        .btn-3 { background: #aed581; box-shadow: 0 6px 0 #7cb342; }
-        .btn-4 { background: #4fc3f7; box-shadow: 0 6px 0 #29b6f6; }
-        .btn-5 { background: #ffb74d; box-shadow: 0 6px 0 #f57c00; }
-        .btn-6 { background: #ba68c8; box-shadow: 0 6px 0 #ab47bc; }
-        .btn-7 { background: #e57373; box-shadow: 0 6px 0 #ef5350; }
+        /* 🇮🇹 สีปุ่มธีมอิตาลี เขียว-ขาว-แดง */
+        .btn-2 { background: #43a047; box-shadow: 0 6px 0 #2e7d32; } /* เขียว */
+        .btn-3 { background: #fbc02d; box-shadow: 0 6px 0 #f57f17; color:#5d4037;} /* เหลืองชีส */
+        .btn-4 { background: #e53935; box-shadow: 0 6px 0 #c62828; } /* แดง */
+        .btn-5 { background: #43a047; box-shadow: 0 6px 0 #2e7d32; }
+        .btn-6 { background: #fbc02d; box-shadow: 0 6px 0 #f57f17; color:#5d4037;}
+        .btn-7 { background: #e53935; box-shadow: 0 6px 0 #c62828; }
 
         .btn-ans.flash-green { filter: brightness(1.2); transform: scale(1.05); }
-        .btn-ans.flash-red { background: #b71c1c !important; box-shadow: 0 6px 0 #7f0000 !important; }
+        .btn-ans.flash-red { background: #b71c1c !important; box-shadow: 0 6px 0 #7f0000 !important; color:#fff !important; }
 
         .feedback { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s;}
         .feedback.show { opacity: 1; animation: popFeedback 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes popFeedback { 0% { transform: translate(-50%, -30%) scale(0.5); } 100% { transform: translate(-50%, -50%) scale(1); } }
 
-        /* ---------------- Level Up Animation ---------------- */
-        .level-up-overlay {
-            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) scale(0);
-            font-size: 4rem; font-weight: 900; color: #ff8a65; text-shadow: 0 6px 0 #fff;
-            z-index: 500; pointer-events: none; opacity: 0; white-space: nowrap;
+        /* ---------------- ☕ เมนูเริ่มและหยุดเกม ---------------- */
+        .overlay-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(78, 52, 46, 0.95); z-index: 1000; display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px); text-align: center; padding: 20px;
         }
-        .level-up-overlay.show { animation: smashText 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes smashText { 
-            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 
-            20% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } 
-            80% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 
-            100% { transform: translate(-50%, -80%) scale(0); opacity: 0; } 
+        .overlay-title { font-size: 2.5rem; color: #ffccbc; font-weight: 900; margin-bottom: 15px; text-shadow: 0px 4px 0px #b71c1c; line-height: 1.2;}
+        
+        .start-instruction-box {
+            background: #fffcf4; padding: 25px 20px; 
+            border-radius: 25px; width: 90%; text-align: center; margin-bottom: 25px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 0 15px 25px rgba(0,0,0,0.3);
+            border: 4px dashed #d32f2f;
         }
 
-        /* ---------------- 💀 หน้าจอจบเกมส์ ---------------- */
-        #gameOverScreen { justify-content: center; display: none; }
-        .go-box { background: #fff; padding: 30px 25px; border-radius: 35px; box-shadow: 0 10px 0 #f4e1d2, 0 20px 40px rgba(93, 64, 55, 0.15); width: 100%; text-align: center; }
-        .go-box h2 { font-size: 2.2rem; color: #ff8a65; margin-bottom: 20px; font-weight: 900; }
-        .result-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; background: #fdfaf6; border-radius: 20px; overflow: hidden; border: 3px dashed #ffccbc;}
-        .result-table td { padding: 15px; border-bottom: 2px dashed #ffccbc; font-size: 1.1rem; }
-        .result-table td:first-child { text-align: left; color: #795548; font-weight: bold; }
-        .result-table td:last-child { text-align: right; font-weight: 900; color: #d84315; font-size: 1.5rem;}
+        .btn-action {
+            padding: 16px 30px; font-size: 1.3rem; font-weight: 900; color: #fff;
+            background: #d32f2f; border: none; border-radius: 30px;
+            cursor: pointer; box-shadow: 0 8px 0 #b71c1c, 0 15px 20px rgba(0, 0, 0, 0.3); transition: all 0.15s; width: 85%; max-width: 250px; margin-bottom: 15px;
+        }
+        .btn-action:active { transform: translateY(8px); box-shadow: 0 0px 0 transparent; }
+        
+        .btn-secondary { background: #fff; color: #d32f2f; box-shadow: 0 8px 0 #e6d8ce, 0 15px 20px rgba(0, 0, 0, 0.2); font-size: 1.15rem; }
 
+        .go-box { background: #fffcf4; padding: 30px 25px; border-radius: 35px; box-shadow: 0 10px 0 #e6d8ce, 0 20px 40px rgba(0,0,0,0.4); width: 100%; text-align: center; border: 4px dashed #d32f2f; }
+        .go-box h2 { font-size: 2.2rem; color: #d32f2f; margin-bottom: 20px; font-weight: 900; }
+        .result-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; background: #fff; border-radius: 20px; overflow: hidden; border: 2px dashed #bcaaa4;}
+        .result-table td { padding: 15px; border-bottom: 2px dashed #bcaaa4; font-size: 1.1rem; }
+        .result-table td:first-child { text-align: left; color: #5d4037; font-weight: bold; }
+        .result-table td:last-child { text-align: right; font-weight: 900; color: #d32f2f; font-size: 1.5rem;}
     </style>
 </head>
 <body>
 
     <div id="app-container">
-        <div id="warmOverlay"></div>
-
-        <!-- 🏠 หน้า Lobby -->
-        <div id="setupScreen" class="screen">
-            <div class="lobby-header">
-                <!-- ป้ายนิ่งๆ น่ารัก -->
-                <div class="game-logo">Interval Café ☕</div>
-                
-                <div class="instruction-box">
-                    <h3>วิธีปิ้งขนมปัง</h3>
-                    <p>1. ดูขนมปังโทสต์ที่เลื่อนมา จะมีโน้ต 2 ตัวซ้อนกันอยู่</p>
-                    <p>2. นับระยะห่าง (ขั้นคู่) ว่าห่างกันกี่ตัว (เช่น C ไป E คือ 3)</p>
-                    <p>3. กดปุ่มด้านล่างให้ถูกต้องก่อนขนมปังจะร่วง!</p>
-                </div>
-
-                <div class="btn-group-vertical">
-                    <button class="btn-action" onclick="startGame()">เปิดเตาอบเริ่มเกม 🍞</button>
-                    <button class="btn-action btn-secondary" onclick="openReview()">ทบทวนเรื่องขั้นคู่ 📖</button>
-                </div>
+        
+        <!-- ส่วนหัวบอกโจทย์ -->
+        <div class="header-board">
+            <div class="game-title">
+                <span class="game-name-small">Pizzeria 🍕</span>
+                <h1 class="huge-target" id="targetScaleText">วิเคราะห์ขั้นคู่</h1>
             </div>
+            <button class="btn-pause" onclick="pauseGame()">⏸</button>
         </div>
 
-        <!-- 📖 หน้าต่างทบทวนเมนู -->
-        <div id="reviewScreen" class="overlay-screen">
-            <h1 class="overlay-title">📖 การนับขั้นคู่</h1>
-            
-            <div class="review-box">
-                <p style="text-align: center; color: #795548; font-weight: 700; margin-bottom: 15px;"><b>Interval (ขั้นคู่)</b><br>คือระยะห่างระหว่างโน้ต 2 ตัว นับจากตัวล่างขึ้นไปหาตัวบน (นับตัวมันเองเป็น 1 เสมอ)</p>
-                
-                <div class="chord-info">
-                    <span class="chord-title">✌️ คู่ 2 (2nd) และ คู่ 3 (3rd)</span>
-                    <span class="chord-desc">คู่ 2: ติดกันเลย เช่น C ไป D<br>คู่ 3: ห่างกันนิดนึง เช่น C ไป E</span>
-                </div>
-                <div class="chord-info">
-                    <span class="chord-title">🖖 คู่ 4 (4th) และ คู่ 5 (5th)</span>
-                    <span class="chord-desc">คู่ 4: เช่น C ไป F (C-D-E-F = 4)<br>คู่ 5: เช่น C ไป G (C-D-E-F-G = 5)</span>
-                </div>
-                <div class="chord-info">
-                    <span class="chord-title">🖐️ คู่ 6 (6th) และ คู่ 7 (7th)</span>
-                    <span class="chord-desc">คู่ 6: กว้างขึ้นมาอีก เช่น C ไป A<br>คู่ 7: เกือบจะถึง 8 (Octave) เช่น C ไป B</span>
-                </div>
-            </div>
-            
-            <button class="btn-action btn-secondary" style="max-width: 200px;" onclick="closeReview()">เข้าใจแล้ว! ❌</button>
+        <!-- แถบแสดงคะแนนและหัวใจ -->
+        <div class="hud-info">
+            <div class="score-board">SCORE: <span id="scoreDisplay">0</span></div>
+            <div class="lives-board" id="livesDisplay">❤️❤️❤️</div>
         </div>
 
-        <!-- ⏸️ หน้าต่างหยุดเกม -->
-        <div id="pauseScreen" class="overlay-screen">
-            <h1 class="overlay-title" style="color: #fff;">พักดื่มนม 🥛</h1>
-            <div class="btn-group-vertical">
-                <button class="btn-action" onclick="resumeGame()">▶ ลุยงานต่อ</button>
-                <button class="btn-action btn-secondary" onclick="openReviewFromPause()">ทบทวนบทเรียน 📖</button>
-                <button class="btn-action" style="background:#fff; color:#e57373; box-shadow: 0 8px 0 #ffcdd2;" onclick="backToStartScreen()">🔄 กลับหน้าร้าน</button>
-            </div>
-        </div>
-
-        <!-- 🍞 หน้าจอเล่นเกมหลัก -->
-        <div id="gameWrapper" class="screen" style="padding: 15px 15px;">
-            <div class="game-header">
-                <div class="score-board">SCORE: <span id="scoreDisplay">0</span></div>
-                <button class="btn-pause" onclick="pauseGame()">⏸</button>
-                <div class="lives-board" id="livesDisplay">❤️❤️❤️</div>
-            </div>
-
-            <!-- 👨‍🍳 ตัวละครบาริสต้า (ใส่เอี๊ยม ไม่มีหมวกเชฟ) -->
-            <div class="character-center-zone">
-                <div class="hint-bubble" id="chefBubble">พร้อมรับออเดอร์!</div>
-                
-                <svg class="chef-img" id="chefFace" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                    <!-- เสื้อเชิ้ตขาวด้านใน -->
-                    <path d="M 25 115 C 25 85, 95 85, 95 115" fill="#ffffff" stroke="#d7ccc8" stroke-width="2"/>
-                    <!-- เอี๊ยมบาริสต้าสีน้ำตาล -->
-                    <path d="M 35 115 C 35 90, 85 90, 85 115" fill="#795548"/>
-                    <!-- สายเอี๊ยมคล้องคอ -->
-                    <path d="M 45 95 L 45 80 Q 60 85 75 80 L 75 95 Z" fill="#5d4037"/>
-
-                    <!-- หู -->
-                    <circle cx="32" cy="60" r="7" fill="#fae5d3"/>
-                    <circle cx="88" cy="60" r="7" fill="#fae5d3"/>
-
-                    <!-- ใบหน้า -->
-                    <rect x="35" y="40" width="50" height="52" rx="20" fill="#fae5d3"/>
+        <!-- กระดานเล่นเกม -->
+        <div class="board-wrapper" id="boardWrapper">
+            <div id="gameArea">
+                <!-- SVG พ่อครัวอิตาลี -->
+                <div class="character-center-zone">
+                    <div class="hint-bubble" id="chefBubble">Mamma Mia!</div>
                     
-                    <!-- ผมดำฟูๆ ไม่มีหมวก -->
-                    <path d="M 30 50 Q 35 15 60 15 Q 85 15 90 50 Q 75 35 60 40 Q 45 35 30 50 Z" fill="#212121"/>
-                    <path d="M 30 50 L 30 60 L 38 55 Z" fill="#212121"/>
-                    <path d="M 90 50 L 90 60 L 82 55 Z" fill="#212121"/>
-                    
-                    <!-- แว่นตาทรงเหลี่ยม -->
-                    <rect x="37" y="52" width="19" height="12" rx="2" fill="rgba(255,255,255,0.4)" stroke="#3e2723" stroke-width="2.5"/>
-                    <rect x="64" y="52" width="19" height="12" rx="2" fill="rgba(255,255,255,0.4)" stroke="#3e2723" stroke-width="2.5"/>
-                    <line x1="56" y1="58" x2="64" y2="58" stroke="#3e2723" stroke-width="2.5"/>
-                    <line x1="30" y1="56" x2="37" y2="56" stroke="#3e2723" stroke-width="2.5"/>
-                    <line x1="83" y1="56" x2="90" y2="56" stroke="#3e2723" stroke-width="2.5"/>
+                    <svg class="chef-img" id="chefFace" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <!-- เสื้อเชฟขาว -->
+                        <path d="M 25 115 C 25 85, 95 85, 95 115" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+                        <!-- ผ้าพันคอสีแดง (Italian style) -->
+                        <path d="M 45 95 L 60 105 L 75 95 L 60 115 Z" fill="#d32f2f"/>
 
-                    <!-- ตา -->
-                    <circle cx="47" cy="58" r="2.5" fill="#3e2723"/>
-                    <circle cx="73" cy="58" r="2.5" fill="#3e2723"/>
+                        <!-- หู -->
+                        <circle cx="32" cy="65" r="7" fill="#ffccbc"/>
+                        <circle cx="88" cy="65" r="7" fill="#ffccbc"/>
 
-                    <!-- แก้มแดงระเรื่อ -->
-                    <ellipse cx="42" cy="68" rx="4.5" ry="2.5" fill="#ffcdd2" opacity="0.9"/>
-                    <ellipse cx="78" cy="68" rx="4.5" ry="2.5" fill="#ffcdd2" opacity="0.9"/>
+                        <!-- ใบหน้า -->
+                        <rect x="35" y="45" width="50" height="48" rx="15" fill="#ffccbc"/>
+                        
+                        <!-- หมวกเชฟทรงสูง (Toque) -->
+                        <path d="M 35 45 C 20 45, 20 20, 35 15 C 40 5, 60 0, 70 10 C 85 5, 100 20, 95 35 C 105 45, 95 55, 85 45 L 85 45 L 35 45 Z" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
 
-                    <!-- ปาก -->
-                    <path id="mouthPath" d="M 54 74 Q 60 78 66 74" fill="none" stroke="#3e2723" stroke-width="2.5" stroke-linecap="round"/>
-                </svg>
+                        <!-- ตา -->
+                        <circle id="eyeL" cx="47" cy="58" r="3" fill="#3e2723"/>
+                        <circle id="eyeR" cx="73" cy="58" r="3" fill="#3e2723"/>
 
+                        <!-- จมูกกลมโต -->
+                        <ellipse cx="60" cy="65" rx="8" ry="6" fill="#ffab91"/>
+
+                        <!-- หนวดดำโค้งเฟี้ยว (Italian Mustache) -->
+                        <path id="mustache" d="M 40 70 Q 50 62 60 70 Q 70 62 80 70 Q 75 76 60 73 Q 45 76 40 70 Z" fill="#212121"/>
+                    </svg>
+                </div>
+
+                <div id="feedbackText" class="feedback"></div>
+
+                <!-- เตาอบด้านล่าง -->
+                <div class="oven-zone" id="ovenZone"></div>
             </div>
 
-            <div id="feedbackText" class="feedback"></div>
-            <div id="levelUpFX" class="level-up-overlay">LEVEL UP!</div>
-
-            <!-- สายพานขนมปัง -->
-            <div class="belt-zone" id="beltZone">
-                <div class="belt-track" id="beltTrack"></div>
-                <div class="target-scanner"></div>
-            </div>
-
-            <!-- แผงปุ่มกด 6 ปุ่ม (Grid 3x2) -->
+            <!-- แผงปุ่มตอบ 6 ปุ่ม -->
             <div class="answer-zone">
                 <button class="btn-ans btn-2" onclick="checkAnswer(2, this)">คู่ 2<br><span>(2nd)</span></button>
                 <button class="btn-ans btn-3" onclick="checkAnswer(3, this)">คู่ 3<br><span>(3rd)</span></button>
@@ -382,17 +302,42 @@
             </div>
         </div>
 
-        <!-- 💀 หน้าจอจบเกมส์ -->
-        <div id="gameOverScreen" class="screen">
-            <div class="go-box">
-                <h2>ขนมปังไหม้! 🥺</h2>
-                <table class="result-table">
-                    <tr><td>คะแนนรวม</td><td><span id="finalScore">0</span></td></tr>
-                    <tr><td colspan="2" style="text-align: center;"><span style="font-size:1rem; color:#795548;">รอดถึง</span><br><span id="finalLevel" style="font-size: 1.4rem; color: #d84315; font-weight: 900;">LEVEL 1</span></td></tr>
-                </table>
-                <button class="btn-action" onclick="backToStartScreen()">กลับหน้าหลัก 🌸</button>
+        <!-- หน้าต่างเริ่มเกม -->
+        <div id="startOverlay" class="overlay-screen" style="display: flex;">
+            <h1 class="overlay-title">Interval Pizza 🍕</h1>
+            <div class="start-instruction-box">
+                <p style="font-size: 1.2rem; color: #d32f2f; font-weight: 900; line-height: 1.5; margin-bottom:10px;">
+                    🔥 วิธีย่างพิซซ่า
+                </p>
+                <p style="font-size: 0.95rem; color: #4e342e; font-weight: 700;">ดูพิซซ่าที่ตกลงมา จะมีโน้ต 2 ตัว</p>
+                <p style="font-size: 0.95rem; color: #4e342e; font-weight: 700;">นับระยะห่าง (ขั้นคู่) แล้วกดปุ่มตอบ</p>
+                <p style="font-size: 0.85rem; color: #d32f2f; font-weight: 700; margin-top: 10px;">
+                    ❤️ ตอบให้ทันก่อนพิซซ่าตกลงไปไหม้ในเตาอบนะ!
+                </p>
+            </div>
+            <button class="btn-action" onclick="startGame()">เริ่มทำพิซซ่า ▶</button>
+        </div>
+
+        <!-- หน้าต่างหยุดเกม -->
+        <div id="pauseModal" class="overlay-screen">
+            <h1 class="overlay-title" style="color: #ffccbc;">พักทานเจลาโต้ 🍨</h1>
+            <div style="display: flex; flex-direction: column; width:100%; align-items:center;">
+                <button class="btn-action" onclick="resumeGame()">▶ เปิดเตาอบต่อ</button>
+                <button class="btn-action btn-secondary" onclick="restartGame()">🔄 เริ่มนวดแป้งใหม่</button>
             </div>
         </div>
+
+        <!-- 💀 หน้าจอจบเกมส์ -->
+        <div id="gameOverScreen" class="overlay-screen">
+            <div class="go-box">
+                <h2>พิซซ่าไหม้หมด! 🥺</h2>
+                <table class="result-table">
+                    <tr><td>คะแนนรวม</td><td><span id="finalScore">0</span></td></tr>
+                </table>
+                <button class="btn-action" onclick="backToStartScreen()">กลับหน้าร้าน 🌸</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -400,180 +345,149 @@
         const popSound = new Audio('https://assets.mixkit.co/active_storage/sfx/1114/1114-preview.mp3'); 
         const errorSound = new Audio('https://assets.mixkit.co/active_storage/sfx/314/314-preview.mp3');
         const successSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3'); 
-        const levelUpSound = new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3');
-
+        
         function playSound(audio) { 
-            audio.currentTime = 0; 
-            audio.volume = 0.4;
-            audio.play().catch(e => console.log("Sound error")); 
+            audio.currentTime = 0; audio.volume = 0.5;
+            audio.play().catch(e => {}); 
         }
 
-        // ---------------- 👨‍🍳 ระบบเปลี่ยนอารมณ์บาริสต้า SVG ----------------
+        // ---------------- 👨‍🍳 ระบบเปลี่ยนอารมณ์เชฟ SVG ----------------
         function setChefEmotion(emotion) {
-            const mouth = document.getElementById('mouthPath');
+            const mustache = document.getElementById('mustache');
+            const eyeL = document.getElementById('eyeL');
+            const eyeR = document.getElementById('eyeR');
+
             if (emotion === 'normal') {
-                mouth.setAttribute('d', 'M 54 74 Q 60 78 66 74'); 
-                mouth.setAttribute('fill', 'none');
+                mustache.setAttribute('d', 'M 40 70 Q 50 62 60 70 Q 70 62 80 70 Q 75 76 60 73 Q 45 76 40 70 Z');
+                eyeL.setAttribute('r', '3'); eyeR.setAttribute('r', '3');
+                eyeL.setAttribute('cy', '58'); eyeR.setAttribute('cy', '58');
             } else if (emotion === 'happy') {
-                mouth.setAttribute('d', 'M 53 72 Q 60 82 67 72 Z'); 
-                mouth.setAttribute('fill', '#e57373');
+                mustache.setAttribute('d', 'M 40 68 Q 50 60 60 68 Q 70 60 80 68 Q 75 74 60 71 Q 45 74 40 68 Z');
+                eyeL.setAttribute('r', '4'); eyeR.setAttribute('r', '4');
+                eyeL.setAttribute('cy', '57'); eyeR.setAttribute('cy', '57');
             } else if (emotion === 'angry') {
-                mouth.setAttribute('d', 'M 54 78 Q 60 72 66 78'); 
-                mouth.setAttribute('fill', 'none');
+                mustache.setAttribute('d', 'M 40 75 Q 50 65 60 70 Q 70 65 80 75 Q 75 75 60 75 Q 45 75 40 75 Z');
+                eyeL.setAttribute('r', '3'); eyeR.setAttribute('r', '3');
             } else if (emotion === 'shocked') {
-                mouth.setAttribute('d', 'M 57 72 C 57 68, 63 68, 63 72 C 63 76, 57 76, 57 72 Z'); 
-                mouth.setAttribute('fill', '#3e2723');
+                mustache.setAttribute('d', 'M 40 65 Q 50 55 60 65 Q 70 55 80 65 Q 75 75 60 80 Q 45 75 40 65 Z');
+                eyeL.setAttribute('r', '5'); eyeR.setAttribute('r', '5');
             }
         }
 
-        // ---------------- 📚 ฐานข้อมูลโจทย์ Interval (นับระยะห่าง) ----------------
-        // ให้ bottom เป็นโน้ตตัวล่าง, top เป็นโน้ตตัวบน (0 = C4, 1 = D4, 2 = E4 ...)
-        // สูตรคำนวณขั้นคู่ (Interval Number) = (top - bottom) + 1
-        const intervalBank = [
-            { bottom: 0, top: 1, type: 2 }, { bottom: 3, top: 4, type: 2 }, { bottom: 4, top: 5, type: 2 },
-            { bottom: 0, top: 2, type: 3 }, { bottom: 1, top: 3, type: 3 }, { bottom: 4, top: 6, type: 3 },
-            { bottom: 0, top: 3, type: 4 }, { bottom: 1, top: 4, type: 4 }, { bottom: 2, top: 5, type: 4 },
-            { bottom: 0, top: 4, type: 5 }, { bottom: 1, top: 5, type: 5 }, { bottom: 3, top: 7, type: 5 },
-            { bottom: 0, top: 5, type: 6 }, { bottom: 1, top: 6, type: 6 }, { bottom: 2, top: 7, type: 6 },
-            { bottom: 0, top: 6, type: 7 }, { bottom: 1, top: 7, type: 7 }, { bottom: 2, top: 8, type: 7 }
-        ];
-
         // ---------------- ⚙️ ตัวแปรควบคุมเกม ----------------
+        let activePizzas = [];       
         let score = 0;
         let lives = 3;
-        let level = 1;
-        let correctSinceLevelUp = 0; 
-        let gameActive = false;
-        let isPaused = false;
+        let pizzasCleared = 0;
         
-        let plates = []; 
-        let spawnTimer = 0;
-        let baseSpeed = 0.25; 
-        let currentSpeed = baseSpeed; 
-        let spawnInterval = 350; 
+        let gameLoopId;
+        let spawnId;
+        
+        let fallSpeed = 1.0;        
+        let spawnRate = 2500;       
+        let isPaused = false; 
 
-        const beltZone = document.getElementById('beltZone');
-        const beltTrack = document.getElementById('beltTrack');
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        const livesDisplay = document.getElementById('livesDisplay');
-        const levelDisplay = document.getElementById('finalLevel');
-        const levelUpFX = document.getElementById('levelUpFX');
+        const gameArea = document.getElementById('gameArea');
+        const boardWrapper = document.getElementById('boardWrapper');
+        const ovenZone = document.getElementById('ovenZone');
         const chefFace = document.getElementById('chefFace');
         const chefBubble = document.getElementById('chefBubble');
         const feedbackText = document.getElementById('feedbackText');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const livesDisplay = document.getElementById('livesDisplay');
 
-        const screens = {
-            start: document.getElementById('setupScreen'),
-            gameover: document.getElementById('gameOverScreen'),
-            pause: document.getElementById('pauseScreen'),
-            review: document.getElementById('reviewScreen'),
-            game: document.getElementById('gameWrapper')
-        };
-
-        function hideAllScreens() { Object.values(screens).forEach(s => s.style.display = 'none'); }
-
-        function openReview() {
-            playSound(popSound);
-            hideAllScreens();
-            screens.review.style.display = 'flex';
-        }
-        function openReviewFromPause() {
-            playSound(popSound);
-            screens.pause.style.display = 'none';
-            screens.review.style.display = 'flex';
-        }
-        function closeReview() {
-            playSound(popSound);
-            hideAllScreens();
-            if(isPaused) {
-                screens.pause.style.display = 'flex';
-            } else {
-                screens.start.style.display = 'flex';
-            }
-        }
-
-        function startGame() {
-            playSound(popSound);
-            hideAllScreens();
-            screens.game.style.display = 'flex';
-            
-            plates.forEach(p => p.el.remove());
-            plates = [];
-            
-            score = 0; lives = 3; level = 1; correctSinceLevelUp = 0;
-            currentSpeed = baseSpeed; spawnInterval = 350; 
-            beltTrack.style.animationDuration = '6s'; 
-            isPaused = false;
-
-            updateUI();
-            
-            setChefEmotion('normal');
-            chefFace.style.transform = "scaleX(1) scale(1)";
-            chefBubble.textContent = "ออเดอร์แรกมาแล้ว!";
-            
-            gameActive = true;
-            spawnTimer = spawnInterval - 50; 
-            requestAnimationFrame(gameLoop);
-        }
-
+        // ---------------- ⏸️ ระบบหยุดเกม / เริ่มใหม่ ----------------
         function pauseGame() {
-            if (!gameActive || isPaused) return;
-            isPaused = true;
+            if (!activePizzas.length && score === 0 && lives === 3) return;
             playSound(popSound);
-            screens.pause.style.display = 'flex';
+            isPaused = true;
+            document.getElementById('pauseModal').style.display = 'flex';
         }
 
         function resumeGame() {
-            isPaused = false;
             playSound(popSound);
-            screens.pause.style.display = 'none';
+            isPaused = false;
+            document.getElementById('pauseModal').style.display = 'none';
+        }
+
+        function restartGame() {
+            playSound(popSound);
+            document.getElementById('pauseModal').style.display = 'none';
+            startGameInit();
         }
 
         function backToStartScreen() {
             playSound(popSound);
-            isPaused = false;
-            gameActive = false;
-            hideAllScreens();
-            screens.start.style.display = 'flex';
+            document.getElementById('gameOverScreen').style.display = 'none';
+            document.getElementById('startOverlay').style.display = 'flex';
         }
 
         function updateUI() {
             scoreDisplay.textContent = score;
-            livesDisplay.textContent = "❤️".repeat(lives) + "🤍".repeat(3 - lives);
+            livesDisplay.textContent = "❤️".repeat(Math.max(0, lives)) + "🤍".repeat(Math.max(0, 3 - lives));
         }
 
-        function triggerLevelUp() {
-            level++;
-            correctSinceLevelUp = 0;
-            playSound(levelUpSound);
+        function triggerGameOver() {
+            isPaused = true;
+            cancelAnimationFrame(gameLoopId);
+            clearInterval(spawnId);
             
-            currentSpeed += 0.1; 
-            if (spawnInterval > 100) spawnInterval -= 30; 
-            
-            let trackAnimSpeed = Math.max(1, 6 - (level * 0.8));
-            beltTrack.style.animationDuration = `${trackAnimSpeed}s`;
-
-            levelUpFX.classList.remove('show');
-            void levelUpFX.offsetWidth;
-            levelUpFX.textContent = `LEVEL ${level}!`;
-            levelUpFX.classList.add('show');
-            
-            setChefEmotion('happy');
-            chefBubble.textContent = "เก่งมาก! สายพานจะไวขึ้นนะ";
+            setTimeout(() => {
+                document.getElementById('finalScore').textContent = score;
+                document.getElementById('gameOverScreen').style.display = 'flex';
+            }, 500);
         }
 
-        function spawnPlate() {
-            let q = intervalBank[Math.floor(Math.random() * intervalBank.length)];
+        // ---------------- 🚀 ฟังก์ชันหลักของเกม ----------------
+        function startGame() {
+            playSound(popSound);
+            document.getElementById('startOverlay').style.display = 'none';
+            startGameInit();
+        }
+        
+        function startGameInit() {
+            activePizzas.forEach(p => p.element.remove());
+            activePizzas = [];
             
-            let plateEl = document.createElement('div');
-            plateEl.className = 'toast-plate';
-            plateEl.style.left = '110%'; 
+            score = 0;
+            lives = 3;
+            pizzasCleared = 0;
+            fallSpeed = 1.0;
+            spawnRate = 2500;
+            isPaused = false;
             
-            // กุญแจซอลตัวเต็มแบบ SVG
-            let staffHTML = `
+            updateUI();
+            setChefEmotion('normal');
+            chefFace.style.transform = "scaleX(1) scale(1)";
+            chefBubble.textContent = "สั่งมาเลย!";
+            
+            gameLoopId = requestAnimationFrame(updateGame);
+            
+            clearInterval(spawnId);
+            spawnPizza(); // ลูกแรกมาทันที
+            spawnId = setInterval(spawnPizza, spawnRate);
+        }
+
+        // สร้างพิซซ่าและสุ่มขั้นคู่ (Interval 2-7)
+        function spawnPizza() {
+            if (isPaused) return; 
+
+            // สุ่มโน้ตตัวล่างสุดในบรรทัด 5 เส้น (0 = C4, 1 = D4, ... 4 = G4)
+            let bottomPos = Math.floor(Math.random() * 5); 
+            // สุ่มขั้นคู่ (2 ถึง 7)
+            let interval = Math.floor(Math.random() * 6) + 2; 
+            // โน้ตตัวบน
+            let topPos = bottomPos + interval - 1; 
+
+            const pizzaEl = document.createElement('div');
+            pizzaEl.classList.add('falling-pizza');
+            
+            // กุญแจซอลตัวเต็มแบบ SVG และซอสมะเขือเทศ
+            let html = `
+                <div class="pizza-sauce"></div>
                 <div class="mini-staff">
                     <svg class="mini-clef-svg" viewBox="0 0 100 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                        <text x="8" y="155" font-family="'Times New Roman', Georgia, serif" font-size="140" fill="#a1887f">&#119070;</text>
+                        <text x="5" y="150" font-family="'Times New Roman', Georgia, serif" font-size="140" fill="#fff">&#119070;</text>
                     </svg>
                     <div class="mini-line m-line-1"></div>
                     <div class="mini-line m-line-2"></div>
@@ -582,131 +496,131 @@
                     <div class="mini-line m-line-5"></div>
             `;
             
-            // วาดโน้ต 2 ตัว
-            let bottomPx = 10 + (q.bottom * 4);
-            let topPx = 10 + (q.top * 4);
+            // วาดโน้ต 2 ตัว (เปปเปอโรนี)
+            // ระยะห่างแต่ละเส้น/ช่อง คือ 4px (เพราะ line-height ใน CSS)
+            let bottomPx = 8 + (bottomPos * 4);
+            let topPx = 8 + (topPos * 4);
             
-            let leftPxBottom = 42;
-            let leftPxTop = 42;
+            let leftPxBottom = 35;
+            let leftPxTop = 35;
             
-            // ถ้าเป็นคู่ 2 ต้องขยับหลบกัน
-            if (q.type === 2) {
-                leftPxTop += 15;
+            // ถ้าเป็นคู่ 2 ต้องขยับหลบกัน (คู่ 2 โน้ตจะชิดกันมาก)
+            if (interval === 2) {
+                leftPxTop += 14;
             }
 
-            let ledgerB = (q.bottom <= 0 || q.bottom >= 12) ? `<div class="mini-ledger"></div>` : '';
-            let ledgerT = (q.top <= 0 || q.top >= 12) ? `<div class="mini-ledger"></div>` : '';
+            let ledgerB = (bottomPos <= 0 || bottomPos >= 12) ? `<div class="mini-ledger"></div>` : '';
+            let ledgerT = (topPos <= 0 || topPos >= 12) ? `<div class="mini-ledger"></div>` : '';
 
-            staffHTML += `<div class="mini-note" style="bottom:${bottomPx}px; left:${leftPxBottom}%;">${ledgerB}</div>`;
-            staffHTML += `<div class="mini-note" style="bottom:${topPx}px; left:${leftPxTop}%;">${ledgerT}</div>`;
+            html += `<div class="mini-note" style="bottom:${bottomPx}px; left:${leftPxBottom}%;">${ledgerB}</div>`;
+            html += `<div class="mini-note" style="bottom:${topPx}px; left:${leftPxTop}%;">${ledgerT}</div>`;
             
-            staffHTML += `</div>`;
-            plateEl.innerHTML = staffHTML;
-            beltZone.appendChild(plateEl);
+            html += `</div>`;
+            pizzaEl.innerHTML = html;
             
-            plates.push({ el: plateEl, x: 110, type: q.type });
+            const maxLeft = gameArea.clientWidth - 110;
+            const randomX = Math.floor(Math.random() * maxLeft) + 55;
+            pizzaEl.style.left = randomX + 'px';
+            pizzaEl.style.top = '-110px';
+            
+            gameArea.appendChild(pizzaEl);
+            activePizzas.push({ element: pizzaEl, type: interval, y: -110, x: randomX });
         }
 
-        function gameLoop() {
-            if (!gameActive) return;
-            if (isPaused) {
-                requestAnimationFrame(gameLoop);
-                return;
-            }
+        function updateGame() {
+            if (!isPaused) {
+                const areaHeight = gameArea.clientHeight;
+                const ovenTop = areaHeight - 110; // ตำแหน่งปากเตาอบ
 
-            spawnTimer++;
-            if (spawnTimer >= spawnInterval) {
-                spawnPlate();
-                spawnTimer = 0;
-            }
+                for (let i = 0; i < activePizzas.length; i++) {
+                    let pizzaObj = activePizzas[i];
+                    pizzaObj.y += fallSpeed;
+                    pizzaObj.element.style.top = pizzaObj.y + 'px';
 
-            for (let i = 0; i < plates.length; i++) {
-                let p = plates[i];
-                p.x -= currentSpeed; 
-                p.el.style.left = p.x + '%';
-
-                if (p.x < -10) {
-                    p.el.remove();
-                    plates.splice(i, 1);
-                    i--;
-                    
-                    playSound(errorSound);
-                    lives--;
-                    updateUI();
-                    
-                    setChefEmotion('shocked');
-                    chefFace.style.transform = "scaleX(1) scale(1.1)";
-                    setTimeout(() => chefFace.style.transform = "scaleX(1) scale(1)", 300);
-                    chefBubble.textContent = "อ๊ะ! ขนมปังหล่น!";
-                    
-                    if (lives <= 0) {
-                        gameActive = false;
-                        document.getElementById('finalScore').textContent = score;
-                        document.getElementById('finalLevel').textContent = `LEVEL ${level}`;
-                        setTimeout(() => { screens.gameover.style.display = 'flex'; }, 500);
-                        return;
+                    // ถ้าพิซซ่าร่วงลงไปถึงเตาอบ (เลยปุ่มกด)
+                    if (pizzaObj.y > ovenTop) {
+                        pizzaObj.element.remove();
+                        activePizzas.splice(i, 1);
+                        i--;
+                        
+                        // พลาด! โดนไฟไหม้
+                        lives--;
+                        updateUI();
+                        playSound(errorSound);
+                        boardWrapper.classList.add('flash-red');
+                        
+                        setChefEmotion('shocked');
+                        chefBubble.textContent = "Mama Mia! ไหม้แล้ว!";
+                        
+                        setTimeout(() => boardWrapper.classList.remove('flash-red'), 300);
+                        
+                        if (lives <= 0) {
+                            triggerGameOver();
+                        }
                     }
                 }
             }
-            requestAnimationFrame(gameLoop);
+            
+            gameLoopId = requestAnimationFrame(updateGame);
         }
 
         // ---------------- 🔘 ระบบตรวจคำตอบ ----------------
         function checkAnswer(answerType, btnElement) {
-            if (!gameActive || isPaused || plates.length === 0) return;
+            if (isPaused || activePizzas.length === 0) return;
             
-            let targetPlate = plates[0];
-            if (targetPlate.x > 80) return;
+            // เช็คพิซซ่าที่อยู่ล่างสุด (ตัวแรกใน Array)
+            let targetPizza = activePizzas[0];
             
-            if (targetPlate.type === answerType) {
+            if (targetPizza.type === answerType) {
+                // ตอบถูก!
                 playSound(successSound);
                 
                 btnElement.classList.add('flash-green');
                 setTimeout(() => btnElement.classList.remove('flash-green'), 200);
                 
-                targetPlate.el.style.transition = '0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                targetPlate.el.style.transform = 'translateY(-80px) scale(0)';
-                targetPlate.el.style.opacity = '0';
+                targetPizza.element.style.transition = '0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                targetPizza.element.style.transform = 'translateY(-100px) scale(0) rotate(180deg)';
+                targetPizza.element.style.opacity = '0';
                 
-                score += 50 * level; 
-                correctSinceLevelUp++;
+                score += 50; 
+                pizzasCleared++;
                 updateUI();
                 
                 setChefEmotion('happy');
-                chefFace.style.transform = "scaleX(1) scale(1.1)";
-                setTimeout(() => chefFace.style.transform = "scaleX(1) scale(1)", 200);
-                chefBubble.textContent = "เสิร์ฟได้สวย!";
+                chefBubble.textContent = "Bellissimo! 🤌";
                 showFeedback("✨", "");
                 
-                setTimeout(() => targetPlate.el.remove(), 300);
-                plates.shift();
+                setTimeout(() => targetPizza.element.remove(), 300);
+                activePizzas.shift();
 
-                if (correctSinceLevelUp >= 2) {
-                    triggerLevelUp();
+                // เพิ่มความยากทุกๆ 5 ถาด
+                if (pizzasCleared % 5 === 0) {
+                    fallSpeed += 0.15; 
+                    spawnRate = Math.max(1000, spawnRate - 150);
+                    clearInterval(spawnId);
+                    spawnId = setInterval(spawnPizza, spawnRate);
                 }
                 
             } else {
+                // ตอบผิด
                 playSound(errorSound);
                 
                 btnElement.classList.add('flash-red');
                 setTimeout(() => btnElement.classList.remove('flash-red'), 200);
                 
-                targetPlate.el.style.transform = 'translateX(-10px)';
-                setTimeout(() => targetPlate.el.style.transform = 'translateX(10px)', 50);
-                setTimeout(() => targetPlate.el.style.transform = 'translateX(0)', 100);
+                targetPizza.element.style.transform = 'translateX(-10px)';
+                setTimeout(() => targetPizza.element.style.transform = 'translateX(10px)', 50);
+                setTimeout(() => targetPizza.element.style.transform = 'translateX(-50%)', 100);
                 
                 lives--;
                 updateUI();
                 
                 setChefEmotion('angry');
-                chefBubble.textContent = "นับผิดบรรทัดหรือเปล่า?";
+                chefBubble.textContent = "ดูดีๆ สิลูกพี่!";
                 showFeedback("❌", "");
                 
                 if (lives <= 0) {
-                    gameActive = false;
-                    document.getElementById('finalScore').textContent = score;
-                    document.getElementById('finalLevel').textContent = `LEVEL ${level}`;
-                    setTimeout(() => { screens.gameover.style.display = 'flex'; }, 500);
+                    triggerGameOver();
                 }
             }
         }
