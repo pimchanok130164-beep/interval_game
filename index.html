@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Italian Interval - ร้านพิซซ่าขั้นคู่</title>
+    <title>Cozy Sheep Dentist - เกมกดฟันแกะน้อย</title>
     <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;700;900&display=swap" rel="stylesheet">
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Mali', sans-serif; user-select: none; }
         
-        /* 🇮🇹 พื้นหลังลายตาราง Gingham สีแดง-ขาว สไตล์ร้านอิตาลี */
+        /* 🌿 พื้นหลังลายตาราง Gingham สีเขียวมิ้นต์ สไตล์ปิกนิกทุ่งหญ้า */
         body { 
-            background-color: #fffcf4;
+            background-color: #e0f2f1;
             background-image: 
-                linear-gradient(90deg, rgba(211, 47, 47, 0.15) 50%, transparent 50%),
-                linear-gradient(0deg, rgba(211, 47, 47, 0.15) 50%, transparent 50%);
+                linear-gradient(90deg, rgba(77, 182, 172, 0.15) 50%, transparent 50%),
+                linear-gradient(0deg, rgba(77, 182, 172, 0.15) 50%, transparent 50%);
             background-size: 50px 50px;
             color: #4e342e; 
             height: 100vh; height: 100dvh; 
@@ -22,48 +22,46 @@
             overflow: hidden; touch-action: none;
         }
 
-        /* 📱 กรอบร้านพิซซ่า */
+        /* 📱 กรอบเกมมือถือ */
         #app-container {
             width: 100%; max-width: 420px; 
             height: 100%; height: 100dvh; 
             background-color: #fdfaf6;
-            background-image: radial-gradient(#e6d8ce 15%, transparent 16%), 
-                              radial-gradient(#e6d8ce 15%, transparent 16%);
+            background-image: radial-gradient(#e0f2f1 15%, transparent 16%), 
+                              radial-gradient(#e0f2f1 15%, transparent 16%);
             background-size: 40px 40px;
             background-position: 0 0, 20px 20px;
             border-radius: 35px; border: 8px solid #fff;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
             position: relative; 
             display: flex; flex-direction: column; align-items: center; padding: 20px 15px;
             overflow: hidden; 
         }
 
-        /* ---------------- ส่วนหัว (Header - ป้ายไม้) ---------------- */
+        /* ---------------- ส่วนหัว (Header) ---------------- */
         .header-board {
-            background: #5d4037; border: 4px solid #8d6e63; border-radius: 22px;
-            width: 100%; text-align: center; padding: 12px 15px; margin-bottom: 12px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 8px 0 #4e342e, 0 12px 18px rgba(0, 0, 0, 0.15);
+            background: #fff; border: 4px solid #b2dfdb; border-radius: 22px;
+            width: 100%; text-align: center; padding: 12px 15px; margin-bottom: 15px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 8px 0 #e0f2f1;
             position: relative; flex-shrink: 0;
             display: flex; justify-content: space-between; align-items: center;
         }
         
-        .game-title {
-            display: flex; flex-direction: column; align-items: flex-start;
-        }
+        .game-title { display: flex; flex-direction: column; align-items: flex-start; }
         .game-name-small {
-            font-size: 0.85rem; color: #d7ccc8; font-weight: 700; letter-spacing: 1px;
+            font-size: 0.85rem; color: #00796b; font-weight: 900; letter-spacing: 1px;
             text-transform: uppercase; margin-bottom: 2px;
         }
         .huge-target {
-            font-size: 1.6rem; color: #ffccbc; font-weight: 900; line-height: 1.1;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.4);
+            font-size: 1.6rem; color: #ff8a65; font-weight: 900; line-height: 1.1;
+            text-shadow: 1px 2px 0px #ffe0b2;
         }
 
         .btn-pause {
-            width: 42px; height: 42px; background: #fffcf4; border: 3px solid #d32f2f;
-            border-radius: 12px; font-size: 1.2rem; color: #d32f2f; font-weight: 900;
+            width: 42px; height: 42px; background: #fffcf4; border: 3px solid #ff8a65;
+            border-radius: 12px; font-size: 1.2rem; color: #d84315; font-weight: 900;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 5px 0 #b71c1c; transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 0 #d84315; transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
             -webkit-tap-highlight-color: transparent; flex-shrink: 0;
         }
         .btn-pause:active { transform: translateY(5px); box-shadow: 0 0 0 transparent; }
@@ -71,164 +69,127 @@
         /* HUD - หัวใจและคะแนน */
         .hud-info {
             width: 100%; display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5px; margin-bottom: 8px; z-index: 20;
+            padding: 0 5px; margin-bottom: 10px; z-index: 20;
         }
-        .score-board { font-size: 1.1rem; color: #fff; font-weight: 900; background: #d32f2f; padding: 4px 15px; border-radius: 12px; box-shadow: 0 3px 0 #b71c1c;}
-        .lives-board { font-size: 1.2rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); letter-spacing: 2px; background: #fff; padding: 4px 12px; border-radius: 12px; border: 2px solid #e6d8ce; }
+        .score-board { font-size: 1.1rem; color: #fff; font-weight: 900; background: #4db6ac; padding: 4px 15px; border-radius: 12px; box-shadow: 0 4px 0 #00897b;}
+        .lives-board { font-size: 1.2rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); letter-spacing: 2px; background: #fff; padding: 4px 12px; border-radius: 12px; border: 2px dashed #80cbc4; }
 
-        /* ---------------- พื้นที่เล่นเกม (Kitchen Area) ---------------- */
+        /* ---------------- พื้นที่เล่นเกม (Sheep Area) ---------------- */
         .board-wrapper {
             position: relative; width: 100%; flex: 1; min-height: 0;
-            background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(253,250,246,0.95) 100%);
-            border: 6px solid #8d6e63; border-radius: 25px; border-bottom: none;
-            box-shadow: inset 0 10px 20px rgba(93, 64, 55, 0.05);
-            display: flex; flex-direction: column; overflow: hidden;
+            background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(224, 242, 241, 0.9) 100%);
+            border: 6px solid #b2dfdb; border-radius: 25px; 
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.05);
+            display: flex; justify-content: center; align-items: center; overflow: hidden;
         }
 
         #gameArea {
             width: 100%; height: 100%; position: relative; overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        /* 👨‍🍳 SVG ตัวละครเชฟอิตาลี */
-        .character-center-zone {
-            position: absolute; top: 8%; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; z-index: 5;
+        /* 🐑 SVG น้องแกะ */
+        .sheep-container {
+            position: relative; width: 340px; height: 340px;
+            animation: floatSheep 4s infinite alternate ease-in-out;
         }
-        .chef-img { 
-            width: 190px; height: 190px; 
-            filter: drop-shadow(0 15px 15px rgba(93, 64, 55, 0.2));
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: breathe 3s infinite alternate ease-in-out;
-        }
-        @keyframes breathe { 0% { transform: scale(1) translateY(0); } 100% { transform: scale(1.02) translateY(-5px); } }
-        
-        .hint-bubble {
-            background: #fff; border-radius: 20px; border: 3px solid #d32f2f;
-            padding: 6px 15px; font-weight: 900; color: #d32f2f; font-size: 1rem;
-            box-shadow: 0 6px 0 #ffcdd2; margin-bottom: 5px; text-align: center;
-            animation: float 2s infinite alternate ease-in-out;
-        }
-        @keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
+        @keyframes floatSheep { 0% { transform: translateY(0px); } 100% { transform: translateY(-10px); } }
 
-        /* 🍕 แป้งพิซซ่าที่ร่วงลงมา */
-        .falling-pizza {
-            position: absolute; width: 105px; height: 105px; 
-            background: #ffe0b2; /* สีแป้ง */
-            border-radius: 50%;
-            border: 6px solid #ffb300; /* ขอบชีส/ครัสต์ */
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1), 0 10px 15px rgba(0,0,0,0.2);
-            transform: translateX(-50%); z-index: 10;
+        .sheep-svg { width: 100%; height: 100%; filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.15)); }
+
+        /* การทำอนิเมชันตอนงับปาก */
+        .mouth-interior { transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: 50% 65%; }
+        .biting .mouth-interior { transform: scaleY(0.05); } 
+        .biting .sheep-svg { animation: shakeHead 0.3s; }
+        @keyframes shakeHead { 
+            0%, 100% { transform: translateX(0); } 
+            25% { transform: translateX(-10px) rotate(-3deg); } 
+            75% { transform: translateX(10px) rotate(3deg); } 
         }
 
-        /* ซอสและบรรทัด 5 เส้นบนพิซซ่า */
-        .pizza-sauce {
-            position: absolute; width: 85%; height: 85%;
-            background: #e53935; border-radius: 50%; z-index: -1;
-            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
+        /* 🎵 โจทย์ในปากแกะ */
+        .question-zone {
+            position: absolute; top: 58%; left: 50%; transform: translate(-50%, -50%);
+            width: 180px; height: 80px; z-index: 10;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 0.1s;
         }
+        .biting .question-zone { opacity: 0; }
 
-        .mini-staff { width: 75%; height: 45px; position: relative; margin-top: -5px; z-index: 2; }
-        .mini-line { width: 100%; height: 2px; background: rgba(255,255,255,0.6); position: absolute; border-radius: 2px;}
-        .m-line-1 { bottom: 8px; } .m-line-2 { bottom: 16px; } .m-line-3 { bottom: 24px; } .m-line-4 { bottom: 32px; } .m-line-5 { bottom: 40px; }
+        .mini-staff { width: 100%; height: 40px; position: relative; }
+        .mini-line { width: 100%; height: 2px; background: rgba(255,255,255,0.3); position: absolute; border-radius: 2px;}
+        .m-line-1 { bottom: 0px; } .m-line-2 { bottom: 10px; } .m-line-3 { bottom: 20px; } .m-line-4 { bottom: 30px; } .m-line-5 { bottom: 40px; }
 
         .mini-clef-svg {
-            position: absolute; left: -10px; bottom: -18px; width: 40px; height: 75px; 
-            pointer-events: none; opacity: 0.85; z-index: 1;
+            position: absolute; left: 0px; bottom: -20px; width: 45px; height: 80px; 
+            pointer-events: none; opacity: 0.6; z-index: 1;
         }
 
-        /* โน้ตเพลงเปรียบเสมือนเปปเปอโรนี */
+        /* โน้ตเพลงบนบรรทัด 5 เส้น */
         .mini-note {
-            position: absolute; width: 14px; height: 14px; background: #fff;
-            border-radius: 50%; border: 3px solid #3e2723;
-            transform: rotate(-15deg); margin-left: -7px; margin-bottom: -7px;
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.3); z-index: 5;
+            position: absolute; width: 18px; height: 14px; background: #fffcf4;
+            border-radius: 50%; transform: rotate(-15deg); margin-left: -9px; margin-bottom: -7px;
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.5); z-index: 5;
         }
         .mini-ledger {
-            position: absolute; width: 24px; height: 3px; background: #fff; border-radius: 2px;
-            left: 50%; top: 50%; transform: translate(-50%, -50%); border: 1px solid #3e2723;
+            position: absolute; width: 30px; height: 2px; background: rgba(255,255,255,0.7); border-radius: 2px;
+            left: 50%; top: 50%; transform: translate(-50%, -50%); 
         }
 
-        /* 🔥 เตาอบด้านล่าง */
-        .oven-zone {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 100px;
-            background: #4e342e; border-radius: 50px 50px 0 0;
-            border: 6px solid #8d6e63; border-bottom: none;
-            box-shadow: inset 0 -40px 50px rgba(255, 87, 34, 0.6), inset 0 0 20px #d84315;
-            z-index: 15; display: flex; justify-content: center;
+        /* 🦷 ปุ่มฟันแกะ */
+        .teeth-zone {
+            position: absolute; bottom: 18%; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 8px; z-index: 15;
+            transition: opacity 0.1s, transform 0.15s;
         }
-        .oven-zone::before {
-            content: '🔥'; font-size: 2.5rem; opacity: 0.8; animation: fireGlow 0.5s infinite alternate; margin-top: 20px;
-        }
-        @keyframes fireGlow { 0% { transform: scale(1); opacity: 0.7;} 100% { transform: scale(1.2); opacity: 1;} }
+        .biting .teeth-zone { opacity: 0; transform: translate(-50%, 20px); }
 
-        .flash-red { animation: flashRed 0.3s; }
-        @keyframes flashRed { 0% { background-color: #ffcdd2; } 100% { background-color: transparent; } }
-
-        /* ---------------- แผงปุ่มตอบ (Italian Flag Colors) ---------------- */
-        .answer-zone {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; 
-            padding: 20px 15px calc(20px + env(safe-area-inset-bottom)) 15px; 
-            background: #fff; border-radius: 35px 35px 0 0; 
-            box-shadow: 0 -10px 30px rgba(93, 64, 55, 0.15); z-index: 30;
+        .tooth-btn {
+            width: 32px; height: 45px; background: #fff; border: 2px solid #e0e0e0;
+            border-radius: 6px 6px 15px 15px; /* ทรงฟัน */
+            font-size: 1.4rem; font-weight: 900; color: #795548;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 0 #d7ccc8, inset 0 -5px 8px rgba(0,0,0,0.05);
+            transition: all 0.1s; -webkit-tap-highlight-color: transparent;
+            padding-bottom: 5px;
         }
-
-        .btn-ans { 
-            padding: 15px 5px; font-size: 1.2rem; font-weight: 900; color: #fff; 
-            border: none; border-radius: 18px; 
-            cursor: pointer; transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1); -webkit-tap-highlight-color: transparent;
-            display: flex; flex-direction: column; align-items: center; line-height: 1.1;
-        }
-        .btn-ans span { font-size: 0.75rem; color: rgba(255,255,255,0.9); font-weight: 700; margin-top: 3px;}
-        .btn-ans:active { transform: translateY(6px); box-shadow: 0 0px 0 transparent !important; }
+        .tooth-btn:active { transform: translateY(4px); box-shadow: 0 0px 0 transparent; background: #fdfaf6;}
         
-        /* 🇮🇹 สีปุ่มธีมอิตาลี เขียว-ขาว-แดง */
-        .btn-2 { background: #43a047; box-shadow: 0 6px 0 #2e7d32; } /* เขียว */
-        .btn-3 { background: #fbc02d; box-shadow: 0 6px 0 #f57f17; color:#5d4037;} /* เหลืองชีส */
-        .btn-4 { background: #e53935; box-shadow: 0 6px 0 #c62828; } /* แดง */
-        .btn-5 { background: #43a047; box-shadow: 0 6px 0 #2e7d32; }
-        .btn-6 { background: #fbc02d; box-shadow: 0 6px 0 #f57f17; color:#5d4037;}
-        .btn-7 { background: #e53935; box-shadow: 0 6px 0 #c62828; }
-
-        .btn-ans.flash-green { filter: brightness(1.2); transform: scale(1.05); }
-        .btn-ans.flash-red { background: #b71c1c !important; box-shadow: 0 6px 0 #7f0000 !important; color:#fff !important; }
-
-        .feedback { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s;}
-        .feedback.show { opacity: 1; animation: popFeedback 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        @keyframes popFeedback { 0% { transform: translate(-50%, -30%) scale(0.5); } 100% { transform: translate(-50%, -50%) scale(1); } }
+        .flash-green { background: #c8e6c9 !important; border-color: #4caf50 !important; color: #1b5e20 !important; }
+        .flash-red-bg { animation: flashRedBg 0.4s; }
+        @keyframes flashRedBg { 0% { background-color: #ffcdd2; } 100% { background-color: transparent; } }
 
         /* ---------------- ☕ เมนูเริ่มและหยุดเกม ---------------- */
         .overlay-screen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(78, 52, 46, 0.95); z-index: 1000; display: none;
+            background: rgba(78, 52, 46, 0.85); z-index: 1000; display: none;
             flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(5px); text-align: center; padding: 20px;
+            backdrop-filter: blur(6px); text-align: center; padding: 20px;
         }
-        .overlay-title { font-size: 2.5rem; color: #ffccbc; font-weight: 900; margin-bottom: 15px; text-shadow: 0px 4px 0px #b71c1c; line-height: 1.2;}
+        .overlay-title { font-size: 2.6rem; color: #fff; font-weight: 900; margin-bottom: 15px; text-shadow: 0px 4px 0px #ff8a65; line-height: 1.2;}
         
         .start-instruction-box {
             background: #fffcf4; padding: 25px 20px; 
             border-radius: 25px; width: 90%; text-align: center; margin-bottom: 25px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 0 15px 25px rgba(0,0,0,0.3);
-            border: 4px dashed #d32f2f;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 15px 25px rgba(0,0,0,0.2);
+            border: 4px dashed #4db6ac;
         }
 
         .btn-action {
             padding: 16px 30px; font-size: 1.3rem; font-weight: 900; color: #fff;
-            background: #d32f2f; border: none; border-radius: 30px;
-            cursor: pointer; box-shadow: 0 8px 0 #b71c1c, 0 15px 20px rgba(0, 0, 0, 0.3); transition: all 0.15s; width: 85%; max-width: 250px; margin-bottom: 15px;
+            background: #ff8a65; border: none; border-radius: 30px;
+            cursor: pointer; box-shadow: 0 8px 0 #d84315, 0 15px 20px rgba(0, 0, 0, 0.2); transition: all 0.15s; width: 85%; max-width: 250px; margin-bottom: 15px;
         }
         .btn-action:active { transform: translateY(8px); box-shadow: 0 0px 0 transparent; }
         
-        .btn-secondary { background: #fff; color: #d32f2f; box-shadow: 0 8px 0 #e6d8ce, 0 15px 20px rgba(0, 0, 0, 0.2); font-size: 1.15rem; }
+        .btn-secondary { background: #fff; color: #00796b; box-shadow: 0 8px 0 #b2dfdb, 0 15px 20px rgba(0, 0, 0, 0.1); font-size: 1.15rem; }
 
-        .go-box { background: #fffcf4; padding: 30px 25px; border-radius: 35px; box-shadow: 0 10px 0 #e6d8ce, 0 20px 40px rgba(0,0,0,0.4); width: 100%; text-align: center; border: 4px dashed #d32f2f; }
-        .go-box h2 { font-size: 2.2rem; color: #d32f2f; margin-bottom: 20px; font-weight: 900; }
-        .result-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; background: #fff; border-radius: 20px; overflow: hidden; border: 2px dashed #bcaaa4;}
-        .result-table td { padding: 15px; border-bottom: 2px dashed #bcaaa4; font-size: 1.1rem; }
-        .result-table td:first-child { text-align: left; color: #5d4037; font-weight: bold; }
-        .result-table td:last-child { text-align: right; font-weight: 900; color: #d32f2f; font-size: 1.5rem;}
+        .go-box { background: #fffcf4; padding: 30px 25px; border-radius: 35px; box-shadow: 0 10px 0 #e6d8ce, 0 20px 40px rgba(0,0,0,0.4); width: 100%; text-align: center; border: 4px dashed #ff8a65; }
+        .go-box h2 { font-size: 2.2rem; color: #d84315; margin-bottom: 20px; font-weight: 900; }
+        .result-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; background: #fff; border-radius: 20px; overflow: hidden; border: 2px dashed #b2dfdb;}
+        .result-table td { padding: 15px; border-bottom: 2px dashed #b2dfdb; font-size: 1.2rem; }
+        .result-table td:first-child { text-align: left; color: #00796b; font-weight: bold; }
+        .result-table td:last-child { text-align: right; font-weight: 900; color: #ff8a65; font-size: 1.6rem;}
     </style>
 </head>
 <body>
@@ -238,8 +199,8 @@
         <!-- ส่วนหัวบอกโจทย์ -->
         <div class="header-board">
             <div class="game-title">
-                <span class="game-name-small">Pizzeria 🍕</span>
-                <h1 class="huge-target" id="targetScaleText">วิเคราะห์ขั้นคู่</h1>
+                <span class="game-name-small">Sheep Dentist 🐑</span>
+                <h1 class="huge-target">นับขั้นคู่ให้ถูกนะ!</h1>
             </div>
             <button class="btn-pause" onclick="pauseGame()">⏸</button>
         </div>
@@ -253,88 +214,113 @@
         <!-- กระดานเล่นเกม -->
         <div class="board-wrapper" id="boardWrapper">
             <div id="gameArea">
-                <!-- SVG พ่อครัวอิตาลี -->
-                <div class="character-center-zone">
-                    <div class="hint-bubble" id="chefBubble">Mamma Mia!</div>
-                    
-                    <svg class="chef-img" id="chefFace" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-                        <!-- เสื้อเชฟขาว -->
-                        <path d="M 25 115 C 25 85, 95 85, 95 115" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
-                        <!-- ผ้าพันคอสีแดง (Italian style) -->
-                        <path d="M 45 95 L 60 105 L 75 95 L 60 115 Z" fill="#d32f2f"/>
+                
+                <div class="sheep-container" id="sheepMaster">
+                    <!-- SVG แกะน้อย -->
+                    <svg class="sheep-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                        <!-- ขนแกะด้านหลัง/รอบๆ (Fluffy Wool) -->
+                        <circle cx="200" cy="90" r="75" fill="#ffffff"/>
+                        <circle cx="120" cy="120" r="65" fill="#ffffff"/>
+                        <circle cx="280" cy="120" r="65" fill="#ffffff"/>
+                        <circle cx="80" cy="190" r="60" fill="#ffffff"/>
+                        <circle cx="320" cy="190" r="60" fill="#ffffff"/>
+                        <circle cx="100" cy="270" r="60" fill="#ffffff"/>
+                        <circle cx="300" cy="270" r="60" fill="#ffffff"/>
+                        <circle cx="200" cy="300" r="70" fill="#ffffff"/>
 
                         <!-- หู -->
-                        <circle cx="32" cy="65" r="7" fill="#ffccbc"/>
-                        <circle cx="88" cy="65" r="7" fill="#ffccbc"/>
+                        <path d="M 80 150 Q 30 180 60 210 Q 90 180 120 160 Z" fill="#fbe9e7"/>
+                        <path d="M 320 150 Q 370 180 340 210 Q 310 180 280 160 Z" fill="#fbe9e7"/>
 
-                        <!-- ใบหน้า -->
-                        <rect x="35" y="45" width="50" height="48" rx="15" fill="#ffccbc"/>
-                        
-                        <!-- หมวกเชฟทรงสูง (Toque) -->
-                        <path d="M 35 45 C 20 45, 20 20, 35 15 C 40 5, 60 0, 70 10 C 85 5, 100 20, 95 35 C 105 45, 95 55, 85 45 L 85 45 L 35 45 Z" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+                        <!-- ใบหน้า (Face) -->
+                        <rect x="100" y="120" width="200" height="200" rx="90" fill="#3e2723"/>
+
+                        <!-- ปากที่เปิดกว้างสุดๆ (Mouth Interior) ที่จะถูก Animate พับลง -->
+                        <g class="mouth-interior">
+                            <path d="M 120 220 C 120 340, 280 340, 280 220 Z" fill="#1b100e"/>
+                        </g>
+
+                        <!-- จมูกและปากบน -->
+                        <path d="M 195 190 L 205 190 L 200 198 Z" fill="#ffab91"/>
+                        <path d="M 200 198 Q 190 205 180 200 M 200 198 Q 210 205 220 200" fill="none" stroke="#ffab91" stroke-width="4" stroke-linecap="round"/>
 
                         <!-- ตา -->
-                        <circle id="eyeL" cx="47" cy="58" r="3" fill="#3e2723"/>
-                        <circle id="eyeR" cx="73" cy="58" r="3" fill="#3e2723"/>
+                        <circle id="eyeL" cx="160" cy="160" r="8" fill="#ffffff"/>
+                        <circle id="eyeR" cx="240" cy="160" r="8" fill="#ffffff"/>
 
-                        <!-- จมูกกลมโต -->
-                        <ellipse cx="60" cy="65" rx="8" ry="6" fill="#ffab91"/>
-
-                        <!-- หนวดดำโค้งเฟี้ยว (Italian Mustache) -->
-                        <path id="mustache" d="M 40 70 Q 50 62 60 70 Q 70 62 80 70 Q 75 76 60 73 Q 45 76 40 70 Z" fill="#212121"/>
+                        <!-- แก้มชมพู -->
+                        <ellipse cx="130" cy="180" rx="14" ry="9" fill="#ffcdd2" opacity="0.8"/>
+                        <ellipse cx="270" cy="180" rx="14" ry="9" fill="#ffcdd2" opacity="0.8"/>
+                        
+                        <!-- ขนปุกปุยบนหัว (Bangs) -->
+                        <circle cx="200" cy="110" r="40" fill="#ffffff"/>
+                        <circle cx="160" cy="120" r="30" fill="#ffffff"/>
+                        <circle cx="240" cy="120" r="30" fill="#ffffff"/>
                     </svg>
+
+                    <!-- 🎵 โจทย์ในปากแกะ (อยู่ทับ SVG) -->
+                    <div class="question-zone">
+                        <div class="mini-staff" id="staffContainer">
+                            <svg class="mini-clef-svg" viewBox="0 0 100 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                                <text x="5" y="150" font-family="'Times New Roman', Georgia, serif" font-size="140" fill="#fff">&#119070;</text>
+                            </svg>
+                            <div class="mini-line m-line-1"></div>
+                            <div class="mini-line m-line-2"></div>
+                            <div class="mini-line m-line-3"></div>
+                            <div class="mini-line m-line-4"></div>
+                            <div class="mini-line m-line-5"></div>
+                            <!-- โน้ตจะถูกวาดลงที่นี่ผ่าน JS -->
+                        </div>
+                    </div>
+
+                    <!-- 🦷 ปุ่มฟันแกะ (อยู่ทับ SVG บริเวณขอบปากล่าง) -->
+                    <div class="teeth-zone">
+                        <button class="tooth-btn" onclick="checkAnswer(2, this)">2</button>
+                        <button class="tooth-btn" onclick="checkAnswer(3, this)">3</button>
+                        <button class="tooth-btn" onclick="checkAnswer(4, this)">4</button>
+                        <button class="tooth-btn" onclick="checkAnswer(5, this)">5</button>
+                        <button class="tooth-btn" onclick="checkAnswer(6, this)">6</button>
+                        <button class="tooth-btn" onclick="checkAnswer(7, this)">7</button>
+                    </div>
+
                 </div>
 
-                <div id="feedbackText" class="feedback"></div>
-
-                <!-- เตาอบด้านล่าง -->
-                <div class="oven-zone" id="ovenZone"></div>
-            </div>
-
-            <!-- แผงปุ่มตอบ 6 ปุ่ม -->
-            <div class="answer-zone">
-                <button class="btn-ans btn-2" onclick="checkAnswer(2, this)">คู่ 2<br><span>(2nd)</span></button>
-                <button class="btn-ans btn-3" onclick="checkAnswer(3, this)">คู่ 3<br><span>(3rd)</span></button>
-                <button class="btn-ans btn-4" onclick="checkAnswer(4, this)">คู่ 4<br><span>(4th)</span></button>
-                <button class="btn-ans btn-5" onclick="checkAnswer(5, this)">คู่ 5<br><span>(5th)</span></button>
-                <button class="btn-ans btn-6" onclick="checkAnswer(6, this)">คู่ 6<br><span>(6th)</span></button>
-                <button class="btn-ans btn-7" onclick="checkAnswer(7, this)">คู่ 7<br><span>(7th)</span></button>
             </div>
         </div>
 
         <!-- หน้าต่างเริ่มเกม -->
         <div id="startOverlay" class="overlay-screen" style="display: flex;">
-            <h1 class="overlay-title">Interval Pizza 🍕</h1>
+            <h1 class="overlay-title">Sheep Dentist 🐑</h1>
             <div class="start-instruction-box">
-                <p style="font-size: 1.2rem; color: #d32f2f; font-weight: 900; line-height: 1.5; margin-bottom:10px;">
-                    🔥 วิธีย่างพิซซ่า
+                <p style="font-size: 1.3rem; color: #00796b; font-weight: 900; line-height: 1.5; margin-bottom:10px;">
+                    🦷 วิธีกดฟันแกะ
                 </p>
-                <p style="font-size: 0.95rem; color: #4e342e; font-weight: 700;">ดูพิซซ่าที่ตกลงมา จะมีโน้ต 2 ตัว</p>
-                <p style="font-size: 0.95rem; color: #4e342e; font-weight: 700;">นับระยะห่าง (ขั้นคู่) แล้วกดปุ่มตอบ</p>
-                <p style="font-size: 0.85rem; color: #d32f2f; font-weight: 700; margin-top: 10px;">
-                    ❤️ ตอบให้ทันก่อนพิซซ่าตกลงไปไหม้ในเตาอบนะ!
+                <p style="font-size: 1rem; color: #4e342e; font-weight: 700;">ดูโน้ตเพลงที่อยู่ใน <b>"ปากแกะ"</b></p>
+                <p style="font-size: 1rem; color: #4e342e; font-weight: 700;">นับระยะห่าง แล้วกด <b>"ซี่ฟัน"</b> ให้ถูกต้อง</p>
+                <p style="font-size: 0.9rem; color: #d32f2f; font-weight: 700; margin-top: 15px;">
+                    ⚠️ ตอบผิด แกะงับนิ้ว เสียหัวใจนะ!
                 </p>
             </div>
-            <button class="btn-action" onclick="startGame()">เริ่มทำพิซซ่า ▶</button>
+            <button class="btn-action" onclick="startGame()">แหย่นิ้วเริ่มเกม 👆</button>
         </div>
 
         <!-- หน้าต่างหยุดเกม -->
         <div id="pauseModal" class="overlay-screen">
-            <h1 class="overlay-title" style="color: #ffccbc;">พักทานเจลาโต้ 🍨</h1>
+            <h1 class="overlay-title" style="color: #ffe0b2;">พักกินหญ้า 🌿</h1>
             <div style="display: flex; flex-direction: column; width:100%; align-items:center;">
-                <button class="btn-action" onclick="resumeGame()">▶ เปิดเตาอบต่อ</button>
-                <button class="btn-action btn-secondary" onclick="restartGame()">🔄 เริ่มนวดแป้งใหม่</button>
+                <button class="btn-action" onclick="resumeGame()">▶ ลุยต่อ</button>
+                <button class="btn-action btn-secondary" onclick="restartGame()">🔄 เริ่มเกมใหม่</button>
             </div>
         </div>
 
         <!-- 💀 หน้าจอจบเกมส์ -->
         <div id="gameOverScreen" class="overlay-screen">
             <div class="go-box">
-                <h2>พิซซ่าไหม้หมด! 🥺</h2>
+                <h2>โดนงับนิ้วขาด! 😱</h2>
                 <table class="result-table">
-                    <tr><td>คะแนนรวม</td><td><span id="finalScore">0</span></td></tr>
+                    <tr><td>คะแนนของคุณ</td><td><span id="finalScore">0</span></td></tr>
                 </table>
-                <button class="btn-action" onclick="backToStartScreen()">กลับหน้าร้าน 🌸</button>
+                <button class="btn-action" onclick="backToStartScreen()">กลับไปทำแผล 🩹</button>
             </div>
         </div>
 
@@ -351,54 +337,22 @@
             audio.play().catch(e => {}); 
         }
 
-        // ---------------- 👨‍🍳 ระบบเปลี่ยนอารมณ์เชฟ SVG ----------------
-        function setChefEmotion(emotion) {
-            const mustache = document.getElementById('mustache');
-            const eyeL = document.getElementById('eyeL');
-            const eyeR = document.getElementById('eyeR');
-
-            if (emotion === 'normal') {
-                mustache.setAttribute('d', 'M 40 70 Q 50 62 60 70 Q 70 62 80 70 Q 75 76 60 73 Q 45 76 40 70 Z');
-                eyeL.setAttribute('r', '3'); eyeR.setAttribute('r', '3');
-                eyeL.setAttribute('cy', '58'); eyeR.setAttribute('cy', '58');
-            } else if (emotion === 'happy') {
-                mustache.setAttribute('d', 'M 40 68 Q 50 60 60 68 Q 70 60 80 68 Q 75 74 60 71 Q 45 74 40 68 Z');
-                eyeL.setAttribute('r', '4'); eyeR.setAttribute('r', '4');
-                eyeL.setAttribute('cy', '57'); eyeR.setAttribute('cy', '57');
-            } else if (emotion === 'angry') {
-                mustache.setAttribute('d', 'M 40 75 Q 50 65 60 70 Q 70 65 80 75 Q 75 75 60 75 Q 45 75 40 75 Z');
-                eyeL.setAttribute('r', '3'); eyeR.setAttribute('r', '3');
-            } else if (emotion === 'shocked') {
-                mustache.setAttribute('d', 'M 40 65 Q 50 55 60 65 Q 70 55 80 65 Q 75 75 60 80 Q 45 75 40 65 Z');
-                eyeL.setAttribute('r', '5'); eyeR.setAttribute('r', '5');
-            }
-        }
-
         // ---------------- ⚙️ ตัวแปรควบคุมเกม ----------------
-        let activePizzas = [];       
         let score = 0;
         let lives = 3;
-        let pizzasCleared = 0;
-        
-        let gameLoopId;
-        let spawnId;
-        
-        let fallSpeed = 1.0;        
-        let spawnRate = 2500;       
+        let currentInterval = 0;
         let isPaused = false; 
+        let isBiting = false;
 
-        const gameArea = document.getElementById('gameArea');
         const boardWrapper = document.getElementById('boardWrapper');
-        const ovenZone = document.getElementById('ovenZone');
-        const chefFace = document.getElementById('chefFace');
-        const chefBubble = document.getElementById('chefBubble');
-        const feedbackText = document.getElementById('feedbackText');
+        const sheepMaster = document.getElementById('sheepMaster');
+        const staffContainer = document.getElementById('staffContainer');
         const scoreDisplay = document.getElementById('scoreDisplay');
         const livesDisplay = document.getElementById('livesDisplay');
 
         // ---------------- ⏸️ ระบบหยุดเกม / เริ่มใหม่ ----------------
         function pauseGame() {
-            if (!activePizzas.length && score === 0 && lives === 3) return;
+            if (isBiting) return;
             playSound(popSound);
             isPaused = true;
             document.getElementById('pauseModal').style.display = 'flex';
@@ -412,6 +366,7 @@
 
         function restartGame() {
             playSound(popSound);
+            isPaused = false;
             document.getElementById('pauseModal').style.display = 'none';
             startGameInit();
         }
@@ -429,13 +384,10 @@
 
         function triggerGameOver() {
             isPaused = true;
-            cancelAnimationFrame(gameLoopId);
-            clearInterval(spawnId);
-            
             setTimeout(() => {
                 document.getElementById('finalScore').textContent = score;
                 document.getElementById('gameOverScreen').style.display = 'flex';
-            }, 500);
+            }, 800);
         }
 
         // ---------------- 🚀 ฟังก์ชันหลักของเกม ----------------
@@ -446,190 +398,95 @@
         }
         
         function startGameInit() {
-            activePizzas.forEach(p => p.element.remove());
-            activePizzas = [];
-            
             score = 0;
             lives = 3;
-            pizzasCleared = 0;
-            fallSpeed = 1.0;
-            spawnRate = 2500;
             isPaused = false;
-            
+            isBiting = false;
             updateUI();
-            setChefEmotion('normal');
-            chefFace.style.transform = "scaleX(1) scale(1)";
-            chefBubble.textContent = "สั่งมาเลย!";
-            
-            gameLoopId = requestAnimationFrame(updateGame);
-            
-            clearInterval(spawnId);
-            spawnPizza(); // ลูกแรกมาทันที
-            spawnId = setInterval(spawnPizza, spawnRate);
+            generateQuestion();
         }
 
-        // สร้างพิซซ่าและสุ่มขั้นคู่ (Interval 2-7)
-        function spawnPizza() {
-            if (isPaused) return; 
+        // สุ่มโจทย์ขึ้นมาไว้ในปากแกะ
+        function generateQuestion() {
+            // ลบโน้ตเก่าออกก่อน
+            const oldNotes = staffContainer.querySelectorAll('.mini-note');
+            oldNotes.forEach(n => n.remove());
 
-            // สุ่มโน้ตตัวล่างสุดในบรรทัด 5 เส้น (0 = C4, 1 = D4, ... 4 = G4)
+            // สุ่มตำแหน่งตัวล่างสุดในบรรทัด 5 เส้น (0 = C4, 1 = D4, ... 4 = G4)
             let bottomPos = Math.floor(Math.random() * 5); 
             // สุ่มขั้นคู่ (2 ถึง 7)
-            let interval = Math.floor(Math.random() * 6) + 2; 
+            currentInterval = Math.floor(Math.random() * 6) + 2; 
             // โน้ตตัวบน
-            let topPos = bottomPos + interval - 1; 
-
-            const pizzaEl = document.createElement('div');
-            pizzaEl.classList.add('falling-pizza');
+            let topPos = bottomPos + currentInterval - 1; 
             
-            // กุญแจซอลตัวเต็มแบบ SVG และซอสมะเขือเทศ
-            let html = `
-                <div class="pizza-sauce"></div>
-                <div class="mini-staff">
-                    <svg class="mini-clef-svg" viewBox="0 0 100 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                        <text x="5" y="150" font-family="'Times New Roman', Georgia, serif" font-size="140" fill="#fff">&#119070;</text>
-                    </svg>
-                    <div class="mini-line m-line-1"></div>
-                    <div class="mini-line m-line-2"></div>
-                    <div class="mini-line m-line-3"></div>
-                    <div class="mini-line m-line-4"></div>
-                    <div class="mini-line m-line-5"></div>
-            `;
+            // ระยะห่างเส้นและช่อง = 5px (เพื่อให้พอดีกับ height 40px ของ mini-staff)
+            // (10px ระหว่างเส้น / 2 = 5px)
+            let bottomPx = bottomPos * 5;
+            let topPx = topPos * 5;
             
-            // วาดโน้ต 2 ตัว (เปปเปอโรนี)
-            // ระยะห่างแต่ละเส้น/ช่อง คือ 4px (เพราะ line-height ใน CSS)
-            let bottomPx = 8 + (bottomPos * 4);
-            let topPx = 8 + (topPos * 4);
+            let leftPxBottom = 50;
+            let leftPxTop = 50;
             
-            let leftPxBottom = 35;
-            let leftPxTop = 35;
-            
-            // ถ้าเป็นคู่ 2 ต้องขยับหลบกัน (คู่ 2 โน้ตจะชิดกันมาก)
-            if (interval === 2) {
-                leftPxTop += 14;
+            // ถ้าเป็นคู่ 2 ต้องขยับหลบกัน ไม่ให้ทับกันตรงๆ
+            if (currentInterval === 2) {
+                leftPxTop += 25;
             }
 
-            let ledgerB = (bottomPos <= 0 || bottomPos >= 12) ? `<div class="mini-ledger"></div>` : '';
-            let ledgerT = (topPos <= 0 || topPos >= 12) ? `<div class="mini-ledger"></div>` : '';
+            // สร้าง HTML โน้ตตัวล่าง
+            let bottomNoteHTML = `<div class="mini-note" style="bottom:${bottomPx}px; left:${leftPxBottom}px;">`;
+            if (bottomPos <= 0 || bottomPos >= 12) bottomNoteHTML += `<div class="mini-ledger"></div>`;
+            bottomNoteHTML += `</div>`;
+            
+            // สร้าง HTML โน้ตตัวบน
+            let topNoteHTML = `<div class="mini-note" style="bottom:${topPx}px; left:${leftPxTop}px;">`;
+            if (topPos <= 0 || topPos >= 12) topNoteHTML += `<div class="mini-ledger"></div>`;
+            topNoteHTML += `</div>`;
 
-            html += `<div class="mini-note" style="bottom:${bottomPx}px; left:${leftPxBottom}%;">${ledgerB}</div>`;
-            html += `<div class="mini-note" style="bottom:${topPx}px; left:${leftPxTop}%;">${ledgerT}</div>`;
-            
-            html += `</div>`;
-            pizzaEl.innerHTML = html;
-            
-            const maxLeft = gameArea.clientWidth - 110;
-            const randomX = Math.floor(Math.random() * maxLeft) + 55;
-            pizzaEl.style.left = randomX + 'px';
-            pizzaEl.style.top = '-110px';
-            
-            gameArea.appendChild(pizzaEl);
-            activePizzas.push({ element: pizzaEl, type: interval, y: -110, x: randomX });
+            staffContainer.innerHTML += bottomNoteHTML + topNoteHTML;
         }
 
-        function updateGame() {
-            if (!isPaused) {
-                const areaHeight = gameArea.clientHeight;
-                const ovenTop = areaHeight - 110; // ตำแหน่งปากเตาอบ
-
-                for (let i = 0; i < activePizzas.length; i++) {
-                    let pizzaObj = activePizzas[i];
-                    pizzaObj.y += fallSpeed;
-                    pizzaObj.element.style.top = pizzaObj.y + 'px';
-
-                    // ถ้าพิซซ่าร่วงลงไปถึงเตาอบ (เลยปุ่มกด)
-                    if (pizzaObj.y > ovenTop) {
-                        pizzaObj.element.remove();
-                        activePizzas.splice(i, 1);
-                        i--;
-                        
-                        // พลาด! โดนไฟไหม้
-                        lives--;
-                        updateUI();
-                        playSound(errorSound);
-                        boardWrapper.classList.add('flash-red');
-                        
-                        setChefEmotion('shocked');
-                        chefBubble.textContent = "Mama Mia! ไหม้แล้ว!";
-                        
-                        setTimeout(() => boardWrapper.classList.remove('flash-red'), 300);
-                        
-                        if (lives <= 0) {
-                            triggerGameOver();
-                        }
-                    }
-                }
-            }
-            
-            gameLoopId = requestAnimationFrame(updateGame);
-        }
-
-        // ---------------- 🔘 ระบบตรวจคำตอบ ----------------
+        // ---------------- 🔘 ระบบตรวจคำตอบเมื่อกดฟัน ----------------
         function checkAnswer(answerType, btnElement) {
-            if (isPaused || activePizzas.length === 0) return;
+            if (isPaused || isBiting) return;
             
-            // เช็คพิซซ่าที่อยู่ล่างสุด (ตัวแรกใน Array)
-            let targetPizza = activePizzas[0];
-            
-            if (targetPizza.type === answerType) {
+            if (answerType === currentInterval) {
                 // ตอบถูก!
                 playSound(successSound);
-                
-                btnElement.classList.add('flash-green');
-                setTimeout(() => btnElement.classList.remove('flash-green'), 200);
-                
-                targetPizza.element.style.transition = '0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                targetPizza.element.style.transform = 'translateY(-100px) scale(0) rotate(180deg)';
-                targetPizza.element.style.opacity = '0';
-                
-                score += 50; 
-                pizzasCleared++;
+                score += 10;
                 updateUI();
                 
-                setChefEmotion('happy');
-                chefBubble.textContent = "Bellissimo! 🤌";
-                showFeedback("✨", "");
+                // เอฟเฟกต์ไฟเขียวที่ฟัน
+                btnElement.classList.add('flash-green');
+                setTimeout(() => btnElement.classList.remove('flash-green'), 300);
                 
-                setTimeout(() => targetPizza.element.remove(), 300);
-                activePizzas.shift();
-
-                // เพิ่มความยากทุกๆ 5 ถาด
-                if (pizzasCleared % 5 === 0) {
-                    fallSpeed += 0.15; 
-                    spawnRate = Math.max(1000, spawnRate - 150);
-                    clearInterval(spawnId);
-                    spawnId = setInterval(spawnPizza, spawnRate);
-                }
+                generateQuestion();
                 
             } else {
-                // ตอบผิด
+                // ตอบผิด! โดนงับ
+                isBiting = true;
                 playSound(errorSound);
-                
-                btnElement.classList.add('flash-red');
-                setTimeout(() => btnElement.classList.remove('flash-red'), 200);
-                
-                targetPizza.element.style.transform = 'translateX(-10px)';
-                setTimeout(() => targetPizza.element.style.transform = 'translateX(10px)', 50);
-                setTimeout(() => targetPizza.element.style.transform = 'translateX(-50%)', 100);
-                
                 lives--;
                 updateUI();
                 
-                setChefEmotion('angry');
-                chefBubble.textContent = "ดูดีๆ สิลูกพี่!";
-                showFeedback("❌", "");
+                // ทำฉากหลังกระพริบแดง และสั่งงับปาก
+                boardWrapper.classList.add('flash-red-bg');
+                sheepMaster.classList.add('biting');
                 
-                if (lives <= 0) {
-                    triggerGameOver();
-                }
+                // เปลี่ยนตาแกะเป็นตาโกรธ (ขีดขวาง)
+                document.getElementById('eyeL').setAttribute('d', 'M 155 160 L 165 160'); // ลดรูปลงเป็นตาหยีได้ แต่ SVG เป็น <circle> ดังนั้นปล่อย CSS Shake ทำงานแทน
+                
+                setTimeout(() => {
+                    boardWrapper.classList.remove('flash-red-bg');
+                    sheepMaster.classList.remove('biting');
+                    isBiting = false;
+                    
+                    if (lives <= 0) {
+                        triggerGameOver();
+                    } else {
+                        generateQuestion(); // สุ่มโจทย์ใหม่ให้เลยเผื่อตกใจ
+                    }
+                }, 500); // ระยะเวลางับนิ้ว 0.5 วินาที
             }
-        }
-
-        function showFeedback(msg, color) { 
-            feedbackText.textContent = msg; 
-            feedbackText.classList.remove('show'); 
-            void feedbackText.offsetWidth; 
-            feedbackText.classList.add('show'); 
         }
 
     </script>
