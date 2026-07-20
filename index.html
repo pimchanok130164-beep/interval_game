@@ -88,9 +88,9 @@
             display: flex; justify-content: center; align-items: center;
         }
 
-        /* 🐑 SVG น้องแกะ */
+        /* 🐑 SVG น้องแกะ - ขยายขนาดให้ใหญ่ขึ้น */
         .sheep-container {
-            position: relative; width: 340px; height: 340px;
+            position: relative; width: 380px; height: 380px;
             animation: floatSheep 4s infinite alternate ease-in-out;
         }
         @keyframes floatSheep { 0% { transform: translateY(0px); } 100% { transform: translateY(-10px); } }
@@ -110,44 +110,54 @@
         /* 🎵 โจทย์ในปากแกะ */
         .question-zone {
             position: absolute; top: 58%; left: 50%; transform: translate(-50%, -50%);
-            width: 180px; height: 80px; z-index: 10;
+            width: 200px; height: 80px; z-index: 10;
             display: flex; justify-content: center; align-items: center;
             transition: opacity 0.1s;
         }
         .biting .question-zone { opacity: 0; }
 
         .mini-staff { width: 100%; height: 40px; position: relative; }
-        .mini-line { width: 100%; height: 2px; background: rgba(255,255,255,0.3); position: absolute; border-radius: 2px;}
-        .m-line-1 { bottom: 0px; } .m-line-2 { bottom: 10px; } .m-line-3 { bottom: 20px; } .m-line-4 { bottom: 30px; } .m-line-5 { bottom: 40px; }
+        .mini-line { width: 100%; height: 2px; background: rgba(255,255,255,0.4); position: absolute; border-radius: 2px;}
+        
+        /* บรรทัด 5 เส้น ระยะห่าง 10px */
+        .m-line-1 { bottom: 0px; } 
+        .m-line-2 { bottom: 10px; } 
+        .m-line-3 { bottom: 20px; } 
+        .m-line-4 { bottom: 30px; } 
+        .m-line-5 { bottom: 40px; }
 
+        /* ปรับกุญแจซอลให้อยู่ตำแหน่งที่ถูกต้อง (วงกลมม้วนรอบเส้นที่ 2) */
         .mini-clef-svg {
             position: absolute; left: 0px; bottom: -20px; width: 45px; height: 80px; 
-            pointer-events: none; opacity: 0.6; z-index: 1;
+            pointer-events: none; opacity: 0.8; z-index: 1;
         }
 
-        /* โน้ตเพลงบนบรรทัด 5 เส้น */
+        /* โน้ตเพลงแบบตัวกลม (Whole Note) โปร่งใสเห็นเส้น */
         .mini-note {
-            position: absolute; width: 18px; height: 14px; background: #fffcf4;
-            border-radius: 50%; transform: rotate(-15deg); margin-left: -9px; margin-bottom: -7px;
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.5); z-index: 5;
+            position: absolute; width: 16px; height: 10px; 
+            background: transparent; border: 2.5px solid #ffffff;
+            border-radius: 50%; transform: rotate(-10deg); 
+            margin-left: -8px; margin-bottom: -5px; /* จัดศูนย์กลางให้ตรงเป๊ะ */
+            box-shadow: 1px 1px 0 rgba(0,0,0,0.2); z-index: 5;
         }
+        /* เส้นน้อย (Ledger Line) หมุนกลับให้ขนานกับบรรทัด 5 เส้น */
         .mini-ledger {
-            position: absolute; width: 30px; height: 2px; background: rgba(255,255,255,0.7); border-radius: 2px;
-            left: 50%; top: 50%; transform: translate(-50%, -50%); 
+            position: absolute; width: 26px; height: 2px; background: #ffffff; border-radius: 2px;
+            left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(10deg); 
         }
 
         /* 🦷 ปุ่มฟันแกะ */
         .teeth-zone {
-            position: absolute; bottom: 18%; left: 50%; transform: translateX(-50%);
+            position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%);
             display: flex; gap: 8px; z-index: 15;
             transition: opacity 0.1s, transform 0.15s;
         }
         .biting .teeth-zone { opacity: 0; transform: translate(-50%, 20px); }
 
         .tooth-btn {
-            width: 32px; height: 45px; background: #fff; border: 2px solid #e0e0e0;
-            border-radius: 6px 6px 15px 15px; /* ทรงฟัน */
-            font-size: 1.4rem; font-weight: 900; color: #795548;
+            width: 35px; height: 50px; background: #fff; border: 2px solid #e0e0e0;
+            border-radius: 6px 6px 18px 18px; /* ทรงฟันมนขึ้น */
+            font-size: 1.5rem; font-weight: 900; color: #795548;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 0 #d7ccc8, inset 0 -5px 8px rgba(0,0,0,0.05);
             transition: all 0.1s; -webkit-tap-highlight-color: transparent;
@@ -262,14 +272,14 @@
                     <div class="question-zone">
                         <div class="mini-staff" id="staffContainer">
                             <svg class="mini-clef-svg" viewBox="0 0 100 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                                <text x="5" y="150" font-family="'Times New Roman', Georgia, serif" font-size="140" fill="#fff">&#119070;</text>
+                                <text x="5" y="145" font-family="'Times New Roman', Georgia, serif" font-size="140" fill="#fff">&#119070;</text>
                             </svg>
                             <div class="mini-line m-line-1"></div>
                             <div class="mini-line m-line-2"></div>
                             <div class="mini-line m-line-3"></div>
                             <div class="mini-line m-line-4"></div>
                             <div class="mini-line m-line-5"></div>
-                            <!-- โน้ตจะถูกวาดลงที่นี่ผ่าน JS -->
+                            <!-- โน้ตตัวกลมจะถูกวาดลงที่นี่ผ่าน JS -->
                         </div>
                     </div>
 
@@ -406,38 +416,40 @@
             generateQuestion();
         }
 
-        // สุ่มโจทย์ขึ้นมาไว้ในปากแกะ
+        // สุ่มโจทย์โน้ตตัวกลมขึ้นมาไว้ในปากแกะ
         function generateQuestion() {
-            // ลบโน้ตเก่าออกก่อน
             const oldNotes = staffContainer.querySelectorAll('.mini-note');
             oldNotes.forEach(n => n.remove());
 
-            // สุ่มตำแหน่งตัวล่างสุดในบรรทัด 5 เส้น (0 = C4, 1 = D4, ... 4 = G4)
-            let bottomPos = Math.floor(Math.random() * 5); 
+            // สุ่มตำแหน่งตัวล่างสุด C4(0) ถึง A4(5)
+            // (ตำแหน่ง: 0=C4, 1=D4, 2=E4(เส้น1), 3=F4, 4=G4, 5=A4)
+            let bottomPos = Math.floor(Math.random() * 6); 
             // สุ่มขั้นคู่ (2 ถึง 7)
             currentInterval = Math.floor(Math.random() * 6) + 2; 
-            // โน้ตตัวบน
             let topPos = bottomPos + currentInterval - 1; 
             
-            // ระยะห่างเส้นและช่อง = 5px (เพื่อให้พอดีกับ height 40px ของ mini-staff)
-            // (10px ระหว่างเส้น / 2 = 5px)
-            let bottomPx = bottomPos * 5;
-            let topPx = topPos * 5;
+            // ระยะห่างเส้นและช่อง = 5px
+            // ให้ E4 (ตำแหน่ง 2) อยู่ที่ bottom: 0px (บรรทัดเส้นที่ 1 พอดี)
+            let bottomPx = (bottomPos * 5) - 10;
+            let topPx = (topPos * 5) - 10;
             
-            let leftPxBottom = 50;
-            let leftPxTop = 50;
+            // ระยะซ้ายขวาของโน้ต จัดให้อยู่กึ่งกลาง
+            let leftPxBottom = 90;
+            let leftPxTop = 90;
             
-            // ถ้าเป็นคู่ 2 ต้องขยับหลบกัน ไม่ให้ทับกันตรงๆ
+            // แก้บัคขั้นคู่ 2 ทับกัน: ขยับตัวบนไปทางขวา และขยับซ้ายให้ดูสมดุล
             if (currentInterval === 2) {
-                leftPxTop += 25;
+                leftPxTop += 16;
+                leftPxBottom -= 8;
+                leftPxTop -= 8;
             }
 
-            // สร้าง HTML โน้ตตัวล่าง
+            // สร้าง HTML โน้ตตัวล่าง (ตัวกลม)
             let bottomNoteHTML = `<div class="mini-note" style="bottom:${bottomPx}px; left:${leftPxBottom}px;">`;
             if (bottomPos <= 0 || bottomPos >= 12) bottomNoteHTML += `<div class="mini-ledger"></div>`;
             bottomNoteHTML += `</div>`;
             
-            // สร้าง HTML โน้ตตัวบน
+            // สร้าง HTML โน้ตตัวบน (ตัวกลม)
             let topNoteHTML = `<div class="mini-note" style="bottom:${topPx}px; left:${leftPxTop}px;">`;
             if (topPos <= 0 || topPos >= 12) topNoteHTML += `<div class="mini-ledger"></div>`;
             topNoteHTML += `</div>`;
@@ -455,7 +467,6 @@
                 score += 10;
                 updateUI();
                 
-                // เอฟเฟกต์ไฟเขียวที่ฟัน
                 btnElement.classList.add('flash-green');
                 setTimeout(() => btnElement.classList.remove('flash-green'), 300);
                 
@@ -473,7 +484,7 @@
                 sheepMaster.classList.add('biting');
                 
                 // เปลี่ยนตาแกะเป็นตาโกรธ (ขีดขวาง)
-                document.getElementById('eyeL').setAttribute('d', 'M 155 160 L 165 160'); // ลดรูปลงเป็นตาหยีได้ แต่ SVG เป็น <circle> ดังนั้นปล่อย CSS Shake ทำงานแทน
+                document.getElementById('eyeL').setAttribute('d', 'M 155 160 L 165 160'); 
                 
                 setTimeout(() => {
                     boardWrapper.classList.remove('flash-red-bg');
@@ -483,7 +494,7 @@
                     if (lives <= 0) {
                         triggerGameOver();
                     } else {
-                        generateQuestion(); // สุ่มโจทย์ใหม่ให้เลยเผื่อตกใจ
+                        generateQuestion(); // สุ่มโจทย์ใหม่ให้
                     }
                 }, 500); // ระยะเวลางับนิ้ว 0.5 วินาที
             }
