@@ -3,334 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Cozy Sheep Dentist - เกมกดฟันแกะน้อย</title>
+    <title>Italian Interval Pizza - เชฟพิซซ่าขั้นคู่</title>
     <link href="https://fonts.googleapis.com/css2?family=Mali:wght@500;700;900&display=swap" rel="stylesheet">
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Mali', sans-serif; user-select: none; }
         
-        /* 🌿 พื้นหลังลายตาราง Gingham สีเขียวมิ้นต์ สไตล์ปิกนิกทุ่งหญ้า */
+        /* 🇮🇹 พื้นหลังลายตาราง Gingham สีแดง-ขาว ผ้าปูโต๊ะอิตาลี */
         body { 
-            background-color: #e0f2f1;
+            background-color: #fffcf4;
             background-image: 
-                linear-gradient(90deg, rgba(77, 182, 172, 0.15) 50%, transparent 50%),
-                linear-gradient(0deg, rgba(77, 182, 172, 0.15) 50%, transparent 50%);
-            background-size: 50px 50px;
+                linear-gradient(90deg, rgba(211, 47, 47, 0.15) 50%, transparent 50%),
+                linear-gradient(0deg, rgba(211, 47, 47, 0.15) 50%, transparent 50%);
+            background-size: 60px 60px;
             color: #4e342e; 
             height: 100vh; height: 100dvh; 
             display: flex; align-items: center; justify-content: center; 
             overflow: hidden; touch-action: none;
         }
 
-        /* 📱 กรอบเกมมือถือ */
+        /* 📱 กรอบเกม โต๊ะไม้ทำพิซซ่า */
         #app-container {
             width: 100%; max-width: 420px; 
             height: 100%; height: 100dvh; 
-            background-color: #fdfaf6;
-            background-image: radial-gradient(#e0f2f1 15%, transparent 16%), 
-                              radial-gradient(#e0f2f1 15%, transparent 16%);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            border-radius: 35px; border: 8px solid #fff;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            background-color: #8d6e63; /* สีเนื้อไม้ */
+            background-image: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,0,0,0.03) 40px, rgba(0,0,0,0.03) 80px);
+            border-radius: 35px; border: 8px solid #5d4037;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(0,0,0,0.2);
             position: relative; 
-            display: flex; flex-direction: column; align-items: center; padding: 20px 15px;
+            display: flex; flex-direction: column; align-items: center; padding: 15px;
             overflow: hidden; 
         }
 
-        /* ---------------- ส่วนหัว (Header) ---------------- */
-        .header-board {
-            background: #fff; border: 4px solid #b2dfdb; border-radius: 22px;
-            width: 100%; text-align: center; padding: 12px 15px; margin-bottom: 15px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 8px 0 #e0f2f1;
-            position: relative; flex-shrink: 0;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        
-        .game-title { display: flex; flex-direction: column; align-items: flex-start; }
-        .game-name-small {
-            font-size: 0.85rem; color: #00796b; font-weight: 900; letter-spacing: 1px;
-            text-transform: uppercase; margin-bottom: 2px;
-        }
-        .huge-target {
-            font-size: 1.6rem; color: #ff8a65; font-weight: 900; line-height: 1.1;
-            text-shadow: 1px 2px 0px #ffe0b2;
-        }
-
-        .btn-pause {
-            width: 42px; height: 42px; background: #fffcf4; border: 3px solid #ff8a65;
-            border-radius: 12px; font-size: 1.2rem; color: #d84315; font-weight: 900;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 5px 0 #d84315; transition: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-            -webkit-tap-highlight-color: transparent; flex-shrink: 0;
-        }
-        .btn-pause:active { transform: translateY(5px); box-shadow: 0 0 0 transparent; }
-
-        /* HUD - หัวใจและคะแนน */
+        /* ---------------- HUD (คะแนน ปุ่มหยุด & หัวใจ) ---------------- */
         .hud-info {
             width: 100%; display: flex; justify-content: space-between; align-items: center;
             padding: 0 5px; margin-bottom: 10px; z-index: 20;
         }
-        .score-board { font-size: 1.1rem; color: #fff; font-weight: 900; background: #4db6ac; padding: 4px 15px; border-radius: 12px; box-shadow: 0 4px 0 #00897b;}
-        .lives-board { font-size: 1.2rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); letter-spacing: 2px; background: #fff; padding: 4px 12px; border-radius: 12px; border: 2px dashed #80cbc4; }
-
-        /* ---------------- พื้นที่เล่นเกม (Sheep Area) ---------------- */
-        .board-wrapper {
-            position: relative; width: 100%; flex: 1; min-height: 0;
-            background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(224, 242, 241, 0.9) 100%);
-            border: 6px solid #b2dfdb; border-radius: 25px; 
-            box-shadow: inset 0 10px 20px rgba(0,0,0,0.05);
-            display: flex; justify-content: center; align-items: center; overflow: hidden;
-        }
-
-        #gameArea {
-            width: 100%; height: 100%; position: relative; overflow: hidden;
-            display: flex; justify-content: center; align-items: center;
-        }
-
-        /* 🐑 SVG น้องแกะ - ขยายขนาดให้ใหญ่ขึ้น */
-        .sheep-container {
-            position: relative; width: 380px; height: 380px;
-            animation: floatSheep 4s infinite alternate ease-in-out;
-        }
-        @keyframes floatSheep { 0% { transform: translateY(0px); } 100% { transform: translateY(-10px); } }
-
-        .sheep-svg { width: 100%; height: 100%; filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.15)); }
-
-        /* การทำอนิเมชันตอนงับปาก */
-        .mouth-interior { transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: 50% 65%; }
-        .biting .mouth-interior { transform: scaleY(0.05); } 
-        .biting .sheep-svg { animation: shakeHead 0.3s; }
-        @keyframes shakeHead { 
-            0%, 100% { transform: translateX(0); } 
-            25% { transform: translateX(-10px) rotate(-3deg); } 
-            75% { transform: translateX(10px) rotate(3deg); } 
-        }
-
-        /* 🎵 โจทย์ในปากแกะ */
-        .question-zone {
-            position: absolute; top: 58%; left: 50%; transform: translate(-50%, -50%);
-            width: 200px; height: 80px; z-index: 10;
-            display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.1s;
-        }
-        .biting .question-zone { opacity: 0; }
-
-        .mini-staff { width: 100%; height: 40px; position: relative; }
-        .mini-line { width: 100%; height: 2px; background: rgba(255,255,255,0.4); position: absolute; border-radius: 2px;}
+        .score-board { font-size: 1.1rem; color: #fff; font-weight: 900; background: #d32f2f; padding: 4px 15px; border-radius: 12px; box-shadow: 0 4px 0 #b71c1c; border: 2px solid #ffcdd2;}
+        .lives-board { font-size: 1.3rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); letter-spacing: 2px; background: rgba(255,255,255,0.9); padding: 4px 12px; border-radius: 12px; border: 2px solid #d7ccc8; }
         
-        /* บรรทัด 5 เส้น ระยะห่าง 10px */
+        /* ปุ่มหยุดเกมขนาดเล็ก */
+        .btn-pause-small {
+            width: 38px; height: 38px; background: #fffcf4; border: 3px solid #d32f2f;
+            border-radius: 10px; font-size: 1rem; color: #b71c1c; font-weight: 900;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 0 #b71c1c; transition: 0.1s; -webkit-tap-highlight-color: transparent;
+        }
+        .btn-pause-small:active { transform: translateY(4px); box-shadow: 0 0px 0 transparent; }
+
+        /* ---------------- โซนพิซซ่า (Pizza Zone) - เขียงไม้รองพิซซ่า ---------------- */
+        .pizza-zone {
+            width: 100%; height: 200px; background: #d7ccc8;
+            border: 4px solid #a1887f; border-radius: 50% 50% 20px 20px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2), inset 0 0 20px rgba(93, 64, 55, 0.1); 
+            margin-bottom: 15px; position: relative;
+        }
+        
+        .pizza-svg {
+            width: 170px; height: 170px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .pizza-svg.pop { transform: scale(1.1) rotate(5deg); }
+
+        .pizza-complete-msg {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            font-size: 2.2rem; font-weight: 900; color: #fff; text-shadow: 0 4px 0 #2e7d32, 0 6px 15px rgba(0,0,0,0.4);
+            opacity: 0; pointer-events: none; z-index: 50; white-space: nowrap;
+            background: #4caf50; padding: 10px 20px; border-radius: 20px; border: 4px solid #fff;
+        }
+        .pizza-complete-msg.show { animation: popText 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes popText { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 20% { transform: translate(-50%, -50%) scale(1.1) rotate(-5deg); opacity: 1; } 80% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; } 100% { transform: translate(-50%, -80%) scale(0); opacity: 0; } }
+
+        /* ---------------- โซนโจทย์ (Order Ticket) ---------------- */
+        .question-zone {
+            width: 95%; height: 140px; background: #fffde7; /* สีกระดาษถนอมสายตา */
+            border-top: 15px solid #e0e0e0; border-radius: 5px 5px 15px 15px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2); margin-bottom: 20px;
+            position: relative; overflow: hidden;
+        }
+        .question-zone::before { /* รอยฉีกกระดาษบิล */
+            content: ''; position: absolute; top: -5px; left: 0; width: 100%; height: 10px;
+            background: radial-gradient(circle, #fffde7 50%, transparent 50%); background-size: 20px 20px;
+        }
+
+        .ticket-title {
+            position: absolute; top: 8px; font-size: 0.85rem; color: #795548; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        /* ---------------- บรรทัด 5 เส้น ---------------- */
+        .mini-staff { width: 85%; height: 50px; position: relative; margin-top: 15px;}
+        .mini-line { width: 100%; height: 2px; background: #3e2723; position: absolute; border-radius: 2px;}
+        
         .m-line-1 { bottom: 0px; } 
         .m-line-2 { bottom: 10px; } 
         .m-line-3 { bottom: 20px; } 
         .m-line-4 { bottom: 30px; } 
         .m-line-5 { bottom: 40px; }
 
-        /* ปรับกุญแจซอลให้อยู่ตำแหน่งที่ถูกต้อง (วงกลมม้วนรอบเส้นที่ 2) */
-        .mini-clef-svg {
-            position: absolute; left: 0px; bottom: -20px; width: 45px; height: 80px; 
-            pointer-events: none; opacity: 0.8; z-index: 1;
+        .mini-clef {
+            position: absolute; left: 0px; bottom: -18px; 
+            font-family: 'Times New Roman', serif; font-size: 85px; color: #3e2723; 
+            line-height: 1; pointer-events: none; z-index: 1; text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
         }
 
-        /* โน้ตเพลงแบบตัวกลม (Whole Note) โปร่งใสเห็นเส้น */
-        .mini-note {
-            position: absolute; width: 16px; height: 10px; 
-            background: transparent; border: 2.5px solid #ffffff;
-            border-radius: 50%; transform: rotate(-10deg); 
-            margin-left: -8px; margin-bottom: -5px; /* จัดศูนย์กลางให้ตรงเป๊ะ */
-            box-shadow: 1px 1px 0 rgba(0,0,0,0.2); z-index: 5;
-        }
-        /* เส้นน้อย (Ledger Line) หมุนกลับให้ขนานกับบรรทัด 5 เส้น */
-        .mini-ledger {
-            position: absolute; width: 26px; height: 2px; background: #ffffff; border-radius: 2px;
-            left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(10deg); 
+        /* ---------------- โซนปุ่มกด (Menu Controls) ---------------- */
+        .controls-zone {
+            width: 100%; flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: flex-end; padding-bottom: calc(10px + env(safe-area-inset-bottom));
         }
 
-        /* 🦷 ปุ่มฟันแกะ */
-        .teeth-zone {
-            position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 8px; z-index: 15;
-            transition: opacity 0.1s, transform 0.15s;
+        .btn-row {
+            display: flex; justify-content: space-between; gap: 8px; width: 100%;
         }
-        .biting .teeth-zone { opacity: 0; transform: translate(-50%, 20px); }
 
-        .tooth-btn {
-            width: 35px; height: 50px; background: #fff; border: 2px solid #e0e0e0;
-            border-radius: 6px 6px 18px 18px; /* ทรงฟันมนขึ้น */
-            font-size: 1.5rem; font-weight: 900; color: #795548;
+        .input-btn {
+            flex: 1; height: 50px; background: #d7ccc8; border: 3px solid #795548;
+            border-radius: 12px; font-size: 1.4rem; font-weight: 900; color: #4e342e;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 0 #d7ccc8, inset 0 -5px 8px rgba(0,0,0,0.05);
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.3), 0 5px 0 #5d4037; 
             transition: all 0.1s; -webkit-tap-highlight-color: transparent;
-            padding-bottom: 5px;
         }
-        .tooth-btn:active { transform: translateY(4px); box-shadow: 0 0px 0 transparent; background: #fdfaf6;}
+        .input-btn:active { transform: translateY(5px); box-shadow: 0 0px 0 transparent; }
         
-        .flash-green { background: #c8e6c9 !important; border-color: #4caf50 !important; color: #1b5e20 !important; }
-        .flash-red-bg { animation: flashRedBg 0.4s; }
-        @keyframes flashRedBg { 0% { background-color: #ffcdd2; } 100% { background-color: transparent; } }
+        .input-btn.selected {
+            background: #ffccbc; border-color: #d84315; color: #b71c1c; 
+            transform: translateY(2px); box-shadow: 0 3px 0 #b71c1c, inset 0 0 10px rgba(255,255,255,0.5);
+        }
 
-        /* ---------------- ☕ เมนูเริ่มและหยุดเกม ---------------- */
+        .flash-red-bg { animation: flashRedBg 0.4s; }
+        @keyframes flashRedBg { 0% { background-color: #ffcdd2; } 100% { background-color: #fffde7; } }
+
+        /* ---------------- ☕ เมนู Overlay (Start, Pause, Game Over, Review) ---------------- */
         .overlay-screen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(78, 52, 46, 0.85); z-index: 1000; display: none;
+            background: rgba(78, 52, 46, 0.9); z-index: 1000; display: none;
             flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(6px); text-align: center; padding: 20px;
+            backdrop-filter: blur(8px); text-align: center; padding: 20px;
         }
-        .overlay-title { font-size: 2.6rem; color: #fff; font-weight: 900; margin-bottom: 15px; text-shadow: 0px 4px 0px #ff8a65; line-height: 1.2;}
+        .overlay-title { font-size: 2.5rem; color: #fff; font-weight: 900; margin-bottom: 5px; text-shadow: 0px 4px 0px #d32f2f; line-height: 1.2;}
+        .overlay-subtitle { font-size: 1.1rem; color: #ffccbc; font-weight: 700; margin-bottom: 20px; }
         
         .start-instruction-box {
             background: #fffcf4; padding: 25px 20px; 
-            border-radius: 25px; width: 90%; text-align: center; margin-bottom: 25px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 15px 25px rgba(0,0,0,0.2);
-            border: 4px dashed #4db6ac;
+            border-radius: 25px; width: 95%; text-align: center; margin-bottom: 25px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 15px 25px rgba(0,0,0,0.4);
+            border: 4px dashed #d32f2f;
         }
 
         .btn-action {
             padding: 16px 30px; font-size: 1.3rem; font-weight: 900; color: #fff;
-            background: #ff8a65; border: none; border-radius: 30px;
-            cursor: pointer; box-shadow: 0 8px 0 #d84315, 0 15px 20px rgba(0, 0, 0, 0.2); transition: all 0.15s; width: 85%; max-width: 250px; margin-bottom: 15px;
+            background: #d32f2f; border: 4px solid #fff; border-radius: 30px;
+            cursor: pointer; box-shadow: 0 8px 0 #b71c1c, 0 15px 20px rgba(0, 0, 0, 0.4); transition: all 0.15s; width: 85%; max-width: 250px; margin-bottom: 12px;
         }
         .btn-action:active { transform: translateY(8px); box-shadow: 0 0px 0 transparent; }
-        
-        .btn-secondary { background: #fff; color: #00796b; box-shadow: 0 8px 0 #b2dfdb, 0 15px 20px rgba(0, 0, 0, 0.1); font-size: 1.15rem; }
+        .btn-secondary { background: #fffcf4; color: #d32f2f; box-shadow: 0 8px 0 #e6d8ce, 0 15px 20px rgba(0, 0, 0, 0.4); font-size: 1.15rem; }
 
-        .go-box { background: #fffcf4; padding: 30px 25px; border-radius: 35px; box-shadow: 0 10px 0 #e6d8ce, 0 20px 40px rgba(0,0,0,0.4); width: 100%; text-align: center; border: 4px dashed #ff8a65; }
-        .go-box h2 { font-size: 2.2rem; color: #d84315; margin-bottom: 20px; font-weight: 900; }
-        .result-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; background: #fff; border-radius: 20px; overflow: hidden; border: 2px dashed #b2dfdb;}
-        .result-table td { padding: 15px; border-bottom: 2px dashed #b2dfdb; font-size: 1.2rem; }
-        .result-table td:first-child { text-align: left; color: #00796b; font-weight: bold; }
-        .result-table td:last-child { text-align: right; font-weight: 900; color: #ff8a65; font-size: 1.6rem;}
+        .go-box { background: #fffcf4; padding: 30px 25px; border-radius: 35px; box-shadow: 0 10px 0 #e6d8ce, 0 20px 40px rgba(0,0,0,0.5); width: 100%; text-align: center; border: 4px dashed #d32f2f; }
+        .go-box h2 { font-size: 2.2rem; color: #d32f2f; margin-bottom: 20px; font-weight: 900; }
+        .result-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; background: #fff; border-radius: 20px; overflow: hidden; border: 2px dashed #ffccbc;}
+        .result-table td { padding: 15px; border-bottom: 2px dashed #ffccbc; font-size: 1.2rem; }
+        .result-table td:first-child { text-align: left; color: #5d4037; font-weight: bold; }
+        .result-table td:last-child { text-align: right; font-weight: 900; color: #d32f2f; font-size: 1.6rem;}
+
+        /* 📖 กล่องทบทวนบทเรียน */
+        .review-box {
+            background: #fffcf4; padding: 20px; 
+            border-radius: 25px; width: 100%; text-align: left; margin-bottom: 20px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05), 0 15px 25px rgba(0,0,0,0.3);
+            border: 4px dashed #d32f2f;
+            max-height: 55vh; overflow-y: auto;
+        }
+        .review-box::-webkit-scrollbar { width: 6px; }
+        .review-box::-webkit-scrollbar-thumb { background: #d32f2f; border-radius: 10px; }
+
+        .theory-info { margin-bottom: 12px; font-size: 0.95rem; padding: 14px; border-radius: 16px; background: #fff; border: 2px dashed #ffccbc; }
+        .theory-title { font-weight: 900; color: #d32f2f; font-size: 1.1rem;}
+        .theory-desc { color: #5d4037; font-weight: 600; display: block; margin-top: 5px; line-height: 1.5; }
     </style>
 </head>
 <body>
 
     <div id="app-container">
         
-        <!-- ส่วนหัวบอกโจทย์ -->
-        <div class="header-board">
-            <div class="game-title">
-                <span class="game-name-small">Sheep Dentist 🐑</span>
-                <h1 class="huge-target">นับขั้นคู่ให้ถูกนะ!</h1>
-            </div>
-            <button class="btn-pause" onclick="pauseGame()">⏸</button>
-        </div>
-
-        <!-- แถบแสดงคะแนนและหัวใจ -->
+        <!-- แถบแสดงคะแนน ปุ่มหยุดพัก และหัวใจ -->
         <div class="hud-info">
             <div class="score-board">SCORE: <span id="scoreDisplay">0</span></div>
+            <button class="btn-pause-small" onclick="pauseGame()">⏸</button>
             <div class="lives-board" id="livesDisplay">❤️❤️❤️</div>
         </div>
 
-        <!-- กระดานเล่นเกม -->
-        <div class="board-wrapper" id="boardWrapper">
-            <div id="gameArea">
+        <!-- ถาดพิซซ่าด้านบน -->
+        <div class="pizza-zone" id="pizzaZone">
+            <svg class="pizza-svg" id="pizzaSvg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- แป้งพิซซ่าขอบกรอบ (เริ่มแรกจะว่างเปล่ามีแต่แป้ง) -->
+                <circle cx="100" cy="100" r="95" fill="#f5deb3" stroke="#d4a373" stroke-width="8" />
                 
-                <div class="sheep-container" id="sheepMaster">
-                    <!-- SVG แกะน้อย -->
-                    <svg class="sheep-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                        <!-- ขนแกะด้านหลัง/รอบๆ (Fluffy Wool) -->
-                        <circle cx="200" cy="90" r="75" fill="#ffffff"/>
-                        <circle cx="120" cy="120" r="65" fill="#ffffff"/>
-                        <circle cx="280" cy="120" r="65" fill="#ffffff"/>
-                        <circle cx="80" cy="190" r="60" fill="#ffffff"/>
-                        <circle cx="320" cy="190" r="60" fill="#ffffff"/>
-                        <circle cx="100" cy="270" r="60" fill="#ffffff"/>
-                        <circle cx="300" cy="270" r="60" fill="#ffffff"/>
-                        <circle cx="200" cy="300" r="70" fill="#ffffff"/>
+                <!-- รอยตัด 8 ชิ้น -->
+                <line x1="100" y1="10" x2="100" y2="190" stroke="#e6c280" stroke-width="2" stroke-dasharray="4,4" />
+                <line x1="10" y1="100" x2="190" y2="100" stroke="#e6c280" stroke-width="2" stroke-dasharray="4,4" />
+                <line x1="36" y1="36" x2="164" y2="164" stroke="#e6c280" stroke-width="2" stroke-dasharray="4,4" />
+                <line x1="36" y1="164" x2="164" y2="36" stroke="#e6c280" stroke-width="2" stroke-dasharray="4,4" />
 
-                        <!-- หู -->
-                        <path d="M 80 150 Q 30 180 60 210 Q 90 180 120 160 Z" fill="#fbe9e7"/>
-                        <path d="M 320 150 Q 370 180 340 210 Q 310 180 280 160 Z" fill="#fbe9e7"/>
+                <!-- Layer สำหรับใส่ซอส ชีส และท็อปปิ้ง -->
+                <g id="ingredientsLayer"></g>
+            </svg>
+            <div class="pizza-complete-msg" id="pizzaCompleteMsg">PERFECT! 🍕</div>
+        </div>
 
-                        <!-- ใบหน้า (Face) -->
-                        <rect x="100" y="120" width="200" height="200" rx="90" fill="#3e2723"/>
+        <!-- บิลออเดอร์โจทย์ตรงกลาง (กระดาษออเดอร์) -->
+        <div class="question-zone" id="questionZone">
+            <div class="ticket-title">Ticket #01 - Interval Order</div>
+            <div class="mini-staff" id="staffContainer">
+                <!-- กุญแจซอล -->
+                <div class="mini-clef">&#119070;</div>
 
-                        <!-- ปากที่เปิดกว้างสุดๆ (Mouth Interior) ที่จะถูก Animate พับลง -->
-                        <g class="mouth-interior">
-                            <path d="M 120 220 C 120 340, 280 340, 280 220 Z" fill="#1b100e"/>
-                        </g>
-
-                        <!-- จมูกและปากบน -->
-                        <path d="M 195 190 L 205 190 L 200 198 Z" fill="#ffab91"/>
-                        <path d="M 200 198 Q 190 205 180 200 M 200 198 Q 210 205 220 200" fill="none" stroke="#ffab91" stroke-width="4" stroke-linecap="round"/>
-
-                        <!-- ตา -->
-                        <circle id="eyeL" cx="160" cy="160" r="8" fill="#ffffff"/>
-                        <circle id="eyeR" cx="240" cy="160" r="8" fill="#ffffff"/>
-
-                        <!-- แก้มชมพู -->
-                        <ellipse cx="130" cy="180" rx="14" ry="9" fill="#ffcdd2" opacity="0.8"/>
-                        <ellipse cx="270" cy="180" rx="14" ry="9" fill="#ffcdd2" opacity="0.8"/>
-                        
-                        <!-- ขนปุกปุยบนหัว (Bangs) -->
-                        <circle cx="200" cy="110" r="40" fill="#ffffff"/>
-                        <circle cx="160" cy="120" r="30" fill="#ffffff"/>
-                        <circle cx="240" cy="120" r="30" fill="#ffffff"/>
-                    </svg>
-
-                    <!-- 🎵 โจทย์ในปากแกะ (อยู่ทับ SVG) -->
-                    <div class="question-zone">
-                        <div class="mini-staff" id="staffContainer">
-                            <svg class="mini-clef-svg" viewBox="0 0 100 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                                <text x="5" y="145" font-family="'Times New Roman', Georgia, serif" font-size="140" fill="#fff">&#119070;</text>
-                            </svg>
-                            <div class="mini-line m-line-1"></div>
-                            <div class="mini-line m-line-2"></div>
-                            <div class="mini-line m-line-3"></div>
-                            <div class="mini-line m-line-4"></div>
-                            <div class="mini-line m-line-5"></div>
-                            <!-- โน้ตตัวกลมจะถูกวาดลงที่นี่ผ่าน JS -->
-                        </div>
-                    </div>
-
-                    <!-- 🦷 ปุ่มฟันแกะ (อยู่ทับ SVG บริเวณขอบปากล่าง) -->
-                    <div class="teeth-zone">
-                        <button class="tooth-btn" onclick="checkAnswer(2, this)">2</button>
-                        <button class="tooth-btn" onclick="checkAnswer(3, this)">3</button>
-                        <button class="tooth-btn" onclick="checkAnswer(4, this)">4</button>
-                        <button class="tooth-btn" onclick="checkAnswer(5, this)">5</button>
-                        <button class="tooth-btn" onclick="checkAnswer(6, this)">6</button>
-                        <button class="tooth-btn" onclick="checkAnswer(7, this)">7</button>
-                    </div>
-
-                </div>
-
+                <div class="mini-line m-line-1"></div>
+                <div class="mini-line m-line-2"></div>
+                <div class="mini-line m-line-3"></div>
+                <div class="mini-line m-line-4"></div>
+                <div class="mini-line m-line-5"></div>
+                <!-- โน้ตจะถูกวาดลงที่นี่ผ่าน JS -->
             </div>
         </div>
 
-        <!-- หน้าต่างเริ่มเกม -->
+        <!-- แผงปุ่มกด (เขียงไม้สำหรับเชฟ) -->
+        <div class="controls-zone">
+            <!-- แถวตัวเลข -->
+            <div class="btn-row">
+                <button class="input-btn btn-num" onclick="selectInput('num', 2, this)">2</button>
+                <button class="input-btn btn-num" onclick="selectInput('num', 3, this)">3</button>
+                <button class="input-btn btn-num" onclick="selectInput('num', 4, this)">4</button>
+                <button class="input-btn btn-num" onclick="selectInput('num', 5, this)">5</button>
+                <button class="input-btn btn-num" onclick="selectInput('num', 6, this)">6</button>
+                <button class="input-btn btn-num" onclick="selectInput('num', 7, this)">7</button>
+            </div>
+            <!-- แถวชนิด -->
+            <div class="btn-row">
+                <button class="input-btn btn-qual" onclick="selectInput('qual', 'M', this)">M</button>
+                <button class="input-btn btn-qual" onclick="selectInput('qual', 'm', this)">m</button>
+                <button class="input-btn btn-qual" onclick="selectInput('qual', 'P', this)">P</button>
+                <button class="input-btn btn-qual" onclick="selectInput('qual', 'A', this)">A</button>
+                <button class="input-btn btn-qual" onclick="selectInput('qual', 'd', this)">d</button>
+            </div>
+        </div>
+
+        <!-- ☕ หน้าต่างเริ่มเกม -->
         <div id="startOverlay" class="overlay-screen" style="display: flex;">
-            <h1 class="overlay-title">Sheep Dentist 🐑</h1>
+            <h1 class="overlay-title">Pizza Interval 🍕</h1>
+            <p class="overlay-subtitle">รับออเดอร์ขั้นคู่ อบพิซซ่าแสนอร่อย!</p>
             <div class="start-instruction-box">
-                <p style="font-size: 1.3rem; color: #00796b; font-weight: 900; line-height: 1.5; margin-bottom:10px;">
-                    🦷 วิธีกดฟันแกะ
-                </p>
-                <p style="font-size: 1rem; color: #4e342e; font-weight: 700;">ดูโน้ตเพลงที่อยู่ใน <b>"ปากแกะ"</b></p>
-                <p style="font-size: 1rem; color: #4e342e; font-weight: 700;">นับระยะห่าง แล้วกด <b>"ซี่ฟัน"</b> ให้ถูกต้อง</p>
-                <p style="font-size: 0.9rem; color: #d32f2f; font-weight: 700; margin-top: 15px;">
-                    ⚠️ ตอบผิด แกะงับนิ้ว เสียหัวใจนะ!
-                </p>
+                <p style="font-size: 1.1rem; color: #4e342e; font-weight: 700; margin-bottom: 8px;">1. ดูบิลออเดอร์ขั้นคู่ตรงกลาง</p>
+                <p style="font-size: 1.1rem; color: #4e342e; font-weight: 700; margin-bottom: 8px;">2. กดเลือก <b>ชนิด (เช่น M)</b> และ <b>ตัวเลข (เช่น 3)</b></p>
+                <div style="background:#fff; border-radius:15px; padding:12px; margin-top:15px; border:2px dashed #d32f2f;">
+                    <p style="font-size: 0.95rem; color: #2e7d32; font-weight: 900;">✅ ตอบถูก = เพิ่มส่วนผสมทีละชั้น (ซอส>ชีส>ท็อปปิ้ง)</p>
+                    <p style="font-size: 0.95rem; color: #c62828; font-weight: 900; margin-top:8px;">❌ ตอบผิด = ได้ของแปลก + เสียหัวใจ 1 ดวง!</p>
+                </div>
             </div>
-            <button class="btn-action" onclick="startGame()">แหย่นิ้วเริ่มเกม 👆</button>
+            <button class="btn-action" onclick="startGame()">เริ่มทำพิซซ่า 👨‍🍳</button>
+            <button class="btn-action btn-secondary" onclick="openReview()">ทบทวนสูตรขั้นคู่ 📖</button>
         </div>
 
-        <!-- หน้าต่างหยุดเกม -->
+        <!-- ⏸️ หน้าต่างหยุดพักเกม -->
         <div id="pauseModal" class="overlay-screen">
-            <h1 class="overlay-title" style="color: #ffe0b2;">พักกินหญ้า 🌿</h1>
-            <div style="display: flex; flex-direction: column; width:100%; align-items:center;">
-                <button class="btn-action" onclick="resumeGame()">▶ ลุยต่อ</button>
-                <button class="btn-action btn-secondary" onclick="restartGame()">🔄 เริ่มเกมใหม่</button>
+            <h1 class="overlay-title" style="color: #ffccbc;">พักดื่มน้ำ 🥤</h1>
+            <p class="overlay-subtitle">เชฟเหนื่อยแล้วหรอ?</p>
+            <div style="display: flex; flex-direction: column; width:100%; align-items:center; margin-top:15px;">
+                <button class="btn-action" onclick="resumeGame()">▶ อบพิซซ่าต่อ</button>
+                <button class="btn-action btn-secondary" onclick="openReviewFromPause()">ทบทวนสูตรขั้นคู่ 📖</button>
+                <button class="btn-action btn-secondary" onclick="restartGame()">🔄 เทแป้งทิ้งเริ่มใหม่</button>
             </div>
+        </div>
+
+        <!-- 📖 หน้าต่างทบทวนเมนูขั้นคู่ -->
+        <div id="reviewScreen" class="overlay-screen">
+            <h1 class="overlay-title" style="font-size: 2rem;">📖 สูตรลับขั้นคู่</h1>
+            
+            <div class="review-box">
+                <div class="theory-info">
+                    <span class="theory-title">🍕 Perfect (P) - สมบูรณ์แบบ</span>
+                    <span class="theory-desc">รสชาติเข้ากันกลมกล่อมสุดๆ<br>มีเฉพาะคู่ <b>1, 4, 5, 8</b> เท่านั้น</span>
+                </div>
+                <div class="theory-info">
+                    <span class="theory-title">☀️ Major (M) - สว่าง/ใหญ่</span>
+                    <span class="theory-desc">รสชาติสว่าง สดใส อารมณ์ดี<br>มีเฉพาะคู่ <b>2, 3, 6, 7</b> (ตัวที่เหลือจาก Perfect)</span>
+                </div>
+                <div class="theory-info">
+                    <span class="theory-title">🌧️ minor (m) - หม่น/เล็ก</span>
+                    <span class="theory-desc">รสชาติซ่อนเปรี้ยว หม่นๆ<br>คือคู่ Major ที่<b>แคบลงครึ่งเสียง</b> (มักติดแฟลต ♭)</span>
+                </div>
+                <div class="theory-info">
+                    <span class="theory-title">🌶️ Augmented (A) & diminished (d)</span>
+                    <span class="theory-desc"><b>A (กว้างขึ้น):</b> รสจัดจ้าน (มักติดชาร์ป ♯)<br><b>d (แคบลง):</b> รสอึดอัด ลึกลับ</span>
+                </div>
+            </div>
+            
+            <button class="btn-action btn-secondary" style="max-width: 200px;" onclick="closeReview()">เข้าใจแล้ว! ❌</button>
         </div>
 
         <!-- 💀 หน้าจอจบเกมส์ -->
         <div id="gameOverScreen" class="overlay-screen">
             <div class="go-box">
-                <h2>โดนงับนิ้วขาด! 😱</h2>
+                <h2>ลูกค้าหนีหมด! 🤢</h2>
                 <table class="result-table">
                     <tr><td>คะแนนของคุณ</td><td><span id="finalScore">0</span></td></tr>
                 </table>
-                <button class="btn-action" onclick="backToStartScreen()">กลับไปทำแผล 🩹</button>
+                <button class="btn-action" onclick="location.reload()">ล้างกระทะเริ่มใหม่ 🍽️</button>
             </div>
         </div>
 
@@ -347,22 +327,105 @@
             audio.play().catch(e => {}); 
         }
 
+        // ---------------- 📚 ฐานข้อมูลโจทย์ขั้นคู่ ----------------
+        // ตำแหน่ง (Position): 0=C4, 1=D4, 2=E4(เส้นล่างสุด), 3=F4, 4=G4, 5=A4, 6=B4, 7=C5, 8=D5, 9=E5, 10=F5
+        const questionBank = [
+            { bPos: 0, bAcc: '', tPos: 4, tAcc: '', num: 5, qual: 'P' }, // C-G (P5)
+            { bPos: 0, bAcc: '', tPos: 2, tAcc: '', num: 3, qual: 'M' }, // C-E (M3)
+            { bPos: 0, bAcc: '', tPos: 2, tAcc: 'b', num: 3, qual: 'm' },// C-Eb (m3)
+            { bPos: 1, bAcc: '', tPos: 3, tAcc: '', num: 3, qual: 'm' }, // D-F (m3)
+            { bPos: 1, bAcc: '', tPos: 3, tAcc: '#', num: 3, qual: 'M' },// D-F# (M3)
+            { bPos: 2, bAcc: '', tPos: 6, tAcc: '', num: 5, qual: 'P' }, // E-B (P5)
+            { bPos: 2, bAcc: '', tPos: 6, tAcc: 'b', num: 5, qual: 'd' },// E-Bb (d5)
+            { bPos: 3, bAcc: '', tPos: 6, tAcc: '', num: 4, qual: 'A' }, // F-B (A4)
+            { bPos: 3, bAcc: '', tPos: 7, tAcc: '', num: 5, qual: 'P' }, // F-C (P5)
+            { bPos: 4, bAcc: '', tPos: 8, tAcc: '', num: 5, qual: 'P' }, // G-D (P5)
+            { bPos: 5, bAcc: '', tPos: 7, tAcc: '', num: 3, qual: 'm' }, // A-C (m3)
+            { bPos: 5, bAcc: '', tPos: 7, tAcc: '#', num: 3, qual: 'M' },// A-C# (M3)
+            { bPos: 0, bAcc: '', tPos: 1, tAcc: '', num: 2, qual: 'M' }, // C-D (M2)
+            { bPos: 2, bAcc: '', tPos: 3, tAcc: '', num: 2, qual: 'm' }, // E-F (m2)
+            { bPos: 4, bAcc: '', tPos: 10, tAcc: '', num: 7, qual: 'm' },// G-F (m7)
+            { bPos: 0, bAcc: '', tPos: 6, tAcc: '', num: 7, qual: 'M' }, // C-B (M7)
+            { bPos: 0, bAcc: '', tPos: 6, tAcc: 'b', num: 7, qual: 'm' },// C-Bb (m7)
+            { bPos: 1, bAcc: '', tPos: 7, tAcc: '', num: 7, qual: 'm' }, // D-C (m7)
+            { bPos: 3, bAcc: '', tPos: 9, tAcc: '', num: 7, qual: 'M' }  // F-E (M7)
+        ];
+
+        // ---------------- 🎨 ลำดับวัตถุดิบ (Sequential Toppings) ----------------
+        function generateScatter(svgItem, count) {
+            let html = '';
+            for(let i=0; i<count; i++) {
+                let angle = (i * (360/count)) + (Math.random() * 30 - 15);
+                let radius = 20 + Math.random() * 50;
+                let cx = 100 + radius * Math.cos(angle * Math.PI/180);
+                let cy = 100 + radius * Math.sin(angle * Math.PI/180);
+                let rot = Math.random() * 360;
+                html += `<g transform="translate(${cx}, ${cy}) rotate(${rot})">
+                            <animateTransform attributeName="transform" type="scale" from="0" to="1" dur="0.3s" fill="freeze" additive="sum"/>
+                            ${svgItem}
+                         </g>`;
+            }
+            return html;
+        }
+
+        // 8 ลำดับการทำพิซซ่าเมื่อตอบถูก
+        const goodSteps = [
+            // 0: ซอสแดง
+            `<g transform="translate(100, 100)"><animateTransform attributeName="transform" type="scale" from="0" to="1" dur="0.3s" fill="freeze" additive="sum"/><circle r="85" fill="#e53935" opacity="0.85" /></g>`,
+            // 1: ชีส
+            `<g transform="translate(100, 100)"><animateTransform attributeName="transform" type="scale" from="0" to="1" dur="0.3s" fill="freeze" additive="sum"/><circle r="80" fill="#ffe082" /></g>`,
+            // 2: ไส้กรอก
+            generateScatter(`<circle r="12" fill="#d32f2f"/><circle r="9" fill="#e53935"/><path d="M-4,0 Q0,4 4,0 M0,-4 Q4,0 0,4" stroke="#b71c1c" stroke-width="1.5" fill="none"/>`, 6),
+            // 3: บล็อคโคลี่
+            generateScatter(`<path d="M-2,10 L2,10 L0,0 Z" fill="#2e7d32"/><circle cx="-6" cy="-2" r="6" fill="#4caf50"/><circle cx="0" cy="-6" r="7" fill="#4caf50"/><circle cx="6" cy="-2" r="6" fill="#4caf50"/>`, 5),
+            // 4: เห็ด
+            generateScatter(`<path d="M-8,0 C-8,-10 8,-10 8,0 L4,0 L4,8 L-4,8 L-4,0 Z" fill="#f5f5f5" stroke="#8d6e63" stroke-width="1"/>`, 6),
+            // 5: มะเขือเทศ
+            generateScatter(`<circle r="10" fill="#e53935"/><circle cx="-3" cy="-3" r="2" fill="#ffcdd2"/>`, 5),
+            // 6: มะกอกดำ
+            generateScatter(`<circle r="6" fill="#424242"/><circle r="2" fill="#ffe082"/>`, 7),
+            // 7: ใบโหระพา
+            generateScatter(`<path d="M0,10 C-10,3 -4,-10 0,-10 C4,-10 10,3 0,10 Z" fill="#4caf50" stroke="#2e7d32" stroke-width="1"/>`, 6)
+        ];
+
+        // วัตถุดิบแปลกๆ เมื่อตอบผิด
+        const badIngredients = [
+            `<g><ellipse rx="6" ry="12" fill="#212121"/><path d="M-6,-5 L-12,-8 M6,-5 L12,-8 M-6,0 L-14,0 M6,0 L14,0 M-6,5 L-12,8 M6,5 L12,8" stroke="#212121" stroke-width="1.5"/></g>`, // แมลงสาบ
+            `<g><path d="M0,-15 L0,15 M-8,-8 L8,-2 M-8,-2 L8,4 M-8,4 L8,10" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round"/><polygon points="0,-15 -5,-20 5,-20" fill="#e0e0e0"/></g>`, // ก้างปลา
+            `<g><path d="M-10,5 Q-5,-15 5,-5 T15,10 Q5,15 -10,5 Z" fill="#7cb342" opacity="0.9"/></g>` // เมือกเขียว
+        ];
+
         // ---------------- ⚙️ ตัวแปรควบคุมเกม ----------------
         let score = 0;
         let lives = 3;
-        let currentInterval = 0;
-        let isPaused = false; 
-        let isBiting = false;
+        let pizzaStep = 0; 
+        let currentQuestion = null;
+        
+        let selectedNum = null;
+        let selectedQual = null;
+        let isPaused = false;
 
-        const boardWrapper = document.getElementById('boardWrapper');
-        const sheepMaster = document.getElementById('sheepMaster');
         const staffContainer = document.getElementById('staffContainer');
         const scoreDisplay = document.getElementById('scoreDisplay');
         const livesDisplay = document.getElementById('livesDisplay');
+        const ingredientsLayer = document.getElementById('ingredientsLayer');
+        const pizzaSvg = document.getElementById('pizzaSvg');
+        const questionZone = document.getElementById('questionZone');
 
-        // ---------------- ⏸️ ระบบหยุดเกม / เริ่มใหม่ ----------------
+        function updateUI() {
+            scoreDisplay.textContent = score;
+            livesDisplay.textContent = "❤️".repeat(Math.max(0, lives)) + "🤍".repeat(Math.max(0, 3 - lives));
+        }
+
+        function triggerGameOver() {
+            setTimeout(() => {
+                document.getElementById('finalScore').textContent = score;
+                document.getElementById('gameOverScreen').style.display = 'flex';
+            }, 800);
+        }
+
+        // ---------------- ⏸️ ระบบหยุดเกม / ทบทวน ----------------
         function pauseGame() {
-            if (isBiting) return;
             playSound(popSound);
             isPaused = true;
             document.getElementById('pauseModal').style.display = 'flex';
@@ -378,126 +441,192 @@
             playSound(popSound);
             isPaused = false;
             document.getElementById('pauseModal').style.display = 'none';
-            startGameInit();
+            startGame(); 
         }
 
-        function backToStartScreen() {
+        function openReview() {
             playSound(popSound);
-            document.getElementById('gameOverScreen').style.display = 'none';
-            document.getElementById('startOverlay').style.display = 'flex';
+            document.getElementById('startOverlay').style.display = 'none';
+            document.getElementById('reviewScreen').style.display = 'flex';
         }
 
-        function updateUI() {
-            scoreDisplay.textContent = score;
-            livesDisplay.textContent = "❤️".repeat(Math.max(0, lives)) + "🤍".repeat(Math.max(0, 3 - lives));
+        function openReviewFromPause() {
+            playSound(popSound);
+            document.getElementById('pauseModal').style.display = 'none';
+            document.getElementById('reviewScreen').style.display = 'flex';
         }
 
-        function triggerGameOver() {
-            isPaused = true;
-            setTimeout(() => {
-                document.getElementById('finalScore').textContent = score;
-                document.getElementById('gameOverScreen').style.display = 'flex';
-            }, 800);
+        function closeReview() {
+            playSound(popSound);
+            document.getElementById('reviewScreen').style.display = 'none';
+            if (isPaused) {
+                document.getElementById('pauseModal').style.display = 'flex';
+            } else {
+                document.getElementById('startOverlay').style.display = 'flex';
+            }
         }
 
-        // ---------------- 🚀 ฟังก์ชันหลักของเกม ----------------
+        // ---------------- 🚀 ฟังก์ชันวาดโน้ต SVG ----------------
+        function createNoteSVG(pos, accidental, offsetX, bottomY) {
+            let needsLedger = (pos <= 0 || pos >= 12);
+            let ledgerHTML = '';
+            if (needsLedger) {
+                // เส้นน้อยลากทะลุกลางโน้ตแนวนอน
+                ledgerHTML = `<line x1="-2" y1="20" x2="26" y2="20" stroke="#3e2723" stroke-width="2" />`;
+            }
+
+            let accHTML = '';
+            if (accidental) {
+                let accSymbol = accidental === 'b' ? '♭' : '♯';
+                let accX = accidental === 'b' ? -12 : -15; 
+                accHTML = `<text x="${accX}" y="26" font-family="'Times New Roman', serif" font-size="24" font-weight="bold" fill="#212121">${accSymbol}</text>`;
+            }
+
+            return `
+            <svg class="note-svg" style="position: absolute; overflow: visible; width: 24px; height: 40px; bottom: ${bottomY - 20}px; left: ${offsetX}px; z-index: 5;">
+                ${ledgerHTML}
+                ${accHTML}
+                <ellipse cx="12" cy="20" rx="7.5" ry="5.5" transform="rotate(-15 12 20)" fill="transparent" stroke="#212121" stroke-width="2.5" />
+            </svg>
+            `;
+        }
+
+        // ---------------- 🚀 เริ่มเกม & สร้างโจทย์ ----------------
         function startGame() {
             playSound(popSound);
             document.getElementById('startOverlay').style.display = 'none';
-            startGameInit();
-        }
-        
-        function startGameInit() {
             score = 0;
             lives = 3;
+            pizzaStep = 0;
             isPaused = false;
-            isBiting = false;
+            ingredientsLayer.innerHTML = '';
+            
+            // ล้างปุ่มที่อาจจะค้างไว้
+            document.querySelectorAll('.input-btn').forEach(btn => btn.classList.remove('selected'));
+            selectedNum = null;
+            selectedQual = null;
+
             updateUI();
             generateQuestion();
         }
 
-        // สุ่มโจทย์โน้ตตัวกลมขึ้นมาไว้ในปากแกะ
         function generateQuestion() {
-            const oldNotes = staffContainer.querySelectorAll('.mini-note');
+            currentQuestion = questionBank[Math.floor(Math.random() * questionBank.length)];
+            
+            const oldNotes = staffContainer.querySelectorAll('.note-svg');
             oldNotes.forEach(n => n.remove());
 
-            // สุ่มตำแหน่งตัวล่างสุด C4(0) ถึง A4(5)
-            // (ตำแหน่ง: 0=C4, 1=D4, 2=E4(เส้น1), 3=F4, 4=G4, 5=A4)
-            let bottomPos = Math.floor(Math.random() * 6); 
-            // สุ่มขั้นคู่ (2 ถึง 7)
-            currentInterval = Math.floor(Math.random() * 6) + 2; 
-            let topPos = bottomPos + currentInterval - 1; 
+            let bottomY = (currentQuestion.bPos - 2) * 5;
+            let topY = (currentQuestion.tPos - 2) * 5;
             
-            // ระยะห่างเส้นและช่อง = 5px
-            // ให้ E4 (ตำแหน่ง 2) อยู่ที่ bottom: 0px (บรรทัดเส้นที่ 1 พอดี)
-            let bottomPx = (bottomPos * 5) - 10;
-            let topPx = (topPos * 5) - 10;
+            let leftPxBottom = 120;
+            let leftPxTop = 120;
             
-            // ระยะซ้ายขวาของโน้ต จัดให้อยู่กึ่งกลาง
-            let leftPxBottom = 90;
-            let leftPxTop = 90;
-            
-            // แก้บัคขั้นคู่ 2 ทับกัน: ขยับตัวบนไปทางขวา และขยับซ้ายให้ดูสมดุล
-            if (currentInterval === 2) {
-                leftPxTop += 16;
-                leftPxBottom -= 8;
-                leftPxTop -= 8;
+            if (currentQuestion.num === 2) {
+                leftPxBottom = 110;
+                leftPxTop = 130;
             }
 
-            // สร้าง HTML โน้ตตัวล่าง (ตัวกลม)
-            let bottomNoteHTML = `<div class="mini-note" style="bottom:${bottomPx}px; left:${leftPxBottom}px;">`;
-            if (bottomPos <= 0 || bottomPos >= 12) bottomNoteHTML += `<div class="mini-ledger"></div>`;
-            bottomNoteHTML += `</div>`;
-            
-            // สร้าง HTML โน้ตตัวบน (ตัวกลม)
-            let topNoteHTML = `<div class="mini-note" style="bottom:${topPx}px; left:${leftPxTop}px;">`;
-            if (topPos <= 0 || topPos >= 12) topNoteHTML += `<div class="mini-ledger"></div>`;
-            topNoteHTML += `</div>`;
+            let bottomNoteHTML = createNoteSVG(currentQuestion.bPos, currentQuestion.bAcc, leftPxBottom, bottomY);
+            let topNoteHTML = createNoteSVG(currentQuestion.tPos, currentQuestion.tAcc, leftPxTop, topY);
 
-            staffContainer.innerHTML += bottomNoteHTML + topNoteHTML;
+            staffContainer.insertAdjacentHTML('beforeend', bottomNoteHTML + topNoteHTML);
         }
 
-        // ---------------- 🔘 ระบบตรวจคำตอบเมื่อกดฟัน ----------------
-        function checkAnswer(answerType, btnElement) {
-            if (isPaused || isBiting) return;
+        // ---------------- 🔘 ระบบรับค่าจากปุ่ม ----------------
+        function selectInput(type, value, btnElement) {
+            if (isPaused) return; 
+            playSound(popSound);
             
-            if (answerType === currentInterval) {
-                // ตอบถูก!
+            document.querySelectorAll(`.btn-${type}`).forEach(btn => btn.classList.remove('selected'));
+            btnElement.classList.add('selected');
+
+            if (type === 'num') selectedNum = value;
+            if (type === 'qual') selectedQual = value;
+
+            if (selectedNum !== null && selectedQual !== null) {
+                setTimeout(checkAnswer, 150); 
+            }
+        }
+
+        function checkAnswer() {
+            if (isPaused) return;
+            
+            let isCorrect = (selectedNum === currentQuestion.num && selectedQual === currentQuestion.qual);
+            
+            document.querySelectorAll('.input-btn').forEach(btn => btn.classList.remove('selected'));
+            selectedNum = null;
+            selectedQual = null;
+
+            if (isCorrect) {
                 playSound(successSound);
-                score += 10;
+                score += 20;
                 updateUI();
                 
-                btnElement.classList.add('flash-green');
-                setTimeout(() => btnElement.classList.remove('flash-green'), 300);
+                // เพิ่มท็อปปิ้งในขั้นต่อไป
+                ingredientsLayer.innerHTML += goodSteps[pizzaStep];
+                pizzaStep++;
                 
-                generateQuestion();
-                
+                pizzaSvg.classList.add('pop');
+                setTimeout(() => pizzaSvg.classList.remove('pop'), 200);
+
+                if (pizzaStep >= 8) {
+                    pizzaComplete();
+                } else {
+                    generateQuestion();
+                }
+
             } else {
-                // ตอบผิด! โดนงับ
-                isBiting = true;
                 playSound(errorSound);
                 lives--;
                 updateUI();
                 
-                // ทำฉากหลังกระพริบแดง และสั่งงับปาก
-                boardWrapper.classList.add('flash-red-bg');
-                sheepMaster.classList.add('biting');
+                addBadIngredient();
                 
-                // เปลี่ยนตาแกะเป็นตาโกรธ (ขีดขวาง)
-                document.getElementById('eyeL').setAttribute('d', 'M 155 160 L 165 160'); 
-                
-                setTimeout(() => {
-                    boardWrapper.classList.remove('flash-red-bg');
-                    sheepMaster.classList.remove('biting');
-                    isBiting = false;
-                    
-                    if (lives <= 0) {
-                        triggerGameOver();
-                    } else {
-                        generateQuestion(); // สุ่มโจทย์ใหม่ให้
-                    }
-                }, 500); // ระยะเวลางับนิ้ว 0.5 วินาที
+                questionZone.classList.add('flash-red-bg');
+                setTimeout(() => questionZone.classList.remove('flash-red-bg'), 400);
+
+                if (lives <= 0) {
+                    triggerGameOver();
+                } else {
+                    generateQuestion();
+                }
             }
+        }
+
+        // ---------------- 🍕 โยนของแปลก & จบถาด ----------------
+        function addBadIngredient() {
+            let angle = Math.random() * 360;
+            let radius = Math.random() * 70;
+            let cx = 100 + radius * Math.cos(angle * Math.PI/180);
+            let cy = 100 + radius * Math.sin(angle * Math.PI/180);
+            let rot = Math.random() * 360;
+            let item = badIngredients[Math.floor(Math.random() * badIngredients.length)];
+            
+            ingredientsLayer.innerHTML += `<g transform="translate(${cx}, ${cy}) rotate(${rot})">
+                <animateTransform attributeName="transform" type="scale" from="0" to="1.5" dur="0.3s" fill="freeze" additive="sum"/>
+                ${item}
+            </g>`;
+            
+            pizzaSvg.classList.add('pop');
+            setTimeout(() => pizzaSvg.classList.remove('pop'), 200);
+        }
+
+        function pizzaComplete() {
+            playSound(successSound);
+            score += 100; // โบนัสทำพิซซ่าเสร็จ 1 ถาด
+            updateUI();
+            
+            const msg = document.getElementById('pizzaCompleteMsg');
+            msg.classList.add('show');
+            
+            setTimeout(() => {
+                msg.classList.remove('show');
+                // ล้างถาดเริ่มหน้าใหม่
+                pizzaStep = 0;
+                ingredientsLayer.innerHTML = '';
+                generateQuestion();
+            }, 1800);
         }
 
     </script>
