@@ -110,6 +110,24 @@
             line-height: 1; pointer-events: none; z-index: 1; text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
         }
 
+        /* โน้ตตัวกลม (Whole Note) โปร่งใส */
+        .mini-note {
+            position: absolute; width: 16px; height: 12px; 
+            background: #fffde7; 
+            border: 2.5px solid #212121;
+            border-radius: 50%; transform: rotate(-10deg); 
+            margin-left: -8px; margin-bottom: -6px; 
+            box-shadow: 1px 1px 0 rgba(0,0,0,0.1); z-index: 5;
+        }
+        
+        .mini-ledger {
+            position: absolute; width: 28px; height: 2px; background: #212121; border-radius: 2px;
+            left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(10deg); 
+        }
+        .accidental {
+            position: absolute; left: -14px; top: -6px; font-size: 1.1rem; font-weight: 900; color: #212121; font-family: serif; transform: rotate(10deg);
+        }
+
         /* ---------------- โซนปุ่มกด (Menu Controls) ---------------- */
         .controls-zone {
             width: 100%; flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: flex-end; padding-bottom: calc(10px + env(safe-area-inset-bottom));
@@ -144,8 +162,8 @@
             backdrop-filter: blur(8px); text-align: center; padding: 20px;
         }
         .overlay-title { font-size: 2.5rem; color: #fff; font-weight: 900; margin-bottom: 5px; text-shadow: 0px 4px 0px #d32f2f; line-height: 1.2;}
-        .overlay-subtitle { font-size: 1.1rem; color: #ffccbc; font-weight: 700; margin-bottom: 20px; }
         
+        /* กล่องคำแนะนำก่อนเริ่มเกม */
         .start-instruction-box {
             background: #fffcf4; padding: 25px 20px; 
             border-radius: 25px; width: 95%; text-align: center; margin-bottom: 25px;
@@ -167,6 +185,48 @@
         .result-table td { padding: 15px; border-bottom: 2px dashed #ffccbc; font-size: 1.2rem; }
         .result-table td:first-child { text-align: left; color: #5d4037; font-weight: bold; }
         .result-table td:last-child { text-align: right; font-weight: 900; color: #d32f2f; font-size: 1.6rem;}
+
+        /* ---------------- 📖 กล่องคู่มือการเล่น (How to Play Modal) ---------------- */
+        /* พื้นหลังโปร่งแสงโชว์ฉากหลังเบลอๆ */
+        .how-to-overlay { background: rgba(78, 52, 46, 0.88); z-index: 1200; }
+        .guide-modal { position: relative; width: 100%; max-width: 360px; display: flex; flex-direction: column; align-items: center; }
+        .guide-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .guide-title { font-size: 2.2rem; color: #aed581; font-weight: 900; text-shadow: 0 3px 0 #33691e; }
+
+        .btn-close-x {
+            width: 45px; height: 45px; background: #ff5252; border: 3px solid #fff; border-radius: 50%;
+            color: #fff; font-size: 1.5rem; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4); transition: 0.1s; -webkit-tap-highlight-color: transparent;
+        }
+        .btn-close-x:active { transform: scale(0.9); }
+
+        /* แผ่นแผนภาพวาดคำอธิบายวิธีเล่น เปิดให้เห็น Scrollbar ชัดเจน */
+        .guide-diagram-canvas {
+            width: 100%; height: auto; max-height: 65vh; position: relative; overflow-y: auto; overflow-x: hidden;
+            background: rgba(0,0,0,0.25); border-radius: 20px; padding: 20px 15px 30px 15px;
+            border: 2px dashed rgba(255,255,255,0.2); display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .guide-diagram-canvas::-webkit-scrollbar { width: 6px; } 
+        .guide-diagram-canvas::-webkit-scrollbar-thumb { background: #aed581; border-radius: 10px; }
+
+        /* ตั๋วออเดอร์จำลอง */
+        .demo-ticket { 
+            background: #fffde7; border-top: 10px solid #e0e0e0; border-radius: 5px 5px 10px 10px; 
+            width: 90%; padding: 15px 10px 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); position: relative; 
+            display:flex; flex-direction:column; align-items:center; flex-shrink: 0;
+        }
+        .demo-ticket::before { content: ''; position: absolute; top: -5px; left: 0; width: 100%; height: 10px; background: radial-gradient(circle, #fffde7 50%, transparent 50%); background-size: 15px 15px; }
+
+        /* ปุ่มคีย์บอร์ดจำลอง */
+        .demo-keyboard { background: #d7ccc8; border: 3px solid #795548; border-radius: 12px; padding: 10px; width: 100%; box-shadow: 0 4px 8px rgba(0,0,0,0.2); flex-shrink: 0;}
+        .demo-key-row { display: flex; gap: 4px; justify-content: center; margin-bottom: 6px; }
+        .demo-key-sm { flex: 1; height: 35px; background: #fff; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 0.9rem; font-weight: 900; color: #5d4037; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 0 #d7ccc8; }
+        
+        /* ถาดพิซซ่าจำลอง ปรับขนาดให้พอดีจอ */
+        .demo-pizza { width: 110px; height: 110px; border-radius: 50%; box-shadow: 0 5px 10px rgba(0,0,0,0.3); flex-shrink: 0; }
+
+        .chalk-text { color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.8); font-weight: 700; line-height: 1.4; text-align: center; width: 100%; font-size: 1.05rem; }
+        .down-arrow { width: 30px; height: 30px; margin: -5px 0; opacity: 0.9; flex-shrink: 0; }
 
         /* 📖 กล่องทบทวนบทเรียน */
         .review-box {
@@ -198,7 +258,7 @@
         <!-- ถาดพิซซ่าด้านบน -->
         <div class="pizza-zone" id="pizzaZone">
             <svg class="pizza-svg" id="pizzaSvg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <!-- แป้งพิซซ่าขอบกรอบ (เริ่มแรกจะว่างเปล่ามีแต่แป้ง) -->
+                <!-- แป้งพิซซ่าขอบกรอบ -->
                 <circle cx="100" cy="100" r="95" fill="#f5deb3" stroke="#d4a373" stroke-width="8" />
                 
                 <!-- รอยตัด 8 ชิ้น -->
@@ -250,20 +310,111 @@
             </div>
         </div>
 
-        <!-- ☕ หน้าต่างเริ่มเกม -->
-        <div id="startOverlay" class="overlay-screen" style="display: flex;">
+        <!-- 🏠 หน้าต่างเริ่มเกม (Lobby) ตั้งให้อยู่หลังสุด -->
+        <div id="startOverlay" class="overlay-screen" style="display: flex; z-index: 1000;">
             <h1 class="overlay-title">Pizza Interval 🍕</h1>
-            <p class="overlay-subtitle">รับออเดอร์ขั้นคู่ อบพิซซ่าแสนอร่อย!</p>
+            
             <div class="start-instruction-box">
-                <p style="font-size: 1.1rem; color: #4e342e; font-weight: 700; margin-bottom: 8px;">1. ดูบิลออเดอร์ขั้นคู่ตรงกลาง</p>
-                <p style="font-size: 1.1rem; color: #4e342e; font-weight: 700; margin-bottom: 8px;">2. กดเลือก <b>ชนิด (เช่น M)</b> และ <b>ตัวเลข (เช่น 3)</b></p>
-                <div style="background:#fff; border-radius:15px; padding:12px; margin-top:15px; border:2px dashed #d32f2f;">
-                    <p style="font-size: 0.95rem; color: #2e7d32; font-weight: 900;">✅ ตอบถูก = เพิ่มส่วนผสมทีละชั้น (ซอส>ชีส>ท็อปปิ้ง)</p>
-                    <p style="font-size: 0.95rem; color: #c62828; font-weight: 900; margin-top:8px;">❌ ตอบผิด = ได้ของแปลก + เสียหัวใจ 1 ดวง!</p>
-                </div>
+                <p style="font-size: 1.25rem; color: #d32f2f; font-weight: 900; line-height: 1.5; margin-bottom:10px;">
+                    🍕 พร้อมอบพิซซ่าหรือยังเชฟ?
+                </p>
+                <p style="font-size: 1rem; color: #4e342e; font-weight: 700;">จำให้แม่น! โครงสร้างของขั้นคู่แต่ละชนิด</p>
+                <p style="font-size: 0.9rem; color: #f57c00; font-weight: 700; margin-top: 10px;">
+                    ถ้ายังไม่แม่น แวะอ่านสูตรทบทวนก่อนได้นะ
+                </p>
             </div>
+            
             <button class="btn-action" onclick="startGame()">เริ่มทำพิซซ่า 👨‍🍳</button>
             <button class="btn-action btn-secondary" onclick="openReview()">ทบทวนสูตรขั้นคู่ 📖</button>
+        </div>
+
+        <!-- 📖 หน้าต่างคู่มือการเล่น (How to Play) - แสดงเป็นหน้าแรกสุด ซ้อนทับแบบเบลอ -->
+        <div id="howToPlayScreen" class="overlay-screen how-to-overlay" style="display: flex;">
+            <div class="guide-modal">
+                <div class="guide-header">
+                    <span class="guide-title">คู่มือการเล่น</span>
+                    <!-- กากบาทกดแล้วไปหน้า Lobby -->
+                    <button class="btn-close-x" onclick="closeHowToPlay()">✕</button>
+                </div>
+
+                <!-- แผ่นวาดภาพจำลองวิธีเล่น (จัดเรียงบนลงล่างด้วย Flexbox ไม่ให้ทับซ้อน) -->
+                <div class="guide-diagram-canvas">
+                    
+                    <!-- 1. บิลออเดอร์ (ใช้ SVG วาดโน้ตและแฟลตให้ถูกต้องเป๊ะตามหลักดนตรี) -->
+                    <div class="demo-ticket">
+                        <div style="font-size: 0.7rem; color: #795548; font-weight: 900; margin-bottom: 5px;">TICKET #01 - INTERVAL ORDER</div>
+                        <div class="mini-staff" style="width: 100%; margin-top: 15px; margin-bottom: 10px;">
+                            <div class="mini-clef">&#119070;</div>
+                            <div class="mini-line m-line-1"></div>
+                            <div class="mini-line m-line-2"></div>
+                            <div class="mini-line m-line-3"></div>
+                            <div class="mini-line m-line-4"></div>
+                            <div class="mini-line m-line-5"></div>
+                            
+                            <!-- โน้ต C4 (Root) -->
+                            <svg class="note-svg" style="position: absolute; overflow: visible; width: 24px; height: 40px; bottom: -30px; left: 45px; z-index: 5;">
+                                <line x1="-2" y1="20" x2="26" y2="20" stroke="#3e2723" stroke-width="2" />
+                                <ellipse cx="12" cy="20" rx="7.5" ry="5.5" transform="rotate(-15 12 20)" fill="transparent" stroke="#212121" stroke-width="2.5" />
+                            </svg>
+                            
+                            <!-- โน้ต Eb4 (Minor 3rd) พร้อมแฟลต -->
+                            <svg class="note-svg" style="position: absolute; overflow: visible; width: 24px; height: 40px; bottom: -20px; left: 45px; z-index: 5;">
+                                <text x="-12" y="26" font-family="'Times New Roman', serif" font-size="24" font-weight="bold" fill="#212121">♭</text>
+                                <ellipse cx="12" cy="20" rx="7.5" ry="5.5" transform="rotate(-15 12 20)" fill="transparent" stroke="#212121" stroke-width="2.5" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="chalk-text">ดูบิลออเดอร์ขั้นคู่<br>ตรงกลาง</div>
+
+                    <!-- ลูกศรชี้ลง -->
+                    <svg class="down-arrow" viewBox="0 0 24 24" fill="none" stroke="#aed581" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="2" x2="12" y2="22"></line>
+                        <polyline points="19 15 12 22 5 15"></polyline>
+                    </svg>
+
+                    <!-- 2. แผงปุ่มกด -->
+                    <div class="demo-keyboard">
+                        <div class="demo-key-row">
+                            <div class="demo-key-sm">2</div><div class="demo-key-sm">3</div><div class="demo-key-sm">4</div>
+                            <div class="demo-key-sm">5</div><div class="demo-key-sm">6</div><div class="demo-key-sm">7</div>
+                        </div>
+                        <div class="demo-key-row">
+                            <div class="demo-key-sm">M</div><div class="demo-key-sm">m</div><div class="demo-key-sm">P</div>
+                            <div class="demo-key-sm">A</div><div class="demo-key-sm">d</div>
+                        </div>
+                    </div>
+                    <div class="chalk-text">กดเลือกชนิดและเลข</div>
+
+                    <!-- ลูกศรชี้ลง -->
+                    <svg class="down-arrow" viewBox="0 0 24 24" fill="none" stroke="#aed581" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="2" x2="12" y2="22"></line>
+                        <polyline points="19 15 12 22 5 15"></polyline>
+                    </svg>
+
+                    <!-- 3. ถาดพิซซ่า -->
+                    <svg class="demo-pizza" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="95" fill="#f5deb3" stroke="#d4a373" stroke-width="8" />
+                        <circle cx="100" cy="100" r="85" fill="#e53935" opacity="0.85" />
+                        <circle cx="100" cy="100" r="80" fill="#ffe082" />
+                        <!-- Pepperoni -->
+                        <g transform="translate(60,60)"><circle r="16" fill="#d32f2f"/><circle r="12" fill="#e53935"/></g>
+                        <g transform="translate(140,110)"><circle r="16" fill="#d32f2f"/><circle r="12" fill="#e53935"/></g>
+                        <g transform="translate(90,140)"><circle r="16" fill="#d32f2f"/><circle r="12" fill="#e53935"/></g>
+                        <!-- Basil -->
+                        <g transform="translate(110,50)"><path d="M0,15 C-15,5 -5,-15 0,-15 C5,-15 15,5 0,15 Z" fill="#4caf50" stroke="#2e7d32" stroke-width="1"/></g>
+                        <g transform="translate(70,140)"><path d="M0,15 C-15,5 -5,-15 0,-15 C5,-15 15,5 0,15 Z" fill="#4caf50" stroke="#2e7d32" stroke-width="1"/></g>
+                        <!-- Mushroom -->
+                        <g transform="translate(140,150)"><path d="M-10,0 C-10,-10 10,-10 10,0 L5,0 L5,8 L-5,8 L-5,0 Z" fill="#f5f5f5" stroke="#8d6e63" stroke-width="1.5"/></g>
+                        <g transform="translate(50,100)"><path d="M-10,0 C-10,-10 10,-10 10,0 L5,0 L5,8 L-5,8 L-5,0 Z" fill="#f5f5f5" stroke="#8d6e63" stroke-width="1.5"/></g>
+                    </svg>
+
+                    <div class="chalk-text" style="font-size: 0.95rem;">
+                        ถ้าหากตอบถูกจะได้ส่วนผสมทีละชิ้น<br>
+                        <span style="color:#ffccbc;">ถ้าหากตอบผิดจะได้ส่วนผสมแปลก<br>และเสียหัวใจ</span>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <!-- ⏸️ หน้าต่างหยุดพักเกม -->
@@ -424,24 +575,10 @@
             }, 800);
         }
 
-        // ---------------- ⏸️ ระบบหยุดเกม / ทบทวน ----------------
-        function pauseGame() {
+        // ---------------- 📖 ฟังก์ชันเปิด/ปิด หน้าต่างต่างๆ ----------------
+        function closeHowToPlay() {
             playSound(popSound);
-            isPaused = true;
-            document.getElementById('pauseModal').style.display = 'flex';
-        }
-
-        function resumeGame() {
-            playSound(popSound);
-            isPaused = false;
-            document.getElementById('pauseModal').style.display = 'none';
-        }
-
-        function restartGame() {
-            playSound(popSound);
-            isPaused = false;
-            document.getElementById('pauseModal').style.display = 'none';
-            startGame(); 
+            document.getElementById('howToPlayScreen').style.display = 'none';
         }
 
         function openReview() {
@@ -466,12 +603,31 @@
             }
         }
 
+        // ---------------- ⏸️ ระบบหยุดเกม / เริ่มใหม่ ----------------
+        function pauseGame() {
+            playSound(popSound);
+            isPaused = true;
+            document.getElementById('pauseModal').style.display = 'flex';
+        }
+
+        function resumeGame() {
+            playSound(popSound);
+            isPaused = false;
+            document.getElementById('pauseModal').style.display = 'none';
+        }
+
+        function restartGame() {
+            playSound(popSound);
+            isPaused = false;
+            document.getElementById('pauseModal').style.display = 'none';
+            startGame(); 
+        }
+
         // ---------------- 🚀 ฟังก์ชันวาดโน้ต SVG ----------------
         function createNoteSVG(pos, accidental, offsetX, bottomY) {
             let needsLedger = (pos <= 0 || pos >= 12);
             let ledgerHTML = '';
             if (needsLedger) {
-                // เส้นน้อยลากทะลุกลางโน้ตแนวนอน
                 ledgerHTML = `<line x1="-2" y1="20" x2="26" y2="20" stroke="#3e2723" stroke-width="2" />`;
             }
 
@@ -495,13 +651,13 @@
         function startGame() {
             playSound(popSound);
             document.getElementById('startOverlay').style.display = 'none';
+            document.getElementById('howToPlayScreen').style.display = 'none'; // เผื่อไว้
             score = 0;
             lives = 3;
             pizzaStep = 0;
             isPaused = false;
             ingredientsLayer.innerHTML = '';
             
-            // ล้างปุ่มที่อาจจะค้างไว้
             document.querySelectorAll('.input-btn').forEach(btn => btn.classList.remove('selected'));
             selectedNum = null;
             selectedQual = null;
@@ -533,7 +689,7 @@
             staffContainer.insertAdjacentHTML('beforeend', bottomNoteHTML + topNoteHTML);
         }
 
-        // ---------------- 🔘 ระบบรับค่าจากปุ่ม ----------------
+        // ---------------- 🔘 ระบบรับค่าจากปุ่มเขียงไม้ ----------------
         function selectInput(type, value, btnElement) {
             if (isPaused) return; 
             playSound(popSound);
@@ -563,7 +719,6 @@
                 score += 20;
                 updateUI();
                 
-                // เพิ่มท็อปปิ้งในขั้นต่อไป
                 ingredientsLayer.innerHTML += goodSteps[pizzaStep];
                 pizzaStep++;
                 
@@ -594,7 +749,7 @@
             }
         }
 
-        // ---------------- 🍕 โยนของแปลก & จบถาด ----------------
+        // ---------------- 🍕 ระบบโยนของแปลก ----------------
         function addBadIngredient() {
             let angle = Math.random() * 360;
             let radius = Math.random() * 70;
@@ -614,7 +769,7 @@
 
         function pizzaComplete() {
             playSound(successSound);
-            score += 100; // โบนัสทำพิซซ่าเสร็จ 1 ถาด
+            score += 100; 
             updateUI();
             
             const msg = document.getElementById('pizzaCompleteMsg');
@@ -622,7 +777,6 @@
             
             setTimeout(() => {
                 msg.classList.remove('show');
-                // ล้างถาดเริ่มหน้าใหม่
                 pizzaStep = 0;
                 ingredientsLayer.innerHTML = '';
                 generateQuestion();
