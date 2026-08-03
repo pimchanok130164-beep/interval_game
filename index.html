@@ -180,11 +180,11 @@
         .btn-secondary { background: #fffcf4; color: #d32f2f; box-shadow: 0 8px 0 #e6d8ce, 0 15px 20px rgba(0, 0, 0, 0.4); font-size: 1.15rem; }
 
         .go-box { background: #fffcf4; padding: 30px 25px; border-radius: 35px; box-shadow: 0 10px 0 #e6d8ce, 0 20px 40px rgba(0,0,0,0.5); width: 100%; text-align: center; border: 4px dashed #d32f2f; }
-        .go-box h2 { font-size: 2.2rem; color: #d32f2f; margin-bottom: 20px; font-weight: 900; }
+        .go-box h2 { font-size: 2.2rem; margin-bottom: 20px; font-weight: 900; }
         .result-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; background: #fff; border-radius: 20px; overflow: hidden; border: 2px dashed #ffccbc;}
         .result-table td { padding: 15px; border-bottom: 2px dashed #ffccbc; font-size: 1.2rem; }
         .result-table td:first-child { text-align: left; color: #5d4037; font-weight: bold; }
-        .result-table td:last-child { text-align: right; font-weight: 900; color: #d32f2f; font-size: 1.6rem;}
+        .result-table td:last-child { text-align: right; font-weight: 900; font-size: 1.6rem;}
 
         /* ---------------- 📖 กล่องคู่มือการเล่น (How to Play Modal) ---------------- */
         /* พื้นหลังโปร่งแสงโชว์ฉากหลังเบลอๆ */
@@ -319,9 +319,10 @@
                     🍕 พร้อมอบพิซซ่าหรือยังเชฟ?
                 </p>
                 <p style="font-size: 1rem; color: #4e342e; font-weight: 700;">จำให้แม่น! โครงสร้างของขั้นคู่แต่ละชนิด</p>
-                <p style="font-size: 0.9rem; color: #f57c00; font-weight: 700; margin-top: 10px;">
-                    ถ้ายังไม่แม่น แวะอ่านสูตรทบทวนก่อนได้นะ
-                </p>
+                <div style="background:#fff; border-radius:15px; padding:12px; margin-top:15px; border:2px dashed #d32f2f;">
+                    <p style="font-size: 0.95rem; color: #2e7d32; font-weight: 900;">✅ ตอบถูก 1 ข้อ = ได้ 10 คะแนน + ส่วนผสม</p>
+                    <p style="font-size: 0.95rem; color: #c62828; font-weight: 900; margin-top:8px;">🎯 สะสมครบ 80 คะแนน เพื่อปลดล็อคด่าน 3!</p>
+                </div>
             </div>
             
             <button class="btn-action" onclick="startGame()">เริ่มทำพิซซ่า 👨‍🍳</button>
@@ -340,7 +341,7 @@
                 <!-- แผ่นวาดภาพจำลองวิธีเล่น (จัดเรียงบนลงล่างด้วย Flexbox ไม่ให้ทับซ้อน) -->
                 <div class="guide-diagram-canvas">
                     
-                    <!-- 1. บิลออเดอร์ (ใช้ SVG วาดโน้ตและแฟลตให้ถูกต้องเป๊ะตามหลักดนตรี) -->
+                    <!-- 1. บิลออเดอร์ -->
                     <div class="demo-ticket">
                         <div style="font-size: 0.7rem; color: #795548; font-weight: 900; margin-bottom: 5px;">TICKET #01 - INTERVAL ORDER</div>
                         <div class="mini-staff" style="width: 100%; margin-top: 15px; margin-bottom: 10px;">
@@ -409,7 +410,7 @@
                     </svg>
 
                     <div class="chalk-text" style="font-size: 0.95rem;">
-                        ถ้าหากตอบถูกจะได้ส่วนผสมทีละชิ้น<br>
+                        ถ้าหากตอบถูกจะได้ส่วนผสมทีละชั้น<br>
                         <span style="color:#ffccbc;">ถ้าหากตอบผิดจะได้ส่วนผสมแปลก<br>และเสียหัวใจ</span>
                     </div>
 
@@ -423,8 +424,8 @@
             <p class="overlay-subtitle">เชฟเหนื่อยแล้วหรอ?</p>
             <div style="display: flex; flex-direction: column; width:100%; align-items:center; margin-top:15px;">
                 <button class="btn-action" onclick="resumeGame()">▶ อบพิซซ่าต่อ</button>
-                <button class="btn-action btn-secondary" onclick="openReviewFromPause()">ทบทวนสูตรขั้นคู่ 📖</button>
                 <button class="btn-action btn-secondary" onclick="restartGame()">🔄 เทแป้งทิ้งเริ่มใหม่</button>
+                <button class="btn-action btn-secondary" style="border-color:#d32f2f; color:#d32f2f;" onclick="loseGameBackToMap()">กลับหน้าหลัก 🗺️</button>
             </div>
         </div>
 
@@ -454,6 +455,18 @@
             <button class="btn-action btn-secondary" style="max-width: 200px;" onclick="closeReview()">เข้าใจแล้ว! ❌</button>
         </div>
 
+        <!-- 🎉 หน้าจอชนะเกม (ผ่านด่าน) -->
+        <div id="gameWinScreen" class="overlay-screen">
+            <div class="go-box" style="border-color: #81c784;">
+                <h2 style="color: #2e7d32;">อบพิซซ่าสำเร็จ! 🎉</h2>
+                <table class="result-table" style="border-color: #a5d6a7;">
+                    <tr><td style="border-bottom: 2px dashed #a5d6a7;">คะแนนรวม</td><td style="border-bottom: 2px dashed #a5d6a7;"><span id="winScore" style="color: #2e7d32;">0</span></td></tr>
+                    <tr><td colspan="2" style="text-align: center; border-bottom: none;"><span style="font-size:1.1rem; color:#5d4037; font-weight: 700;">ยินดีด้วย! คุณปลดล็อคด่านที่ 3 แล้ว</span></td></tr>
+                </table>
+                <button class="btn-action" style="background: #2e7d32; box-shadow: 0 8px 0 #1b5e20;" onclick="winGame()">รับรางวัล & กลับแผนที่ 🗺️</button>
+            </div>
+        </div>
+
         <!-- 💀 หน้าจอจบเกมส์ -->
         <div id="gameOverScreen" class="overlay-screen">
             <div class="go-box">
@@ -461,7 +474,8 @@
                 <table class="result-table">
                     <tr><td>คะแนนของคุณ</td><td><span id="finalScore">0</span></td></tr>
                 </table>
-                <button class="btn-action" onclick="location.reload()">ล้างกระทะเริ่มใหม่ 🍽️</button>
+                <button class="btn-action" onclick="restartGame()">ล้างกระทะเริ่มใหม่ 🍽️</button>
+                <button class="btn-action btn-secondary" onclick="loseGameBackToMap()">กลับหน้าหลัก 🗺️</button>
             </div>
         </div>
 
@@ -603,7 +617,7 @@
             }
         }
 
-        // ---------------- ⏸️ ระบบหยุดเกม / เริ่มใหม่ ----------------
+        // ---------------- ⏸️ ระบบหยุดเกม / เริ่มใหม่ / นำทาง ----------------
         function pauseGame() {
             playSound(popSound);
             isPaused = true;
@@ -620,7 +634,23 @@
             playSound(popSound);
             isPaused = false;
             document.getElementById('pauseModal').style.display = 'none';
+            document.getElementById('gameOverScreen').style.display = 'none';
+            document.getElementById('gameWinScreen').style.display = 'none';
             startGame(); 
+        }
+
+        function winGame() {
+            playSound(popSound);
+            let currentProgress = parseInt(localStorage.getItem('chordkupp_progress')) || 1;
+            if(currentProgress < 3) { 
+                localStorage.setItem('chordkupp_progress', 3); 
+            }
+            window.location.href = 'index.html'; 
+        }
+
+        function loseGameBackToMap() {
+            playSound(popSound);
+            window.location.href = 'index.html'; 
         }
 
         // ---------------- 🚀 ฟังก์ชันวาดโน้ต SVG ----------------
@@ -651,7 +681,7 @@
         function startGame() {
             playSound(popSound);
             document.getElementById('startOverlay').style.display = 'none';
-            document.getElementById('howToPlayScreen').style.display = 'none'; // เผื่อไว้
+            document.getElementById('howToPlayScreen').style.display = 'none'; 
             score = 0;
             lives = 3;
             pizzaStep = 0;
@@ -705,6 +735,13 @@
             }
         }
 
+        function triggerGameWin() {
+            isPaused = true;
+            playSound(successSound); 
+            document.getElementById('winScore').textContent = score; 
+            document.getElementById('gameWinScreen').style.display = 'flex';
+        }
+
         function checkAnswer() {
             if (isPaused) return;
             
@@ -716,7 +753,7 @@
 
             if (isCorrect) {
                 playSound(successSound);
-                score += 20;
+                score += 10;
                 updateUI();
                 
                 ingredientsLayer.innerHTML += goodSteps[pizzaStep];
@@ -769,17 +806,14 @@
 
         function pizzaComplete() {
             playSound(successSound);
-            score += 100; 
-            updateUI();
+            updateUI(); 
             
             const msg = document.getElementById('pizzaCompleteMsg');
             msg.classList.add('show');
             
             setTimeout(() => {
                 msg.classList.remove('show');
-                pizzaStep = 0;
-                ingredientsLayer.innerHTML = '';
-                generateQuestion();
+                triggerGameWin();
             }, 1800);
         }
 
