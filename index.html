@@ -110,21 +110,6 @@
             line-height: 1; pointer-events: none; z-index: 1; text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
         }
 
-        /* โน้ตตัวกลม (Whole Note) โปร่งใส */
-        .mini-note {
-            position: absolute; width: 16px; height: 12px; 
-            background: #fffde7; 
-            border: 2.5px solid #212121;
-            border-radius: 50%; transform: rotate(-10deg); 
-            margin-left: -8px; margin-bottom: -6px; 
-            box-shadow: 1px 1px 0 rgba(0,0,0,0.1); z-index: 5;
-        }
-        
-        .mini-ledger {
-            position: absolute; width: 28px; height: 2px; background: #212121; border-radius: 2px;
-            left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(10deg); 
-        }
-
         /* ---------------- โซนปุ่มกด (Menu Controls) ---------------- */
         .controls-zone {
             width: 100%; flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: flex-end; padding-bottom: calc(10px + env(safe-area-inset-bottom));
@@ -341,13 +326,16 @@
                             <div class="mini-line m-line-4"></div>
                             <div class="mini-line m-line-5"></div>
                             
+                            <!-- โน้ต C4 (Root) แบบสมบูรณ์ -->
                             <svg class="note-svg" style="position: absolute; overflow: visible; width: 24px; height: 40px; bottom: -30px; left: 45px; z-index: 5;">
                                 <line x1="-2" y1="20" x2="26" y2="20" stroke="#3e2723" stroke-width="2" />
                                 <ellipse cx="12" cy="20" rx="7.5" ry="5.5" transform="rotate(-15 12 20)" fill="transparent" stroke="#212121" stroke-width="2.5" />
                             </svg>
                             
+                            <!-- โน้ต Eb4 (Minor 3rd) จัดแฟลตใหม่ไม่ให้ทับโน้ต -->
                             <svg class="note-svg" style="position: absolute; overflow: visible; width: 24px; height: 40px; bottom: -20px; left: 45px; z-index: 5;">
-                                <text x="-12" y="26" font-family="'Times New Roman', serif" font-size="24" font-weight="bold" fill="#212121">♭</text>
+                                <!-- ใช้ x="-2" วางแฟลตอยู่นอกตัวโน้ต และ y="25.5" จัดให้อยู่กลางเส้น -->
+                                <text x="-2" y="25.5" text-anchor="end" font-family="'Times New Roman', serif" font-size="24" font-weight="bold" fill="#212121">♭</text>
                                 <ellipse cx="12" cy="20" rx="7.5" ry="5.5" transform="rotate(-15 12 20)" fill="transparent" stroke="#212121" stroke-width="2.5" />
                             </svg>
                         </div>
@@ -649,7 +637,7 @@
         const questionZone = document.getElementById('questionZone');
 
         function updateUI() {
-            scoreDisplay.textContent = score;
+            scoreDisplay.textContent = score; 
             livesDisplay.textContent = "❤️".repeat(Math.max(0, lives)) + "🤍".repeat(Math.max(0, 3 - lives));
         }
 
@@ -722,7 +710,6 @@
 
         function winGame() {
             playSound(popSound);
-            // แจ้งระบบว่าผ่านด่าน 2 แล้ว (เปิดทางด่าน 3)
             let currentProgress = parseInt(localStorage.getItem('chordkupp_progress')) || 1;
             if(currentProgress < 3) { 
                 localStorage.setItem('chordkupp_progress', 3); 
@@ -735,7 +722,7 @@
             window.location.href = 'index.html'; 
         }
 
-        // ---------------- 🚀 ฟังก์ชันวาดโน้ต SVG แบบโปร ----------------
+        // ---------------- 🚀 ฟังก์ชันวาดโน้ต SVG แบบมือโปร (ปรับแก้ Flat) ----------------
         function createNoteSVG(pos, accidental, offsetX, bottomY) {
             let needsLedger = (pos <= 0 || pos >= 12);
             let ledgerHTML = '';
@@ -746,15 +733,17 @@
             let accHTML = '';
             if (accidental) {
                 let accSymbol = '';
-                let accX = -12;
                 let fontFam = "'Times New Roman', serif";
-                
-                if (accidental === 'b') { accSymbol = '♭'; accX = -14; }
-                else if (accidental === '#') { accSymbol = '♯'; accX = -14; }
-                else if (accidental === 'bb') { accSymbol = '♭♭'; accX = -26; }
-                else if (accidental === '##') { accSymbol = 'x'; accX = -12; fontFam = "sans-serif"; }
+                let yPos = 25.5; 
+                let letterSpacing = "normal";
 
-                accHTML = `<text x="${accX}" y="26" font-family="${fontFam}" font-size="24" font-weight="bold" fill="#212121">${accSymbol}</text>`;
+                if (accidental === 'b') { accSymbol = '♭'; yPos = 25.5; }
+                else if (accidental === '#') { accSymbol = '♯'; yPos = 27.5; }
+                else if (accidental === 'bb') { accSymbol = '♭♭'; yPos = 25.5; letterSpacing = "-3px"; }
+                else if (accidental === '##') { accSymbol = 'x'; yPos = 25; fontFam = "sans-serif"; }
+
+                // ล็อกขอบขวาของตัวอักษรไว้ที่ x="-2" รับรองว่าไม่ทับตัวโน้ตแน่นอน
+                accHTML = `<text x="-2" y="${yPos}" text-anchor="end" style="letter-spacing: ${letterSpacing};" font-family="${fontFam}" font-size="24" font-weight="bold" fill="#212121">${accSymbol}</text>`;
             }
 
             return `
