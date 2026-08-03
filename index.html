@@ -124,9 +124,6 @@
             position: absolute; width: 28px; height: 2px; background: #212121; border-radius: 2px;
             left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(10deg); 
         }
-        .accidental {
-            position: absolute; left: -14px; top: -6px; font-size: 1.1rem; font-weight: 900; color: #212121; font-family: serif; transform: rotate(10deg);
-        }
 
         /* ---------------- โซนปุ่มกด (Menu Controls) ---------------- */
         .controls-zone {
@@ -250,7 +247,7 @@
         
         <!-- แถบแสดงคะแนน ปุ่มหยุดพัก และหัวใจ -->
         <div class="hud-info">
-            <div class="score-board">SCORE: <span id="scoreDisplay">0</span>/80</div>
+            <div class="score-board">SCORE: <span id="scoreDisplay">0</span></div>
             <button class="btn-pause-small" onclick="pauseGame()">⏸</button>
             <div class="lives-board" id="livesDisplay">❤️❤️❤️</div>
         </div>
@@ -260,13 +257,11 @@
             <svg class="pizza-svg" id="pizzaSvg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                 <!-- แป้งพิซซ่าขอบกรอบ -->
                 <circle cx="100" cy="100" r="95" fill="#f5deb3" stroke="#d4a373" stroke-width="8" />
-                
                 <!-- รอยตัด 8 ชิ้น -->
                 <line x1="100" y1="10" x2="100" y2="190" stroke="#e6c280" stroke-width="2" stroke-dasharray="4,4" />
                 <line x1="10" y1="100" x2="190" y2="100" stroke="#e6c280" stroke-width="2" stroke-dasharray="4,4" />
                 <line x1="36" y1="36" x2="164" y2="164" stroke="#e6c280" stroke-width="2" stroke-dasharray="4,4" />
                 <line x1="36" y1="164" x2="164" y2="36" stroke="#e6c280" stroke-width="2" stroke-dasharray="4,4" />
-
                 <!-- Layer สำหรับใส่ซอส ชีส และท็อปปิ้ง -->
                 <g id="ingredientsLayer"></g>
             </svg>
@@ -277,15 +272,12 @@
         <div class="question-zone" id="questionZone">
             <div class="ticket-title">Ticket #02 - Interval Order</div>
             <div class="mini-staff" id="staffContainer">
-                <!-- กุญแจซอล -->
                 <div class="mini-clef">&#119070;</div>
-
                 <div class="mini-line m-line-1"></div>
                 <div class="mini-line m-line-2"></div>
                 <div class="mini-line m-line-3"></div>
                 <div class="mini-line m-line-4"></div>
                 <div class="mini-line m-line-5"></div>
-                <!-- โน้ตจะถูกวาดลงที่นี่ผ่าน JS -->
             </div>
         </div>
 
@@ -310,7 +302,7 @@
             </div>
         </div>
 
-        <!-- 🏠 หน้าต่างเริ่มเกม (Lobby) ตั้งให้อยู่หลังสุด -->
+        <!-- 🏠 หน้าต่างเริ่มเกม (Lobby) -->
         <div id="startOverlay" class="overlay-screen" style="display: flex; z-index: 1000;">
             <h1 class="overlay-title">Pizza Interval 🍕</h1>
             
@@ -329,19 +321,16 @@
             <button class="btn-action btn-secondary" onclick="openReview()">ทบทวนสูตรขั้นคู่ 📖</button>
         </div>
 
-        <!-- 📖 หน้าต่างคู่มือการเล่น (How to Play) - แสดงเป็นหน้าแรกสุด ซ้อนทับแบบเบลอ -->
+        <!-- 📖 หน้าต่างคู่มือการเล่น (How to Play) -->
         <div id="howToPlayScreen" class="overlay-screen how-to-overlay" style="display: flex;">
             <div class="guide-modal">
                 <div class="guide-header">
                     <span class="guide-title">คู่มือการเล่น</span>
-                    <!-- กากบาทกดแล้วไปหน้า Lobby -->
                     <button class="btn-close-x" onclick="closeHowToPlay()">✕</button>
                 </div>
 
-                <!-- แผ่นวาดภาพจำลองวิธีเล่น (จัดเรียงบนลงล่างด้วย Flexbox ไม่ให้ทับซ้อน) -->
                 <div class="guide-diagram-canvas">
-                    
-                    <!-- 1. บิลออเดอร์ (ใช้ SVG วาดโน้ตและแฟลตให้ถูกต้องเป๊ะตามหลักดนตรี) -->
+                    <!-- 1. บิลออเดอร์ -->
                     <div class="demo-ticket">
                         <div style="font-size: 0.7rem; color: #795548; font-weight: 900; margin-bottom: 5px;">TICKET #01 - INTERVAL ORDER</div>
                         <div class="mini-staff" style="width: 100%; margin-top: 15px; margin-bottom: 10px;">
@@ -352,13 +341,11 @@
                             <div class="mini-line m-line-4"></div>
                             <div class="mini-line m-line-5"></div>
                             
-                            <!-- โน้ต C4 (Root) -->
                             <svg class="note-svg" style="position: absolute; overflow: visible; width: 24px; height: 40px; bottom: -30px; left: 45px; z-index: 5;">
                                 <line x1="-2" y1="20" x2="26" y2="20" stroke="#3e2723" stroke-width="2" />
                                 <ellipse cx="12" cy="20" rx="7.5" ry="5.5" transform="rotate(-15 12 20)" fill="transparent" stroke="#212121" stroke-width="2.5" />
                             </svg>
                             
-                            <!-- โน้ต Eb4 (Minor 3rd) พร้อมแฟลต -->
                             <svg class="note-svg" style="position: absolute; overflow: visible; width: 24px; height: 40px; bottom: -20px; left: 45px; z-index: 5;">
                                 <text x="-12" y="26" font-family="'Times New Roman', serif" font-size="24" font-weight="bold" fill="#212121">♭</text>
                                 <ellipse cx="12" cy="20" rx="7.5" ry="5.5" transform="rotate(-15 12 20)" fill="transparent" stroke="#212121" stroke-width="2.5" />
@@ -367,7 +354,6 @@
                     </div>
                     <div class="chalk-text">ดูบิลออเดอร์ขั้นคู่<br>ตรงกลาง</div>
 
-                    <!-- ลูกศรชี้ลง -->
                     <svg class="down-arrow" viewBox="0 0 24 24" fill="none" stroke="#aed581" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="2" x2="12" y2="22"></line>
                         <polyline points="19 15 12 22 5 15"></polyline>
@@ -386,7 +372,6 @@
                     </div>
                     <div class="chalk-text">กดเลือกชนิดและเลข</div>
 
-                    <!-- ลูกศรชี้ลง -->
                     <svg class="down-arrow" viewBox="0 0 24 24" fill="none" stroke="#aed581" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="2" x2="12" y2="22"></line>
                         <polyline points="19 15 12 22 5 15"></polyline>
@@ -413,7 +398,6 @@
                         ถ้าหากตอบถูกจะได้ส่วนผสมทีละชั้น<br>
                         <span style="color:#ffccbc;">ถ้าหากตอบผิดจะได้ส่วนผสมแปลก<br>และเสียหัวใจ</span>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -494,50 +478,121 @@
             audio.play().catch(e => {}); 
         }
 
-        // ---------------- 📚 ฐานข้อมูลโจทย์ขั้นคู่ ----------------
-        // 5 ชนิด (M, m, P, A, d) / รากเสียงไม่เกิน 4# 4b
+        // ---------------- 📚 คลังโจทย์ขั้นคู่ระดับมือโปร ----------------
+        // ครอบคลุม 5 ชนิด และรากเสียงไม่เกิน 4# 4b
         const questionBank = [
-            { bPos: 0, bAcc: '', tPos: 4, tAcc: '', num: 5, qual: 'P' }, // C-G (P5)
-            { bPos: 0, bAcc: '', tPos: 2, tAcc: '', num: 3, qual: 'M' }, // C-E (M3)
-            { bPos: 0, bAcc: '', tPos: 2, tAcc: 'b', num: 3, qual: 'm' },// C-Eb (m3)
-            { bPos: 0, bAcc: '', tPos: 4, tAcc: '#', num: 5, qual: 'A' },// C-G# (A5)
-            { bPos: 0, bAcc: '', tPos: 4, tAcc: 'b', num: 5, qual: 'd' },// C-Gb (d5)
-            
-            { bPos: 4, bAcc: '', tPos: 8, tAcc: '', num: 5, qual: 'P' }, // G-D (P5)
-            { bPos: 4, bAcc: '', tPos: 6, tAcc: '', num: 3, qual: 'M' }, // G-B (M3)
-            { bPos: 4, bAcc: '', tPos: 6, tAcc: 'b', num: 3, qual: 'm' },// G-Bb (m3)
-            { bPos: 4, bAcc: '', tPos: 10, tAcc: '#', num: 7, qual: 'M' },// G-F# (M7)
-            { bPos: 4, bAcc: '', tPos: 10, tAcc: '', num: 7, qual: 'm' }, // G-F (m7)
-            
-            { bPos: 1, bAcc: '', tPos: 5, tAcc: '', num: 5, qual: 'P' }, // D-A (P5)
-            { bPos: 1, bAcc: '', tPos: 3, tAcc: '#', num: 3, qual: 'M' },// D-F# (M3)
-            { bPos: 1, bAcc: '', tPos: 3, tAcc: '', num: 3, qual: 'm' }, // D-F (m3)
-            { bPos: 1, bAcc: '', tPos: 4, tAcc: '#', num: 4, qual: 'A' },// D-G# (A4)
-            { bPos: 1, bAcc: '', tPos: 7, tAcc: 'b', num: 7, qual: 'd' },// D-Cb (d7)
-            
-            { bPos: 5, bAcc: '', tPos: 7, tAcc: '#', num: 3, qual: 'M' },// A-C# (M3)
-            { bPos: 5, bAcc: '', tPos: 7, tAcc: '', num: 3, qual: 'm' }, // A-C (m3)
-            { bPos: 5, bAcc: '', tPos: 9, tAcc: '', num: 5, qual: 'P' }, // A-E (P5)
-            
-            { bPos: 2, bAcc: '', tPos: 6, tAcc: '', num: 5, qual: 'P' }, // E-B (P5)
-            { bPos: 2, bAcc: '', tPos: 4, tAcc: '#', num: 3, qual: 'M' },// E-G# (M3)
-            { bPos: 2, bAcc: '', tPos: 6, tAcc: 'b', num: 5, qual: 'd' },// E-Bb (d5)
-            
-            { bPos: 3, bAcc: '', tPos: 7, tAcc: '', num: 5, qual: 'P' }, // F-C (P5)
-            { bPos: 3, bAcc: '', tPos: 5, tAcc: '', num: 3, qual: 'M' }, // F-A (M3)
-            { bPos: 3, bAcc: '', tPos: 6, tAcc: '', num: 4, qual: 'A' }, // F-B (A4)
-            
-            { bPos: 6, bAcc: 'b', tPos: 10, tAcc: '', num: 5, qual: 'P' }, // Bb-F (P5)
-            { bPos: 6, bAcc: 'b', tPos: 8, tAcc: '', num: 3, qual: 'M' },  // Bb-D (M3)
-            { bPos: 6, bAcc: 'b', tPos: 8, tAcc: 'b', num: 3, qual: 'm' }, // Bb-Db (m3)
-            
-            { bPos: 2, bAcc: 'b', tPos: 6, tAcc: 'b', num: 5, qual: 'P' }, // Eb-Bb (P5)
-            { bPos: 2, bAcc: 'b', tPos: 4, tAcc: '', num: 3, qual: 'M' },  // Eb-G (M3)
-            { bPos: 2, bAcc: 'b', tPos: 4, tAcc: 'b', num: 3, qual: 'm' }, // Eb-Gb (m3)
-            
-            { bPos: 5, bAcc: 'b', tPos: 7, tAcc: '', num: 3, qual: 'M' },  // Ab-C (M3)
-            { bPos: 5, bAcc: 'b', tPos: 7, tAcc: 'b', num: 3, qual: 'm' }, // Ab-Cb (m3)
-            { bPos: 5, bAcc: 'b', tPos: 8, tAcc: '', num: 4, qual: 'A' }   // Ab-D (A4)
+            // Root: C4 (0)
+            { bPos: 0, bAcc: '', tPos: 1, tAcc: '', num: 2, qual: 'M' },
+            { bPos: 0, bAcc: '', tPos: 1, tAcc: 'b', num: 2, qual: 'm' },
+            { bPos: 0, bAcc: '', tPos: 1, tAcc: '#', num: 2, qual: 'A' },
+            { bPos: 0, bAcc: '', tPos: 2, tAcc: '', num: 3, qual: 'M' },
+            { bPos: 0, bAcc: '', tPos: 2, tAcc: 'b', num: 3, qual: 'm' },
+            { bPos: 0, bAcc: '', tPos: 3, tAcc: '', num: 4, qual: 'P' },
+            { bPos: 0, bAcc: '', tPos: 3, tAcc: '#', num: 4, qual: 'A' },
+            { bPos: 0, bAcc: '', tPos: 4, tAcc: '', num: 5, qual: 'P' },
+            { bPos: 0, bAcc: '', tPos: 4, tAcc: 'b', num: 5, qual: 'd' },
+            { bPos: 0, bAcc: '', tPos: 4, tAcc: '#', num: 5, qual: 'A' },
+            { bPos: 0, bAcc: '', tPos: 5, tAcc: '', num: 6, qual: 'M' },
+            { bPos: 0, bAcc: '', tPos: 5, tAcc: 'b', num: 6, qual: 'm' },
+            { bPos: 0, bAcc: '', tPos: 6, tAcc: '', num: 7, qual: 'M' },
+            { bPos: 0, bAcc: '', tPos: 6, tAcc: 'b', num: 7, qual: 'm' },
+            { bPos: 0, bAcc: '', tPos: 6, tAcc: 'bb', num: 7, qual: 'd' },
+
+            // Root: D4 (1) - 2#
+            { bPos: 1, bAcc: '', tPos: 2, tAcc: '', num: 2, qual: 'M' },
+            { bPos: 1, bAcc: '', tPos: 2, tAcc: 'b', num: 2, qual: 'm' },
+            { bPos: 1, bAcc: '', tPos: 3, tAcc: '', num: 3, qual: 'm' },
+            { bPos: 1, bAcc: '', tPos: 3, tAcc: '#', num: 3, qual: 'M' },
+            { bPos: 1, bAcc: '', tPos: 3, tAcc: '##', num: 3, qual: 'A' }, // D-Fx (Double Sharp)
+            { bPos: 1, bAcc: '', tPos: 4, tAcc: '', num: 4, qual: 'P' },
+            { bPos: 1, bAcc: '', tPos: 4, tAcc: '#', num: 4, qual: 'A' },
+            { bPos: 1, bAcc: '', tPos: 5, tAcc: '', num: 5, qual: 'P' },
+            { bPos: 1, bAcc: '', tPos: 5, tAcc: 'b', num: 5, qual: 'd' },
+            { bPos: 1, bAcc: '', tPos: 6, tAcc: '', num: 6, qual: 'M' },
+            { bPos: 1, bAcc: '', tPos: 7, tAcc: '', num: 7, qual: 'm' },
+            { bPos: 1, bAcc: '', tPos: 7, tAcc: '#', num: 7, qual: 'M' },
+
+            // Root: E4 (2) - 4#
+            { bPos: 2, bAcc: '', tPos: 3, tAcc: '#', num: 2, qual: 'M' },
+            { bPos: 2, bAcc: '', tPos: 3, tAcc: '', num: 2, qual: 'm' },
+            { bPos: 2, bAcc: '', tPos: 3, tAcc: '##', num: 2, qual: 'A' }, // E-Fx (Double Sharp)
+            { bPos: 2, bAcc: '', tPos: 4, tAcc: '#', num: 3, qual: 'M' },
+            { bPos: 2, bAcc: '', tPos: 4, tAcc: '', num: 3, qual: 'm' },
+            { bPos: 2, bAcc: '', tPos: 5, tAcc: '', num: 4, qual: 'P' },
+            { bPos: 2, bAcc: '', tPos: 5, tAcc: '#', num: 4, qual: 'A' },
+            { bPos: 2, bAcc: '', tPos: 6, tAcc: '', num: 5, qual: 'P' },
+            { bPos: 2, bAcc: '', tPos: 6, tAcc: 'b', num: 5, qual: 'd' },
+            { bPos: 2, bAcc: '', tPos: 7, tAcc: '#', num: 6, qual: 'M' },
+            { bPos: 2, bAcc: '', tPos: 7, tAcc: '', num: 6, qual: 'm' },
+            { bPos: 2, bAcc: '', tPos: 8, tAcc: '#', num: 7, qual: 'M' },
+            { bPos: 2, bAcc: '', tPos: 8, tAcc: '', num: 7, qual: 'm' },
+
+            // Root: F4 (3) - 1b
+            { bPos: 3, bAcc: '', tPos: 4, tAcc: '', num: 2, qual: 'M' },
+            { bPos: 3, bAcc: '', tPos: 5, tAcc: 'b', num: 3, qual: 'm' },
+            { bPos: 3, bAcc: '', tPos: 5, tAcc: '', num: 3, qual: 'M' },
+            { bPos: 3, bAcc: '', tPos: 6, tAcc: 'b', num: 4, qual: 'P' },
+            { bPos: 3, bAcc: '', tPos: 6, tAcc: '', num: 4, qual: 'A' },
+            { bPos: 3, bAcc: '', tPos: 7, tAcc: 'b', num: 5, qual: 'd' },
+            { bPos: 3, bAcc: '', tPos: 7, tAcc: '', num: 5, qual: 'P' },
+            { bPos: 3, bAcc: '', tPos: 8, tAcc: '', num: 6, qual: 'M' },
+            { bPos: 3, bAcc: '', tPos: 9, tAcc: 'b', num: 7, qual: 'm' },
+            { bPos: 3, bAcc: '', tPos: 9, tAcc: '', num: 7, qual: 'M' },
+
+            // Root: G4 (4) - 1#
+            { bPos: 4, bAcc: '', tPos: 5, tAcc: '', num: 2, qual: 'M' },
+            { bPos: 4, bAcc: '', tPos: 6, tAcc: 'b', num: 3, qual: 'm' },
+            { bPos: 4, bAcc: '', tPos: 6, tAcc: '', num: 3, qual: 'M' },
+            { bPos: 4, bAcc: '', tPos: 7, tAcc: '', num: 4, qual: 'P' },
+            { bPos: 4, bAcc: '', tPos: 7, tAcc: '#', num: 4, qual: 'A' },
+            { bPos: 4, bAcc: '', tPos: 8, tAcc: 'b', num: 5, qual: 'd' },
+            { bPos: 4, bAcc: '', tPos: 8, tAcc: '', num: 5, qual: 'P' },
+            { bPos: 4, bAcc: '', tPos: 9, tAcc: 'b', num: 6, qual: 'm' },
+            { bPos: 4, bAcc: '', tPos: 9, tAcc: '', num: 6, qual: 'M' },
+            { bPos: 4, bAcc: '', tPos: 10, tAcc: '', num: 7, qual: 'm' },
+            { bPos: 4, bAcc: '', tPos: 10, tAcc: '#', num: 7, qual: 'M' },
+
+            // Root: A4 (5) - 3#
+            { bPos: 5, bAcc: '', tPos: 6, tAcc: '', num: 2, qual: 'M' },
+            { bPos: 5, bAcc: '', tPos: 7, tAcc: '', num: 3, qual: 'm' },
+            { bPos: 5, bAcc: '', tPos: 7, tAcc: '#', num: 3, qual: 'M' },
+            { bPos: 5, bAcc: '', tPos: 8, tAcc: '', num: 4, qual: 'P' },
+            { bPos: 5, bAcc: '', tPos: 8, tAcc: '#', num: 4, qual: 'A' },
+            { bPos: 5, bAcc: '', tPos: 9, tAcc: 'b', num: 5, qual: 'd' },
+            { bPos: 5, bAcc: '', tPos: 9, tAcc: '', num: 5, qual: 'P' },
+            { bPos: 5, bAcc: '', tPos: 10, tAcc: '', num: 6, qual: 'm' },
+            { bPos: 5, bAcc: '', tPos: 10, tAcc: '#', num: 6, qual: 'M' },
+            { bPos: 5, bAcc: '', tPos: 11, tAcc: '', num: 7, qual: 'm' },
+            { bPos: 5, bAcc: '', tPos: 11, tAcc: '#', num: 7, qual: 'M' },
+
+            // Root: Eb4 (2, 'b') - 3b
+            { bPos: 2, bAcc: 'b', tPos: 3, tAcc: '', num: 2, qual: 'M' },
+            { bPos: 2, bAcc: 'b', tPos: 3, tAcc: 'b', num: 2, qual: 'm' },
+            { bPos: 2, bAcc: 'b', tPos: 4, tAcc: '', num: 3, qual: 'M' },
+            { bPos: 2, bAcc: 'b', tPos: 4, tAcc: 'b', num: 3, qual: 'm' },
+            { bPos: 2, bAcc: 'b', tPos: 5, tAcc: 'b', num: 4, qual: 'P' },
+            { bPos: 2, bAcc: 'b', tPos: 5, tAcc: '', num: 4, qual: 'A' },
+            { bPos: 2, bAcc: 'b', tPos: 6, tAcc: 'b', num: 5, qual: 'P' },
+            { bPos: 2, bAcc: 'b', tPos: 6, tAcc: 'bb', num: 5, qual: 'd' },
+            { bPos: 2, bAcc: 'b', tPos: 7, tAcc: '', num: 6, qual: 'M' },
+            { bPos: 2, bAcc: 'b', tPos: 7, tAcc: 'b', num: 6, qual: 'm' },
+            { bPos: 2, bAcc: 'b', tPos: 8, tAcc: '', num: 7, qual: 'M' },
+            { bPos: 2, bAcc: 'b', tPos: 8, tAcc: 'b', num: 7, qual: 'm' },
+
+            // Root: Ab4 (5, 'b') - 4b
+            { bPos: 5, bAcc: 'b', tPos: 6, tAcc: 'b', num: 2, qual: 'M' }, // Ab-Bb
+            { bPos: 5, bAcc: 'b', tPos: 6, tAcc: 'bb', num: 2, qual: 'm' }, // Ab-Bbb (Double Flat)
+            { bPos: 5, bAcc: 'b', tPos: 7, tAcc: '', num: 3, qual: 'M' }, // Ab-C
+            { bPos: 5, bAcc: 'b', tPos: 7, tAcc: 'b', num: 3, qual: 'm' }, // Ab-Cb
+            { bPos: 5, bAcc: 'b', tPos: 8, tAcc: 'b', num: 4, qual: 'P' }, // Ab-Db
+            { bPos: 5, bAcc: 'b', tPos: 8, tAcc: '', num: 4, qual: 'A' }, // Ab-D
+            { bPos: 5, bAcc: 'b', tPos: 9, tAcc: 'b', num: 5, qual: 'P' }, // Ab-Eb
+            { bPos: 5, bAcc: 'b', tPos: 9, tAcc: 'bb', num: 5, qual: 'd' }, // Ab-Ebb (Double Flat)
+            { bPos: 5, bAcc: 'b', tPos: 10, tAcc: '', num: 6, qual: 'M' }, // Ab-F
+            { bPos: 5, bAcc: 'b', tPos: 10, tAcc: 'b', num: 6, qual: 'm' }, // Ab-Fb
+            { bPos: 5, bAcc: 'b', tPos: 11, tAcc: '', num: 7, qual: 'M' }, // Ab-G
+            { bPos: 5, bAcc: 'b', tPos: 11, tAcc: 'b', num: 7, qual: 'm' }, // Ab-Gb
+            { bPos: 5, bAcc: 'b', tPos: 11, tAcc: 'bb', num: 7, qual: 'd' }  // Ab-Gbb (Double Flat)
         ];
 
         // ---------------- 🎨 ลำดับวัตถุดิบ (Sequential Toppings) ----------------
@@ -557,7 +612,7 @@
             return html;
         }
 
-        // 8 ลำดับการทำพิซซ่าเมื่อตอบถูก (รวม 80 คะแนนถึงจะชนะ)
+        // 8 ลำดับการทำพิซซ่าเมื่อตอบถูก
         const goodSteps = [
             `<g transform="translate(100, 100)"><animateTransform attributeName="transform" type="scale" from="0" to="1" dur="0.3s" fill="freeze" additive="sum"/><circle r="85" fill="#e53935" opacity="0.85" /></g>`,
             `<g transform="translate(100, 100)"><animateTransform attributeName="transform" type="scale" from="0" to="1" dur="0.3s" fill="freeze" additive="sum"/><circle r="80" fill="#ffe082" /></g>`,
@@ -571,9 +626,9 @@
 
         // วัตถุดิบแปลกๆ เมื่อตอบผิด
         const badIngredients = [
-            `<g><ellipse rx="6" ry="12" fill="#212121"/><path d="M-6,-5 L-12,-8 M6,-5 L12,-8 M-6,0 L-14,0 M6,0 L14,0 M-6,5 L-12,8 M6,5 L12,8" stroke="#212121" stroke-width="1.5"/></g>`, 
-            `<g><path d="M0,-15 L0,15 M-8,-8 L8,-2 M-8,-2 L8,4 M-8,4 L8,10" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round"/><polygon points="0,-15 -5,-20 5,-20" fill="#e0e0e0"/></g>`,
-            `<g><path d="M-10,5 Q-5,-15 5,-5 T15,10 Q5,15 -10,5 Z" fill="#7cb342" opacity="0.9"/></g>`
+            `<g><ellipse rx="6" ry="12" fill="#212121"/><path d="M-6,-5 L-12,-8 M6,-5 L12,-8 M-6,0 L-14,0 M6,0 L14,0 M-6,5 L-12,8 M6,5 L12,8" stroke="#212121" stroke-width="1.5"/></g>`, // แมลงสาบ
+            `<g><path d="M0,-15 L0,15 M-8,-8 L8,-2 M-8,-2 L8,4 M-8,4 L8,10" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round"/><polygon points="0,-15 -5,-20 5,-20" fill="#e0e0e0"/></g>`, // ก้างปลา
+            `<g><path d="M-10,5 Q-5,-15 5,-5 T15,10 Q5,15 -10,5 Z" fill="#7cb342" opacity="0.9"/></g>` // เมือกเขียว
         ];
 
         // ---------------- ⚙️ ตัวแปรควบคุมเกม ----------------
@@ -594,7 +649,7 @@
         const questionZone = document.getElementById('questionZone');
 
         function updateUI() {
-            scoreDisplay.textContent = `${score}/80`; // โชว์เป้าหมาย 80
+            scoreDisplay.textContent = score;
             livesDisplay.textContent = "❤️".repeat(Math.max(0, lives)) + "🤍".repeat(Math.max(0, 3 - lives));
         }
 
@@ -680,7 +735,7 @@
             window.location.href = 'index.html'; 
         }
 
-        // ---------------- 🚀 ฟังก์ชันวาดโน้ต SVG ----------------
+        // ---------------- 🚀 ฟังก์ชันวาดโน้ต SVG แบบโปร ----------------
         function createNoteSVG(pos, accidental, offsetX, bottomY) {
             let needsLedger = (pos <= 0 || pos >= 12);
             let ledgerHTML = '';
@@ -690,9 +745,16 @@
 
             let accHTML = '';
             if (accidental) {
-                let accSymbol = accidental === 'b' ? '♭' : '♯';
-                let accX = accidental === 'b' ? -12 : -15; 
-                accHTML = `<text x="${accX}" y="26" font-family="'Times New Roman', serif" font-size="24" font-weight="bold" fill="#212121">${accSymbol}</text>`;
+                let accSymbol = '';
+                let accX = -12;
+                let fontFam = "'Times New Roman', serif";
+                
+                if (accidental === 'b') { accSymbol = '♭'; accX = -14; }
+                else if (accidental === '#') { accSymbol = '♯'; accX = -14; }
+                else if (accidental === 'bb') { accSymbol = '♭♭'; accX = -26; }
+                else if (accidental === '##') { accSymbol = 'x'; accX = -12; fontFam = "sans-serif"; }
+
+                accHTML = `<text x="${accX}" y="26" font-family="${fontFam}" font-size="24" font-weight="bold" fill="#212121">${accSymbol}</text>`;
             }
 
             return `
